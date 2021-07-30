@@ -16,7 +16,6 @@ uint32_t OUTPUT_BUFFER_LENGTH;
 uint32_t SERVICE_REGISTERS[0x23];
 uint32_t META_REGISTERS[0x05];
 uint32_t REGADRERR;
-uint16_t datfll[13000];
 
 uint8_t uart_rx_buff[UART_BUFF];
 uint8_t uart_tx_buff[UART_BUFF];

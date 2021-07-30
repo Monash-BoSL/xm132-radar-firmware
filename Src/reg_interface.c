@@ -121,14 +121,15 @@ void RegInt_parsecmd(void){
 		offst_l = uart_rx_buff[2];
 		offst_h = uart_rx_buff[3];
 		uint16_t offst = (offst_h << 8) | offst_l;
+		uint32_t datalen = (sparse_metadata.data_length-offst)*sizeof(uint16_t);
 		uart_tx_buff[0] = 0xCC;
-		uart_tx_buff[1] = offst_l;
-		uart_tx_buff[2] = offst_h;
+		uart_tx_buff[1] = get_byte(datalen+1,0);
+		uart_tx_buff[2] = get_byte(datalen+1,1);
 		uart_tx_buff[3] = 0xF7;
 		uart_tx_buff[4] = 0xE8;
 		HAL_UART_Transmit(&huart1, uart_tx_buff, 5, 10);
 		queue_cmd_end = 1;
-		HAL_UART_Transmit_IT(&huart1, sparse_data+offst, sparse_metadata.data_length-offst);
+		HAL_UART_Transmit_IT(&huart1, sparse_data+offst, datalen);
 	}
 	uart_state = 0;
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -211,7 +212,7 @@ void initRSS(void){
 }
 
 void updateConfig(void){
-
+	
 	acc_service_profile_set(sparse_config, RegInt_getreg(0x28));
 	
 	uint32_t rep_mode = RegInt_getreg(0x22); 
@@ -281,9 +282,8 @@ void createService(void){
 		printf("Start: %ld mm\n", (int32_t)(sparse_metadata.start_m * 1000.0f));
 		printf("Length: %lu mm\n", (uint32_t)(sparse_metadata.length_m * 1000.0f));
 		printf("Data length: %lu\n", (uint32_t)sparse_metadata.data_length);
-		printf("Sweep rate: %lu Hz\n ", (uint32_t)(sparse_metadata.sweep_rate * 1000.0f));
+		printf("Sweep rate: %lu Hz\n", (uint32_t)(sparse_metadata.sweep_rate * 1000.0f));
 		printf("Step length: %lu mm\n", (uint32_t)(sparse_metadata.step_length_m * 1000.0f));
-
 	}
 }
 
@@ -301,7 +301,7 @@ void activateService(void){
 		uint32_t flags = RegInt_getreg(0x06); 
 		flags |= 0x00000002;
 		RegInt_setregf(0x06, flags, 1); 
-		printf('activato\n');
+		printf("activato\n");
 	}
 	
 	
