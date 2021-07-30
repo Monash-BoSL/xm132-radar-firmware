@@ -66,7 +66,8 @@ RSS_INTEGRATION_FILES := \
 
 SOURCES_MAIN := \
     main.c \
-	reg_interface.c
+	reg_interface.c \
+	arduinoFFTfix.c
 
 # SOURCES_RADAR_VELOCITY_STM_FIRMWARE := \
     # radar_velocity_stm_firmware.c

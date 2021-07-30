@@ -17,6 +17,7 @@ uint32_t SERVICE_REGISTERS[0x23];
 uint32_t META_REGISTERS[0x05];
 uint32_t REGADRERR;
 
+
 uint8_t uart_rx_buff[UART_BUFF];
 uint8_t uart_tx_buff[UART_BUFF];
 uint8_t uart_state;
@@ -49,6 +50,7 @@ void createService(void);
 void activateService(void);
 void stopService(void);
 void sparseMeasure(void);
+void evalData(void);
 
 
 	

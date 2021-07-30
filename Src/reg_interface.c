@@ -1,5 +1,6 @@
 #include "reg_interface.h"
 
+#include "arduinoFFTfix.h"
 #include "stm32g0xx_it.h"
 #include "stm32g0xx_hal.h"
 
@@ -189,6 +190,7 @@ void rss_control(uint32_t val){
 		RegInt_setregf(0x06, flags, 1);	
 	}
 	if (val == 0x05){sparseMeasure();}
+	if (val == 0x06){evalData();}
 }
 
 
@@ -282,7 +284,7 @@ void createService(void){
 		printf("Start: %ld mm\n", (int32_t)(sparse_metadata.start_m * 1000.0f));
 		printf("Length: %lu mm\n", (uint32_t)(sparse_metadata.length_m * 1000.0f));
 		printf("Data length: %lu\n", (uint32_t)sparse_metadata.data_length);
-		printf("Sweep rate: %lu Hz\n", (uint32_t)(sparse_metadata.sweep_rate * 1000.0f));
+		printf("Sweep rate: %lu mHz\n", (uint32_t)(sparse_metadata.sweep_rate * 1000.0f));
 		printf("Step length: %lu mm\n", (uint32_t)(sparse_metadata.step_length_m * 1000.0f));
 	}
 }
@@ -327,4 +329,128 @@ void sparseMeasure(void){
 	printf("Done measurement\n");
 }
 
+void evalData(void){
+	uint16_t sweeps = acc_service_sparse_configuration_sweeps_per_frame_get(sparse_config);
+	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
+	uint16_t sweep_len = (uint16_t)(sparse_metadata.length_m*1000.0f);
+	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
+	float sweep_rate = sparse_metadata.sweep_rate;
+	uint16_t dist_bins = (sweep_len/dist_res) + 1;
+	
+	float scales[dist_bins];
+	int16_t real[sweeps];
+	int16_t imag[sweeps];
+	
+	float velocity;
+	float distance;
+	float amplitude;
 
+
+	printf("st eval\n");
+	//remove dc component
+	for(int i = 0; i<dist_bins; i++){
+		uint32_t accumulator = 0;
+		for(int j = 0; j<sweeps; j++){
+			accumulator += sparse_data[j*dist_bins+i];
+		}
+
+		uint32_t average = accumulator/sweeps;
+		
+		for(int j = 0; j<sweeps; j++){
+			sparse_data[j*dist_bins+i] -= average;
+
+		}
+	}
+
+	// dump_data('C');
+	printf("st fft\n");
+	//do fft on each row
+	for(int i = 0; i<dist_bins; i++){
+		//note that this method of coping data to another array to do the FFT becomes less relatively memory efficient the fewer distance bins you have.
+		
+		//set real componet of FFT to data
+		for (int j = 0; j < sweeps; j++) {
+		  real[j] = sparse_data[j*dist_bins+i];
+		}
+		//set imaginary componet of FFT to zero
+		for (int j = 0; j < sweeps; j++) {
+		  imag[j] = 0;
+		}
+		
+		//Compute FFT
+		scales[i] = fftRangeScaling(real, sweeps);
+		fftWindowing(real, sweeps, FFT_FORWARD);
+		fftCompute(real, imag, sweeps, FFT_FORWARD);
+		fftComplexToMagnitude(real, imag, sweeps);
+		
+		//load data back in to data array
+		//set real componet of FFT to data
+		for (int j = 0; j < sweeps/2; j++) {
+		  sparse_data[j*dist_bins+i] = real[j];
+		}
+		for (int j = sweeps/2; j < sweeps; j++) {
+		  sparse_data[j*dist_bins+i] = 0;
+		}
+	}
+	//the data has been normalised in each row but to make meaningful comparisons we need in normalised across the entire array, we shall do this now
+	printf("end fft\n");
+	
+	//we will normalise by scaling everything realtive to the smallest scaling
+	float min_scale = scales[0];
+	for(int i =1; i<dist_bins; i++){
+		if (scales[i] < min_scale){
+			min_scale = scales[i];
+			
+		}
+	}
+
+	
+	//now just multiply each row by the relevant scaling factor
+	for(int i =0; i<dist_bins; i++){
+		float scaling_factor = min_scale/scales[i]; 
+		for(int j = 0; j < sweeps/2; j++){
+			sparse_data[j*dist_bins+i] *= scaling_factor;
+		}
+	}
+	return;
+	// dump_data('F');
+	
+	//now we find the maximum value in the data
+	uint16_t apex = 0;
+	for(int i =0; i< dist_bins*sweeps/2; i++){
+		if (sparse_data[i] > apex){
+			apex = sparse_data[i];
+		}
+	}
+
+	float peak_threshold = 0.5f;
+	//now we set all the data below the threshold to zero
+	for(int i =0; i< dist_bins*sweeps/2; i++){
+		if (sparse_data[i] < apex*peak_threshold){
+			sparse_data[i] = 0;
+		}
+	}
+	
+	// dump_data('T');
+	
+	//the center of mass of the image need to be computed
+	float mass = 0;
+	float weights_d = 0; 
+	float weights_s = 0;
+	
+	for(int i = 0; i<dist_bins*sweeps/2; i++){
+		mass += sparse_data[i];
+		weights_d += (float)sparse_data[i]* (float)(i%dist_bins);
+		weights_s += (float)sparse_data[i]* (float)(i/dist_bins);	
+
+	}
+	
+	weights_d /= mass;
+	weights_s /= mass;
+	
+	distance = dist_res*weights_d + dist_start;	//converts data to distance (mm)
+	velocity = weights_s * (float)(sweep_rate/sweeps) * 2.445; //converts data to velocity (mm/s)
+	amplitude = apex*min_scale;
+	
+	printf("end eval\n");
+}
