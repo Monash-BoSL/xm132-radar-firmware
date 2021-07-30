@@ -23,13 +23,21 @@ uint8_t uart_tx_buff[UART_BUFF];
 uint8_t uart_state;
 uint8_t cmd_length;
 uint8_t queue_cmd_end;
+uint8_t far_active;
+uint32_t bufflen;
+uint32_t bufflen_far;
 
 acc_hal_t 							radar_hal;
 acc_service_configuration_t 		sparse_config;
+acc_service_configuration_t 		sparse_config_far;
 acc_service_handle_t 				sparse_handle; 
+acc_service_handle_t 				sparse_handle_far; 
 uint16_t                         	*sparse_data;
+uint16_t                         	*sparse_data_far;
 acc_service_sparse_result_info_t 	sparse_result_info;
+acc_service_sparse_result_info_t 	sparse_result_info_far;
 acc_service_sparse_metadata_t 		sparse_metadata;
+acc_service_sparse_metadata_t 		sparse_metadata_far;
 
 void RegInt_Init(void);
 uint32_t RegInt_getreg(uint8_t);
@@ -40,13 +48,15 @@ void RegInt_parsecmd(void);
 
 void send_byte_ln(uint8_t);
 uint8_t get_byte(uint32_t, uint8_t );
+uint32_t roundUp(uint32_t, uint32_t );
 
 void rss_control(uint32_t);
 void initRSS(void);
 
-void updateConfig(void);
+void updateConfig(acc_service_configuration_t, uint16_t, uint16_t);
 void stopService(void);
-void createService(void);
+int8_t createService(void);
+void printf_metadata(acc_service_sparse_metadata_t);
 void activateService(void);
 void stopService(void);
 void sparseMeasure(void);

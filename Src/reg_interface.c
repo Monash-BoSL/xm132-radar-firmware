@@ -76,7 +76,26 @@ void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	}
 }
 
+void Reg_regand(uint8_t reg, uint32_t andbits){
+	uint32_t flags = RegInt_getreg(reg); 
+	flags &= andbits;
+	RegInt_setregf(reg, flags, 1);
+}
 
+void Reg_regor(uint8_t reg, uint32_t orbits){
+	uint32_t flags = RegInt_getreg(reg); 
+	flags |= orbits;
+	RegInt_setregf(reg, flags, 1);
+}
+
+void Reg_store_metadata(acc_service_sparse_metadata_t metadata){
+
+	RegInt_setregf(0x81, (uint32_t)(metadata.start_m * 1000.0f),1);
+	RegInt_setregf(0x82, (uint32_t)(metadata.length_m * 1000.0f),1);
+	RegInt_setregf(0x83, (uint32_t)(metadata.data_length),1);
+	RegInt_setregf(0x84, (uint32_t)(metadata.sweep_rate * 1000.0f),1);
+	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1000.0f),1);
+}
 
 void RegInt_parsecmd(void){
 	if (uart_state != 4){return;}
@@ -122,15 +141,30 @@ void RegInt_parsecmd(void){
 		offst_l = uart_rx_buff[2];
 		offst_h = uart_rx_buff[3];
 		uint16_t offst = (offst_h << 8) | offst_l;
-		uint32_t datalen = (sparse_metadata.data_length-offst)*sizeof(uint16_t);
+		//maybe we can do this offset thing at some later time
+		//i dont really need it so i'll just leave it here to be
+		//implemented when needed.
+
+		bufflen = (sparse_metadata.data_length)*sizeof(uint16_t);
+		bufflen_far = (sparse_metadata_far.data_length)*sizeof(uint16_t);
+		uint32_t datalen = far_active ? (bufflen+bufflen_far+1) : (bufflen+1);
+		
+		
 		uart_tx_buff[0] = 0xCC;
-		uart_tx_buff[1] = get_byte(datalen+1,0);
-		uart_tx_buff[2] = get_byte(datalen+1,1);
+		uart_tx_buff[1] = get_byte(datalen,0);
+		uart_tx_buff[2] = get_byte(datalen,1);
 		uart_tx_buff[3] = 0xF7;
 		uart_tx_buff[4] = 0xE8;
+		
+		printf("buff dump\n");
+		printf("datalen: %d\n",datalen);
+		printf("bufflen: %d\n",bufflen);
+		printf("bufflenfar: %d\n",bufflen_far);
+		
 		HAL_UART_Transmit(&huart1, uart_tx_buff, 5, 10);
-		queue_cmd_end = 1;
-		HAL_UART_Transmit_IT(&huart1, sparse_data+offst, datalen);
+		queue_cmd_end = far_active ? 2 : 1;
+		printf("queue_cmd_end: %d\n",queue_cmd_end);
+		HAL_UART_Transmit_IT(&huart1, sparse_data, bufflen);
 	}
 	uart_state = 0;
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -162,9 +196,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
-	if (queue_cmd_end == 1){
-		uint8_t end = 0xCD;
+	if (queue_cmd_end == 2){
+		queue_cmd_end = 1;
+		HAL_UART_Transmit_IT(&huart1, sparse_data_far, bufflen_far);
+	}else if(queue_cmd_end == 1){
 		queue_cmd_end = 0;
+		uint8_t end = 0xCD;
 		HAL_UART_Transmit_IT(&huart1, &end, 1);
 	}
 }
@@ -179,16 +216,26 @@ uint8_t get_byte(uint32_t val, uint8_t byte){
 	return (val & (0xFFL << (8*byte))) >> (8*byte);
 }
 
+uint32_t roundUp(uint32_t numToRound, uint32_t multiple)
+{
+    if (multiple == 0)
+        return numToRound;
+
+    uint32_t remainder = numToRound % multiple;
+    if (remainder == 0)
+        return numToRound;
+
+    return numToRound + multiple - remainder;
+}
+
 void rss_control(uint32_t val){
 	if (val == 0x00){stopService();}
 	if (val == 0x01){createService();}
 	if (val == 0x02){activateService();}
-	if (val == 0x03){createService(); activateService();}
-	if (val == 0x04){//clear error bits
-		uint32_t flags = RegInt_getreg(0x06); 
-		flags &= 0x000000FF;
-		RegInt_setregf(0x06, flags, 1);	
+	if (val == 0x03){
+		if(createService()){activateService();}
 	}
+	if (val == 0x04){Reg_regand(0x06,0x000000FF);}//clear error bits
 	if (val == 0x05){sparseMeasure();}
 	if (val == 0x06){evalData();}
 }
@@ -202,6 +249,7 @@ void initRSS(void){
 		/* handle error */
 		printf("rssfail @%d\n", __LINE__);
 	}
+	acc_rss_override_sensor_id_check_at_creation(true);
 	
 	sparse_config = acc_service_sparse_configuration_create();
  
@@ -210,83 +258,118 @@ void initRSS(void){
 		/* Handle error */
 		printf("config @%d\n", __LINE__);
 	}
+	
+	sparse_config_far = acc_service_sparse_configuration_create();
+ 
+	if (sparse_config_far == NULL)
+	{
+		/* Handle error */
+		printf("config @%d\n", __LINE__);
+	}
 
 }
 
-void updateConfig(void){
+void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint16_t sweep_length){
 	
-	acc_service_profile_set(sparse_config, RegInt_getreg(0x28));
+	acc_service_profile_set(config, RegInt_getreg(0x28));
 	
 	uint32_t rep_mode = RegInt_getreg(0x22); 
 	if(rep_mode == 0x01){
-		acc_service_repetition_mode_streaming_set(sparse_config, ((float)RegInt_getreg(0x23))/1000.0f);
+		acc_service_repetition_mode_streaming_set(config, ((float)RegInt_getreg(0x23))/1000.0f);
 	}else if (rep_mode == 0x02){
-		acc_service_repetition_mode_on_demand_set(sparse_config);
+		acc_service_repetition_mode_on_demand_set(config);
 	}else{
 		/* error handle */
 	}
 	
-	acc_service_sparse_downsampling_factor_set(sparse_config, RegInt_getreg(0x29));
+	acc_service_sparse_downsampling_factor_set(config, RegInt_getreg(0x29));
 	
-	acc_service_hw_accelerated_average_samples_set(sparse_config, RegInt_getreg(0x30));
+	acc_service_hw_accelerated_average_samples_set(config, RegInt_getreg(0x30));
 	
-	acc_service_power_save_mode_set(sparse_config, RegInt_getreg(0x25));
+	acc_service_power_save_mode_set(config, RegInt_getreg(0x25));
 	
-	acc_service_asynchronous_measurement_set(sparse_config,RegInt_getreg(0x33));
+	acc_service_asynchronous_measurement_set(config,RegInt_getreg(0x33));
 	
-	acc_service_requested_start_set (sparse_config, (float)RegInt_getreg(0x20)/1000.0f);
+	acc_service_requested_start_set (config, (float)sweep_start/1000.0f);
 	
-	acc_service_requested_length_set (sparse_config, (float)RegInt_getreg(0x21)/1000.0f);
+	acc_service_requested_length_set (config, (float)sweep_length/1000.0f);
 	
-	acc_service_receiver_gain_set (sparse_config, (float)RegInt_getreg(0x24)/1000.0f);
+	acc_service_receiver_gain_set (config, (float)RegInt_getreg(0x24)/1000.0f);
 	
-	acc_service_hw_accelerated_average_samples_set (sparse_config, RegInt_getreg(0x30));
+	acc_service_hw_accelerated_average_samples_set (config, RegInt_getreg(0x30));
 	
-	acc_service_sparse_configuration_sweeps_per_frame_set (sparse_config, RegInt_getreg(0x40));
+	acc_service_sparse_configuration_sweeps_per_frame_set (config, RegInt_getreg(0x40));
 	
-	acc_service_sparse_configuration_sweep_rate_set (sparse_config, (float)RegInt_getreg(0x41)/1000.0f);
+	acc_service_sparse_configuration_sweep_rate_set (config, (float)RegInt_getreg(0x41)/1000.0f);
 	
-	acc_service_sparse_sampling_mode_set (sparse_config, RegInt_getreg(0x42));
+	acc_service_sparse_sampling_mode_set (config, RegInt_getreg(0x42));
 	
-	acc_service_sparse_downsampling_factor_set (sparse_config, RegInt_getreg(0x29));
+	acc_service_sparse_downsampling_factor_set (config, RegInt_getreg(0x29));
 	
 }
 
-void createService(void){
-	updateConfig();
-	
-	sparse_handle = acc_service_create(sparse_config);
+int8_t createService(void){
+	uint32_t start_reg = RegInt_getreg(0x20);
+	uint32_t len_reg = RegInt_getreg(0x21);
+	if (len_reg < 1890){
+		far_active = 0;
+		updateConfig(sparse_config,start_reg, len_reg);
+		//single service will do
+	}else if (len_reg < 3810){
+		far_active = 1;
+		printf("updating sparse config\n");
+		updateConfig(sparse_config,start_reg, 1890);
+		printf("updating sparse far config\n");
+		updateConfig(sparse_config_far,roundUp(start_reg+1860,60),len_reg-1890);
+		printf("done updating config\n");
+	}else{
+		Reg_regor(0x06, 0x00080000);
+		printf("creation failed (too long)\n");
+		return 0;
+	}
+	sparse_handle = acc_service_create(sparse_config);	
 	
 	if (sparse_handle == NULL){//handles error
-		uint32_t flags = RegInt_getreg(0x06); 
-		flags |= 0x0008000;
-		RegInt_setregf(0x06, flags, 1); 
+		Reg_regor(0x06, 0x00080000);
 		printf("creation failed\n");
+		return 0;
 	}else{
-		sparse_metadata.start_m = 0;
-		sparse_metadata.length_m = 0;
-		sparse_metadata.data_length = 0;
-		sparse_metadata.sweep_rate = 0;
-		sparse_metadata.step_length_m = 0;
-		
 		acc_service_sparse_get_metadata(sparse_handle, &sparse_metadata);
-		RegInt_setregf(0x81, (uint32_t)(sparse_metadata.start_m * 1000.0f),1);
-		RegInt_setregf(0x82, (uint32_t)(sparse_metadata.length_m * 1000.0f),1);
-		RegInt_setregf(0x83, (uint32_t)(sparse_metadata.data_length),1);
-		RegInt_setregf(0x84, (uint32_t)(sparse_metadata.sweep_rate * 1000.0f),1);
-		RegInt_setregf(0x85, (uint32_t)(sparse_metadata.step_length_m * 1000.0f),1);
 		
-		uint32_t flags = RegInt_getreg(0x06); 
-		flags |= 0x0000001;
-		RegInt_setregf(0x06, flags, 1);
-
-
-		printf("Start: %ld mm\n", (int32_t)(sparse_metadata.start_m * 1000.0f));
-		printf("Length: %lu mm\n", (uint32_t)(sparse_metadata.length_m * 1000.0f));
-		printf("Data length: %lu\n", (uint32_t)sparse_metadata.data_length);
-		printf("Sweep rate: %lu mHz\n", (uint32_t)(sparse_metadata.sweep_rate * 1000.0f));
-		printf("Step length: %lu mm\n", (uint32_t)(sparse_metadata.step_length_m * 1000.0f));
+		Reg_store_metadata(sparse_metadata);
+		
+		if(!far_active){
+		Reg_regor(0x06, 0x0000001);
+		}
+		printf_metadata(sparse_metadata);
 	}
+	
+	if(far_active){
+	sparse_handle_far = acc_service_create(sparse_config_far);
+	
+	if (sparse_handle_far == NULL){//handles error		
+		Reg_regor(0x06, 0x00080000);
+		printf("creation failed\n");
+		return 0;
+	}else{	
+		acc_service_sparse_get_metadata(sparse_handle_far, &sparse_metadata_far);
+		
+		Reg_store_metadata(sparse_metadata_far);
+		
+		Reg_regor(0x06, 0x0000001);
+		
+		printf_metadata(sparse_metadata_far);
+	}
+	}
+	return 1;
+}
+
+void printf_metadata(acc_service_sparse_metadata_t metadata){
+	printf("Start: %ld mm\n", (int32_t)(metadata.start_m * 1000.0f));
+		printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
+		printf("Data length: %lu\n", (uint32_t)metadata.data_length);
+		printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.sweep_rate * 1000.0f));
+		printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
 }
 
 void activateService(void){
@@ -294,30 +377,35 @@ void activateService(void){
 	{
 		printf("acc_service_activate() failed\n");
 		acc_service_destroy(&sparse_handle);
-		acc_rss_deactivate();
 		
-		uint32_t flags = RegInt_getreg(0x06); 
-		flags |= 0x00100000;
-		RegInt_setregf(0x06, flags, 1); 
+		if(far_active){acc_service_destroy(&sparse_handle_far);}
+		
+		// acc_rss_deactivate();
+		
+		Reg_regor(0x06, 0x00100000);
+		return;
 	}else{
-		uint32_t flags = RegInt_getreg(0x06); 
-		flags |= 0x00000002;
-		RegInt_setregf(0x06, flags, 1); 
+		Reg_regor(0x06, 0x00000002);
 		printf("activato\n");
 	}
-	
-	
 	
 }
 
 void stopService(void){
-	printf("sparce_handle: %ld\n", sparse_handle);
-	printf("sparce_handle_val: %ld\n", &sparse_handle);
 	if(acc_service_deactivate(sparse_handle)){
 		acc_service_destroy(&sparse_handle);	
 		printf("service destroyed @%d\n", __LINE__);
 	}else{
 		printf("deactivation fail @%d\n", __LINE__);
+	}
+	
+	if(far_active){
+	if(acc_service_deactivate(sparse_handle_far)){
+		acc_service_destroy(&sparse_handle_far);	
+		printf("far service destroyed @%d\n", __LINE__);
+	}else{
+		printf("far deactivation fail @%d\n", __LINE__);
+	}
 	}
 	
 }
@@ -327,6 +415,29 @@ void sparseMeasure(void){
 	printf("Start measurement\n");
 	acc_service_sparse_get_next_by_reference(sparse_handle, &sparse_data, &sparse_result_info);
 	printf("Done measurement\n");
+	
+	if(far_active){
+		if(!acc_service_deactivate(sparse_handle)){
+			printf("acc_service_deactivate() for sparse failed\n");
+		}
+		
+		if (!acc_service_activate(sparse_handle_far)){
+			printf("acc_service_activate() for sparse far failed\n");
+			//handle error
+		}
+			
+		acc_service_sparse_get_next_by_reference(sparse_handle_far, &sparse_data_far, &sparse_result_info_far);
+		
+		if(!acc_service_deactivate(sparse_handle_far)){
+			printf("acc_service_deactivate() for sparse far failed\n");
+		}
+		if (!acc_service_activate(sparse_handle)){
+			printf("acc_service_activate() for sparse failed\n");
+			//handle error
+		}
+		
+		printf("Done far measurement\n");
+	}
 }
 
 void evalData(void){
