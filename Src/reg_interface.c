@@ -5,10 +5,12 @@
 #include "stm32g0xx_hal.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define cbi(sfr, bit)   (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit)   (_SFR_BYTE(sfr) |= _BV(bit))
 
+#define PRINT(var)	printf("%s: %ld @%ld\n", #var, var, __LINE__)
 
 extern UART_HandleTypeDef huart1;
 
@@ -147,24 +149,25 @@ void RegInt_parsecmd(void){
 
 		bufflen = (sparse_metadata.data_length)*sizeof(uint16_t);
 		bufflen_far = (sparse_metadata_far.data_length)*sizeof(uint16_t);
-		uint32_t datalen = far_active ? (bufflen+bufflen_far+1) : (bufflen+1);
-		
+		//uint32_t datalen = far_active ? (bufflen+bufflen_far+1) : (bufflen+1);
+		uint32_t datalen = sweeps*bins*sizeof(uint16_t);
 		
 		uart_tx_buff[0] = 0xCC;
-		uart_tx_buff[1] = get_byte(datalen,0);
-		uart_tx_buff[2] = get_byte(datalen,1);
+		uart_tx_buff[1] = get_byte(datalen+1,0);
+		uart_tx_buff[2] = get_byte(datalen+1,1);
 		uart_tx_buff[3] = 0xF7;
 		uart_tx_buff[4] = 0xE8;
 		
 		printf("buff dump\n");
-		printf("datalen: %d\n",datalen);
-		printf("bufflen: %d\n",bufflen);
-		printf("bufflenfar: %d\n",bufflen_far);
+		printf("datalen: %ld\n",datalen);
+		printf("bufflen: %ld\n",bufflen);
+		printf("bufflenfar: %ld\n",bufflen_far);
 		
 		HAL_UART_Transmit(&huart1, uart_tx_buff, 5, 10);
-		queue_cmd_end = far_active ? 2 : 1;
+		// queue_cmd_end = far_active ? 2 : 1;
+		queue_cmd_end = 1;
 		printf("queue_cmd_end: %d\n",queue_cmd_end);
-		HAL_UART_Transmit_IT(&huart1, sparse_data, bufflen);
+		HAL_UART_Transmit_IT(&huart1, *data, datalen);
 	}
 	uart_state = 0;
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -198,7 +201,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 	if (queue_cmd_end == 2){
 		queue_cmd_end = 1;
-		HAL_UART_Transmit_IT(&huart1, sparse_data_far, bufflen_far);
+		//HAL_UART_Transmit_IT(&huart1, sparse_data_far, bufflen_far);
 	}else if(queue_cmd_end == 1){
 		queue_cmd_end = 0;
 		uint8_t end = 0xCD;
@@ -335,12 +338,14 @@ int8_t createService(void){
 		return 0;
 	}else{
 		acc_service_sparse_get_metadata(sparse_handle, &sparse_metadata);
-		
-		Reg_store_metadata(sparse_metadata);
-		
 		if(!far_active){
-		Reg_regor(0x06, 0x0000001);
+			if(data_malloc() == -1){stopService();}
+			Reg_regor(0x06, 0x0000001);
 		}
+
+		Reg_store_metadata(sparse_metadata);
+		//this does not work with active far enabled
+		
 		printf_metadata(sparse_metadata);
 	}
 	
@@ -351,17 +356,61 @@ int8_t createService(void){
 		Reg_regor(0x06, 0x00080000);
 		printf("creation failed\n");
 		return 0;
-	}else{	
+	}else{
 		acc_service_sparse_get_metadata(sparse_handle_far, &sparse_metadata_far);
+		if(data_malloc() == -1){stopService();}
 		
 		Reg_store_metadata(sparse_metadata_far);
-		
+		//this does not work with active far.
 		Reg_regor(0x06, 0x0000001);
 		
 		printf_metadata(sparse_metadata_far);
 	}
 	}
 	return 1;
+}
+
+int8_t data_malloc(void){
+	sweeps = acc_service_sparse_configuration_sweeps_per_frame_get (sparse_config);
+	
+	bins = sparse_metadata.data_length/sweeps;
+	if(far_active){
+		bins += sparse_metadata_far.data_length/sweeps;
+	}
+	printf("malloc sweeps: %d\n", sweeps);
+	printf("malloc bins: %d\n", bins);
+	
+	uint32_t len = 0;
+	uint16_t r=sweeps, c=bins;//r: sweeps, c: bins
+    uint16_t *ptr;
+ 
+    len = sizeof(uint16_t *) * r + sizeof(uint16_t) * c * r;
+    data = (uint16_t **)malloc(len);
+ 
+	if (data == NULL){
+		printf("data buffer allociation failed\n");
+		return -1;
+	}else{
+		printf("data buffer allociation success\n");
+		printf("data buffer len: %ld\n", len);
+	}
+ 
+    // ptr is now pointing to the first element in of 2D array
+    ptr = (uint16_t *)(data + r);
+ 
+    // for loop to point rows pointer to appropriate location in 2D array
+    for(uint16_t i = 0; i < r; i++){
+        data[i] = (ptr + c * i);
+	}
+	
+	return 0;
+}
+
+void data_free(void){
+	free(data);
+	data = NULL;
+	sweeps = 0;
+	bins = 0;
 }
 
 void printf_metadata(acc_service_sparse_metadata_t metadata){
@@ -377,6 +426,7 @@ void activateService(void){
 	{
 		printf("acc_service_activate() failed\n");
 		acc_service_destroy(&sparse_handle);
+		data_free();
 		
 		if(far_active){acc_service_destroy(&sparse_handle_far);}
 		
@@ -394,6 +444,7 @@ void activateService(void){
 void stopService(void){
 	if(acc_service_deactivate(sparse_handle)){
 		acc_service_destroy(&sparse_handle);	
+		data_free();
 		printf("service destroyed @%d\n", __LINE__);
 	}else{
 		printf("deactivation fail @%d\n", __LINE__);
@@ -402,6 +453,7 @@ void stopService(void){
 	if(far_active){
 	if(acc_service_deactivate(sparse_handle_far)){
 		acc_service_destroy(&sparse_handle_far);	
+		data_free();
 		printf("far service destroyed @%d\n", __LINE__);
 	}else{
 		printf("far deactivation fail @%d\n", __LINE__);
@@ -414,8 +466,10 @@ void sparseMeasure(void){
 		//something about a periodic interrupt timer. 
 	printf("Start measurement\n");
 	acc_service_sparse_get_next_by_reference(sparse_handle, &sparse_data, &sparse_result_info);
+	//filling the data buffer for near data
+	filldata(0);
 	printf("Done measurement\n");
-	
+		
 	if(far_active){
 		if(!acc_service_deactivate(sparse_handle)){
 			printf("acc_service_deactivate() for sparse failed\n");
@@ -427,6 +481,8 @@ void sparseMeasure(void){
 		}
 			
 		acc_service_sparse_get_next_by_reference(sparse_handle_far, &sparse_data_far, &sparse_result_info_far);
+		//filling the data buffer for far data
+		filldata(1);
 		
 		if(!acc_service_deactivate(sparse_handle_far)){
 			printf("acc_service_deactivate() for sparse far failed\n");
@@ -438,6 +494,27 @@ void sparseMeasure(void){
 		
 		printf("Done far measurement\n");
 	}
+	
+	
+}
+
+void filldata(uint8_t far){
+	uint16_t bins_near = sparse_metadata.data_length/sweeps;
+	uint16_t bins_far;
+	PRINT(bins_near);
+	if(!far){
+		for(uint16_t sweep = 0; sweep < sweeps; sweep++){
+			memcpy(data[sweep],sparse_data+(sweep*bins_near), bins_near*sizeof(uint16_t));
+		}
+	}else{	
+		bins_far = sparse_metadata_far.data_length/sweeps;
+		PRINT(bins_far);
+		for(uint16_t sweep = 0; sweep < sweeps; sweep++){
+			memcpy(data[sweep]+bins_near,sparse_data_far+(sweep*bins_far), bins_far*sizeof(uint16_t));
+			PRINT(data[sweep]);
+			PRINT(data[sweep]+bins_near);
+		}
+	}	
 }
 
 void evalData(void){

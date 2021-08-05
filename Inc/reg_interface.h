@@ -24,6 +24,9 @@ uint8_t uart_state;
 uint8_t cmd_length;
 uint8_t queue_cmd_end;
 uint8_t far_active;
+uint16_t **data;
+uint16_t sweeps;
+uint16_t bins;
 uint32_t bufflen;
 uint32_t bufflen_far;
 
@@ -44,6 +47,9 @@ uint32_t RegInt_getreg(uint8_t);
 uint32_t* RegInt_regmap(uint8_t);
 void RegInt_setreg(uint8_t, uint32_t);
 void RegInt_setregf(uint8_t, uint32_t, uint8_t);
+void Reg_regand(uint8_t, uint32_t);
+void Reg_regor(uint8_t, uint32_t);
+void Reg_store_metadata(acc_service_sparse_metadata_t);
 void RegInt_parsecmd(void);
 
 void send_byte_ln(uint8_t);
@@ -62,9 +68,9 @@ void stopService(void);
 void sparseMeasure(void);
 void evalData(void);
 
-
-	
-	
+int8_t data_malloc(void);
+void data_free(void);
+void filldata(uint8_t);
 
 
 
