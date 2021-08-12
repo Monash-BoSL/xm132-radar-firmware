@@ -231,6 +231,18 @@ uint32_t roundUp(uint32_t numToRound, uint32_t multiple)
     return numToRound + multiple - remainder;
 }
 
+uint32_t roundDown(uint32_t numToRound, uint32_t multiple)
+{
+    if (multiple == 0)
+        return numToRound;
+
+    uint32_t remainder = numToRound % multiple;
+    if (remainder == 0)
+        return numToRound;
+
+    return numToRound - remainder;
+}
+
 void rss_control(uint32_t val){
 	if (val == 0x00){stopService();}
 	if (val == 0x01){createService();}
@@ -245,6 +257,8 @@ void rss_control(uint32_t val){
 
 
 void initRSS(void){
+	printf("build at %s %s\n", __DATE__, __TIME__);
+	
 	radar_hal = *acc_hal_integration_get_implementation();
 	
 	if (!acc_rss_activate(&radar_hal))
@@ -312,18 +326,21 @@ void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint
 }
 
 int8_t createService(void){
-	uint32_t start_reg = RegInt_getreg(0x20);
-	uint32_t len_reg = RegInt_getreg(0x21);
-	if (len_reg < 1890){
+	uint32_t start_reg = roundDown(RegInt_getreg(0x20),60);
+	uint32_t len_reg = roundDown(RegInt_getreg(0x21),60);
+	if (len_reg < 1891){
 		far_active = 0;
 		updateConfig(sparse_config,start_reg, len_reg);
 		//single service will do
-	}else if (len_reg < 3810){
+	}else if (len_reg < 3811){
 		far_active = 1;
 		printf("updating sparse config\n");
 		updateConfig(sparse_config,start_reg, 1890);
 		printf("updating sparse far config\n");
-		updateConfig(sparse_config_far,roundUp(start_reg+1860,60),len_reg-1890);
+		int16_t far_len; 
+		far_len = (len_reg > 1920) ? len_reg-1920 : 1; 
+		PRINT(far_len);
+		updateConfig(sparse_config_far,start_reg+1920,far_len);
 		printf("done updating config\n");
 	}else{
 		Reg_regor(0x06, 0x00080000);
@@ -371,6 +388,7 @@ int8_t createService(void){
 }
 
 int8_t data_malloc(void){
+	//this creates data array where data[i][j] is the i-th sweep and the j-th distance bin.
 	sweeps = acc_service_sparse_configuration_sweeps_per_frame_get (sparse_config);
 	
 	bins = sparse_metadata.data_length/sweeps;
@@ -454,6 +472,7 @@ void stopService(void){
 	if(acc_service_deactivate(sparse_handle_far)){
 		acc_service_destroy(&sparse_handle_far);	
 		data_free();
+		far_active = 0;
 		printf("far service destroyed @%d\n", __LINE__);
 	}else{
 		printf("far deactivation fail @%d\n", __LINE__);
@@ -501,31 +520,24 @@ void sparseMeasure(void){
 void filldata(uint8_t far){
 	uint16_t bins_near = sparse_metadata.data_length/sweeps;
 	uint16_t bins_far;
-	PRINT(bins_near);
 	if(!far){
 		for(uint16_t sweep = 0; sweep < sweeps; sweep++){
 			memcpy(data[sweep],sparse_data+(sweep*bins_near), bins_near*sizeof(uint16_t));
 		}
 	}else{	
 		bins_far = sparse_metadata_far.data_length/sweeps;
-		PRINT(bins_far);
 		for(uint16_t sweep = 0; sweep < sweeps; sweep++){
 			memcpy(data[sweep]+bins_near,sparse_data_far+(sweep*bins_far), bins_far*sizeof(uint16_t));
-			PRINT(data[sweep]);
-			PRINT(data[sweep]+bins_near);
 		}
 	}	
 }
 
 void evalData(void){
-	uint16_t sweeps = acc_service_sparse_configuration_sweeps_per_frame_get(sparse_config);
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
-	uint16_t sweep_len = (uint16_t)(sparse_metadata.length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;
-	uint16_t dist_bins = (sweep_len/dist_res) + 1;
 	
-	float scales[dist_bins];
+	float scales[bins];
 	int16_t real[sweeps];
 	int16_t imag[sweeps];
 	
@@ -536,16 +548,16 @@ void evalData(void){
 
 	printf("st eval\n");
 	//remove dc component
-	for(int i = 0; i<dist_bins; i++){
+	for(uint16_t i = 0; i<bins; i++){
 		uint32_t accumulator = 0;
-		for(int j = 0; j<sweeps; j++){
-			accumulator += sparse_data[j*dist_bins+i];
+		for(uint16_t j = 0; j<sweeps; j++){
+			accumulator += data[j][i];
 		}
 
 		uint32_t average = accumulator/sweeps;
 		
-		for(int j = 0; j<sweeps; j++){
-			sparse_data[j*dist_bins+i] -= average;
+		for(uint16_t j = 0; j<sweeps; j++){
+			data[j][i] -= average;
 
 		}
 	}
@@ -553,15 +565,15 @@ void evalData(void){
 	// dump_data('C');
 	printf("st fft\n");
 	//do fft on each row
-	for(int i = 0; i<dist_bins; i++){
+	for(uint16_t i = 0; i<bins; i++){
 		//note that this method of coping data to another array to do the FFT becomes less relatively memory efficient the fewer distance bins you have.
 		
 		//set real componet of FFT to data
-		for (int j = 0; j < sweeps; j++) {
-		  real[j] = sparse_data[j*dist_bins+i];
+		for (uint16_t j = 0; j < sweeps; j++) {
+		  real[j] = data[j][i];
 		}
 		//set imaginary componet of FFT to zero
-		for (int j = 0; j < sweeps; j++) {
+		for (uint16_t j = 0; j < sweeps; j++) {
 		  imag[j] = 0;
 		}
 		
@@ -573,11 +585,11 @@ void evalData(void){
 		
 		//load data back in to data array
 		//set real componet of FFT to data
-		for (int j = 0; j < sweeps/2; j++) {
-		  sparse_data[j*dist_bins+i] = real[j];
+		for (uint16_t j = 0; j < sweeps/2; j++) {
+		  data[j][i] = real[j];
 		}
-		for (int j = sweeps/2; j < sweeps; j++) {
-		  sparse_data[j*dist_bins+i] = 0;
+		for (uint16_t j = sweeps/2; j < sweeps; j++) {
+		  data[j][i] = 0;
 		}
 	}
 	//the data has been normalised in each row but to make meaningful comparisons we need in normalised across the entire array, we shall do this now
@@ -585,7 +597,7 @@ void evalData(void){
 	
 	//we will normalise by scaling everything realtive to the smallest scaling
 	float min_scale = scales[0];
-	for(int i =1; i<dist_bins; i++){
+	for(uint16_t i =1; i<bins; i++){
 		if (scales[i] < min_scale){
 			min_scale = scales[i];
 			
@@ -594,42 +606,39 @@ void evalData(void){
 
 	
 	//now just multiply each row by the relevant scaling factor
-	for(int i =0; i<dist_bins; i++){
+	for(uint16_t i =0; i<bins; i++){
 		float scaling_factor = min_scale/scales[i]; 
-		for(int j = 0; j < sweeps/2; j++){
-			sparse_data[j*dist_bins+i] *= scaling_factor;
+		for(uint16_t j = 0; j < sweeps/2; j++){
+			data[j][i] *= scaling_factor;
 		}
 	}
 	return;
 	// dump_data('F');
 	
+	
+	
+	
 	//now we find the maximum value in the data
 	uint16_t apex = 0;
-	for(int i =0; i< dist_bins*sweeps/2; i++){
+	for(uint16_t i =0; i< bins*sweeps/2; i++){
 		if (sparse_data[i] > apex){
 			apex = sparse_data[i];
 		}
 	}
 
-	float peak_threshold = 0.5f;
-	//now we set all the data below the threshold to zero
-	for(int i =0; i< dist_bins*sweeps/2; i++){
-		if (sparse_data[i] < apex*peak_threshold){
-			sparse_data[i] = 0;
-		}
-	}
 	
-	// dump_data('T');
+	
+	
 	
 	//the center of mass of the image need to be computed
 	float mass = 0;
 	float weights_d = 0; 
 	float weights_s = 0;
 	
-	for(int i = 0; i<dist_bins*sweeps/2; i++){
+	for(int i = 0; i<bins*sweeps/2; i++){
 		mass += sparse_data[i];
-		weights_d += (float)sparse_data[i]* (float)(i%dist_bins);
-		weights_s += (float)sparse_data[i]* (float)(i/dist_bins);	
+		weights_d += (float)sparse_data[i]* (float)(i%bins);
+		weights_s += (float)sparse_data[i]* (float)(i/bins);	
 
 	}
 	

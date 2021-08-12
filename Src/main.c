@@ -174,7 +174,7 @@ int main(void)
 
   /* Infinite loop */
   EnableBootLoader();
-  printf("build at %s %s\n", __DATE__, __TIME__);
+  
   // Delay in order to handle rampup of voltage from buck converter
   HAL_Delay(10);
   /* This loop will be the run execution loop */
