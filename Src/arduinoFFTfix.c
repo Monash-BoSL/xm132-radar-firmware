@@ -92,7 +92,7 @@ float fftRangeScaling(int16_t *vReal, uint16_t samples)
 			max = -vReal[i];
 		}
 	}
-	float scaler = 256.0/max;
+	float scaler = 256.0f/max;
 	
 	for(int i =0; i<(samples);i++){
 		vReal[i] = (int16_t) (vReal[i] * scaler);

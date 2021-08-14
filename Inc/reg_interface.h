@@ -11,6 +11,13 @@
 
 #define UART_BUFF 32
 
+#define CONVKER 9//must be odd
+
+
+#if CONVKER % 2 != 1
+	#error CONVKER must be odd
+#endif
+
 uint32_t GENERAL_REGISTERS[0x13];
 uint32_t OUTPUT_BUFFER_LENGTH;
 uint32_t SERVICE_REGISTERS[0x23];
@@ -29,6 +36,11 @@ uint16_t sweeps;
 uint16_t bins;
 uint32_t bufflen;
 uint32_t bufflen_far;
+
+float stdev;
+float kernel[CONVKER];
+float convstack[CONVKER];
+
 
 acc_hal_t 							radar_hal;
 acc_service_configuration_t 		sparse_config;
@@ -55,6 +67,7 @@ void RegInt_parsecmd(void);
 void send_byte_ln(uint8_t);
 uint8_t get_byte(uint32_t, uint8_t );
 uint32_t roundUp(uint32_t, uint32_t );
+uint32_t roundDown(uint32_t, uint32_t );
 
 void rss_control(uint32_t);
 void initRSS(void);
@@ -66,6 +79,14 @@ void printf_metadata(acc_service_sparse_metadata_t);
 void activateService(void);
 void stopService(void);
 void sparseMeasure(void);
+
+
+void makekernel(void);
+void convolve1d(uint16_t, uint8_t);
+uint16_t getdata(int16_t, int16_t);
+void setdata(int16_t, int16_t, uint16_t);
+void stackSet(void);
+float stackPush(float);
 void evalData(void);
 
 int8_t data_malloc(void);

@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #define cbi(sfr, bit)   (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit)   (_SFR_BYTE(sfr) |= _BV(bit))
@@ -532,6 +533,97 @@ void filldata(uint8_t far){
 	}	
 }
 
+void makekernel(void){
+	float norm = 0;
+	for(uint16_t i = 0; i < CONVKER; i++){
+		float t = (i - (CONVKER-1)/2)/(stdev);
+		t = -t*t/2;
+		kernel[i] =  expf(t);
+		norm += kernel[i];
+	}
+	float sclfact = 1/norm;
+	for(uint16_t i = 0; i < CONVKER; i++){
+		kernel[i] *= sclfact;
+	}
+}
+
+void convolve1d(uint16_t indx, uint8_t dir){
+	stackSet();
+	uint8_t cent = (CONVKER-1)/2;
+	if(dir == 0){	
+		// stackSet();
+		if(indx >= bins){
+			printf("bin too great to convolve\n");
+			return;
+		}
+		for(int i = 0; i< sweeps/2 + CONVKER-2; i++){
+			float sum = 0.0f;
+			float pop = 0.0f;
+			for(int j = 0; j < CONVKER; j++){
+				sum += kernel[j]*getdata(i-j+cent, indx);
+			}
+			pop = stackPush(sum);
+			setdata(i-cent, indx, pop);
+		}
+		//setdata(0, 0);
+
+	}else{
+		// stackSet();
+		if(indx >= sweeps){
+			printf("sweep too great to convolve\n");
+			return;
+		}
+		for(int i = 0; i< bins + CONVKER-2; i++){
+			float sum = 0.0f;
+			float pop = 0.0f;
+			for(int j = 0; j < CONVKER; j++){
+				sum += kernel[j]*getdata(indx, i-j+cent);
+			}
+			pop = stackPush(sum);
+			setdata(indx, i-cent, pop);
+		}
+		//setdata(0, 0);	
+	}
+	return;
+}
+
+
+uint16_t getdata(int16_t sweep, int16_t bin){
+	if(
+		(sweep >= 0) && (sweep < sweeps) &&
+		(bin >= 0) && (bin < bins)
+	){
+		return data[sweep][bin];
+	}else{
+		return 0;
+	}
+}
+
+void setdata(int16_t sweep, int16_t bin, uint16_t val){
+	if(
+		(sweep >= 0) && (sweep < sweeps) &&
+		(bin >= 0) && (bin < bins)
+	){
+		data[sweep][bin] = val;
+	}
+}
+
+void stackSet(void){
+	for(int i = 0; i < CONVKER; i++){
+	convstack[i] = 0.0f;
+	}
+}
+
+float stackPush(float val){
+	float popped = convstack[0];
+	for(int i = 0; i < CONVKER-1; i++){
+	convstack[i] = convstack[i+1];
+	}
+	convstack[(CONVKER-1)/2 -1] = val;
+	return popped;
+}
+
+
 void evalData(void){
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
@@ -544,6 +636,7 @@ void evalData(void){
 	float velocity;
 	float distance;
 	float amplitude;
+	float meansqdist;
 
 
 	printf("st eval\n");
@@ -579,6 +672,7 @@ void evalData(void){
 		
 		//Compute FFT
 		scales[i] = fftRangeScaling(real, sweeps);
+		// PRINT((uint32_t)(scales[i]*1000.0f));
 		fftWindowing(real, sweeps, FFT_FORWARD);
 		fftCompute(real, imag, sweeps, FFT_FORWARD);
 		fftComplexToMagnitude(real, imag, sweeps);
@@ -603,7 +697,7 @@ void evalData(void){
 			
 		}
 	}
-
+	// PRINT((uint32_t)(min_scale*1000.0f));
 	
 	//now just multiply each row by the relevant scaling factor
 	for(uint16_t i =0; i<bins; i++){
@@ -612,42 +706,83 @@ void evalData(void){
 			data[j][i] *= scaling_factor;
 		}
 	}
-	return;
+	
 	// dump_data('F');
 	
+	//gaussian filter, seperably calulated
+	stdev = 1;
+	makekernel();
 	
-	
-	
+	for(uint16_t i = 0; i < bins; i++){
+		convolve1d(i,0);
+	}
+	for(uint16_t j = 0; j < sweeps/2; j++){
+		convolve1d(j,1);
+	}
+		
 	//now we find the maximum value in the data
 	uint16_t apex = 0;
-	for(uint16_t i =0; i< bins*sweeps/2; i++){
-		if (sparse_data[i] > apex){
-			apex = sparse_data[i];
-		}
+	uint8_t mbin = 0;
+	uint8_t msweep = 0;
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+			if(data[j][i] > apex){
+				apex = data[j][i];
+				mbin = i;
+				msweep = j;
+			}
 	}
-
+	}
 	
-	
+	PRINT(mbin);
+	PRINT(msweep);
+	meansqdist = 0.0f;
+	float mass = 0.0f;
+	//calulate the mean square distance from peak where the DC has been subtracted
+	for(int16_t i = 0; i<bins; i++){
+	for(int16_t j = 0; j<sweeps/2; j++){
+			mass += data[j][i];
+	}
+	}
+	float dccmp = mass/(bins*sweeps/2);
+	for(int16_t i = 0; i<bins; i++){
+	for(int16_t j = 0; j<sweeps/2; j++){
+			uint32_t dist = (abs(j-msweep) + abs(i-mbin));
+			meansqdist += (float)abs(data[j][i]-dccmp)*(float)(dist);
+	}
+	}
+	meansqdist /= mass;
 	
 	
 	//the center of mass of the image need to be computed
-	float mass = 0;
-	float weights_d = 0; 
-	float weights_s = 0;
-	
-	for(int i = 0; i<bins*sweeps/2; i++){
-		mass += sparse_data[i];
-		weights_d += (float)sparse_data[i]* (float)(i%bins);
-		weights_s += (float)sparse_data[i]* (float)(i/bins);	
-
+	mass = 0.0f;
+	float weight_d = 0.0f; 
+	float weight_s = 0.0f;
+	uint8_t r = 2;
+	for(int16_t i = mbin-r; i<=mbin+r; i++){
+	for(int16_t j = msweep-r; j<=msweep+r; j++){
+			mass += getdata(j,i);
+			weight_d += (float)getdata(j,i)*(float)i;
+			weight_s += (float)getdata(j,i)*(float)j;
 	}
+	}
+		
+	weight_d /= mass;
+	weight_s /= mass;
 	
-	weights_d /= mass;
-	weights_s /= mass;
+	distance = dist_res*weight_d + dist_start;	//converts data to distance (mm)
+	velocity = weight_s * (float)(sweep_rate/sweeps) * 2.445f; //converts data to velocity (mm/s)
+	amplitude = apex/min_scale;
 	
-	distance = dist_res*weights_d + dist_start;	//converts data to distance (mm)
-	velocity = weights_s * (float)(sweep_rate/sweeps) * 2.445; //converts data to velocity (mm/s)
-	amplitude = apex*min_scale;
 	
+	
+	
+	
+	printf("RESULTS\n");
+	printf("Distance: %ld mm\n", (uint32_t)distance);
+	printf("Velocity: %ld mm\\s\n", (uint32_t)velocity);
+	printf("Amplitude: %ld arb\n", (uint32_t)amplitude);
+	printf("Mean Square Distance: %ld arb\n", (uint32_t)meansqdist);
 	printf("end eval\n");
+	return;
 }
