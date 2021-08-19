@@ -12,6 +12,7 @@
 #define sbi(sfr, bit)   (_SFR_BYTE(sfr) |= _BV(bit))
 
 #define PRINT(var)	printf("%s: %ld @%ld\n", #var, var, __LINE__)
+#define PRINTf(var)	printf("%s: %ld @%ld\n", #var, (uint32_t)(var*1000), __LINE__)
 
 extern UART_HandleTypeDef huart1;
 
@@ -26,6 +27,12 @@ void RegInt_Init(void){
 		if(i == 3){continue;}//writing to this reg controlls the RSS.
 		RegInt_setreg(i, 0);
 	}
+	RegInt_setregf(0xD4, 600, 1);//set default mean sq distance threshold
+	RegInt_setregf(0xD5, 1000, 1);//set default radius for gf kernal
+	RegInt_setregf(0xD6, 0x0000000F, 1);//set default eval mode
+	RegInt_setregf(0xD7, 0x00000002, 1);//set default radius for averaging
+	RegInt_setregf(0xD8, 500, 1);//sets theshold data zeroing
+	
 	uart_state = 0;
 	printf("reg_int rec\n");
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -37,6 +44,17 @@ uint32_t RegInt_getreg(uint8_t reg){
 	return *regptr;
 }
 
+//registers as defined in xm132 module software
+//for custom registers
+//0xD0 :: Velocity (mm/s)
+//0xD1 :: Distance (mm)
+//0xD2 :: Amplitude (arb)
+//0xD3 :: Mean Square Distance (arb)
+//0xD4 :: Mean Square Distance threshold (x1000)
+//0xD5 :: Gaussian Kernal StDev (x1000)
+//0xD6 :: Data Eval Mode
+//0xD7 :: Focus weight Radius
+//0xD8 :: Data zeroing threshold
 uint32_t* RegInt_regmap(uint8_t reg){
 	REGADRERR = -1;
 	uint32_t* ptr = &REGADRERR;
@@ -53,6 +71,9 @@ uint32_t* RegInt_regmap(uint8_t reg){
 	if (0x81 <= reg && reg <= 0x85){
 		ptr = &META_REGISTERS[reg - 0x81];
 	}	
+	if (0xD0 <= reg && reg <= 0xD8){
+		ptr = &EVAL_REGISTERS[reg - 0xD0];
+	}
 	return ptr;
 }
 
@@ -536,7 +557,7 @@ void filldata(uint8_t far){
 void makekernel(void){
 	float norm = 0;
 	for(uint16_t i = 0; i < CONVKER; i++){
-		float t = (i - (CONVKER-1)/2)/(stdev);
+		float t = (i - (CONVKER-1)/2)/(stdev_gss);
 		t = -t*t/2;
 		kernel[i] =  expf(t);
 		norm += kernel[i];
@@ -624,22 +645,7 @@ float stackPush(float val){
 }
 
 
-void evalData(void){
-	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
-	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
-	float sweep_rate = sparse_metadata.sweep_rate;
-	
-	float scales[bins];
-	int16_t real[sweeps];
-	int16_t imag[sweeps];
-	
-	float velocity;
-	float distance;
-	float amplitude;
-	float meansqdist;
-
-
-	printf("st eval\n");
+void dcdatarm(void){
 	//remove dc component
 	for(uint16_t i = 0; i<bins; i++){
 		uint32_t accumulator = 0;
@@ -654,12 +660,16 @@ void evalData(void){
 
 		}
 	}
+}
 
-	// dump_data('C');
-	printf("st fft\n");
-	//do fft on each row
+//do fft on each row of data
+float dofft(void){
+	float scales[bins];
+	int16_t real[sweeps];
+	int16_t imag[sweeps];
+	
 	for(uint16_t i = 0; i<bins; i++){
-		//note that this method of coping data to another array to do the FFT becomes less relatively memory efficient the fewer distance bins you have.
+		//note that this method of copying data to another array to do the FFT becomes less relatively memory efficient the fewer distance bins you have.
 		
 		//set real componet of FFT to data
 		for (uint16_t j = 0; j < sweeps; j++) {
@@ -687,17 +697,16 @@ void evalData(void){
 		}
 	}
 	//the data has been normalised in each row but to make meaningful comparisons we need in normalised across the entire array, we shall do this now
-	printf("end fft\n");
-	
+
 	//we will normalise by scaling everything realtive to the smallest scaling
+	
+	//first to find it
 	float min_scale = scales[0];
 	for(uint16_t i =1; i<bins; i++){
 		if (scales[i] < min_scale){
-			min_scale = scales[i];
-			
+			min_scale = scales[i];		
 		}
 	}
-	// PRINT((uint32_t)(min_scale*1000.0f));
 	
 	//now just multiply each row by the relevant scaling factor
 	for(uint16_t i =0; i<bins; i++){
@@ -706,11 +715,13 @@ void evalData(void){
 			data[j][i] *= scaling_factor;
 		}
 	}
-	
-	// dump_data('F');
-	
+	return min_scale;
+}
+
+void doconv(void){
+	stdev_gss = RegInt_getreg(0xD5)/1000.0f;
+
 	//gaussian filter, seperably calulated
-	stdev = 1;
 	makekernel();
 	
 	for(uint16_t i = 0; i < bins; i++){
@@ -719,7 +730,42 @@ void evalData(void){
 	for(uint16_t j = 0; j < sweeps/2; j++){
 		convolve1d(j,1);
 	}
-		
+}
+
+void evalData(void){
+	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
+	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
+	float sweep_rate = sparse_metadata.sweep_rate;
+	
+	float min_scale;
+	float thrstd = RegInt_getreg(0xD4)/1000.0f;
+	float thrnull = RegInt_getreg(0xD8)/1000.0f;
+	uint32_t mode = RegInt_getreg(0xD6);
+	
+	float velocity;
+	float distance;
+	float amplitude;
+	float meansqdist;
+
+	PRINT(mode);
+
+	if(mode & 0x00000001){
+	//dc removal
+	dcdatarm();
+	}
+	
+	
+	if(mode & 0x00000002){
+	//do fft on each row of data
+	min_scale = dofft();
+	}
+	
+	if(mode & 0x00000004){
+	//do convolution
+	doconv();
+	}
+	
+	if(mode & 0x00000008){
 	//now we find the maximum value in the data
 	uint16_t apex = 0;
 	uint8_t mbin = 0;
@@ -734,31 +780,44 @@ void evalData(void){
 	}
 	}
 	
+	PRINT(apex);
 	PRINT(mbin);
 	PRINT(msweep);
+	
 	meansqdist = 0.0f;
 	float mass = 0.0f;
-	//calulate the mean square distance from peak where the DC has been subtracted
+
+	uint16_t halfpex = (uint16_t)(apex * thrstd);
+	//calulate the mean square distance from peak if above half max
 	for(int16_t i = 0; i<bins; i++){
 	for(int16_t j = 0; j<sweeps/2; j++){
+		if (data[j][i] > halfpex){
 			mass += data[j][i];
+			uint32_t dist = ((j-msweep)*(j-msweep) + (i-mbin)*(i-mbin));
+			meansqdist += (float)abs(data[j][i])*(float)(dist);
+		}
 	}
 	}
-	float dccmp = mass/(bins*sweeps/2);
-	for(int16_t i = 0; i<bins; i++){
-	for(int16_t j = 0; j<sweeps/2; j++){
-			uint32_t dist = (abs(j-msweep) + abs(i-mbin));
-			meansqdist += (float)abs(data[j][i]-dccmp)*(float)(dist);
+	if(mass != 0.0f){
+		meansqdist /= mass;
 	}
-	}
-	meansqdist /= mass;
 	
+	if(mode & 0x00000010){
+		uint16_t halfpex = apex*thrnull;
+		for(uint16_t i = 0; i<bins; i++){
+		for(uint16_t j = 0; j<sweeps/2; j++){
+				if(data[j][i] > halfpex){
+					data[j][i] = 0;
+				}
+		}
+		}
+	}
 	
 	//the center of mass of the image need to be computed
 	mass = 0.0f;
 	float weight_d = 0.0f; 
 	float weight_s = 0.0f;
-	uint8_t r = 2;
+	uint8_t r = RegInt_getreg(0xD7);
 	for(int16_t i = mbin-r; i<=mbin+r; i++){
 	for(int16_t j = msweep-r; j<=msweep+r; j++){
 			mass += getdata(j,i);
@@ -766,23 +825,31 @@ void evalData(void){
 			weight_s += (float)getdata(j,i)*(float)j;
 	}
 	}
-		
-	weight_d /= mass;
-	weight_s /= mass;
-	
+	if(mass != 0.0f){	
+		weight_d /= mass;
+		weight_s /= mass;
+	}
 	distance = dist_res*weight_d + dist_start;	//converts data to distance (mm)
 	velocity = weight_s * (float)(sweep_rate/sweeps) * 2.445f; //converts data to velocity (mm/s)
+	
+	if(min_scale != 0.0f){
 	amplitude = apex/min_scale;
+	}else{
+	amplitude = 0;
+	}
 	
-	
-	
+	RegInt_setregf(0xD0,(uint32_t)velocity, 1);
+	RegInt_setregf(0xD1,(uint32_t)distance, 1);
+	RegInt_setregf(0xD2,(uint32_t)amplitude, 1);
+	RegInt_setregf(0xD3,(uint32_t)meansqdist, 1);
 	
 	
 	printf("RESULTS\n");
-	printf("Distance: %ld mm\n", (uint32_t)distance);
 	printf("Velocity: %ld mm\\s\n", (uint32_t)velocity);
+	printf("Distance: %ld mm\n", (uint32_t)distance);
 	printf("Amplitude: %ld arb\n", (uint32_t)amplitude);
 	printf("Mean Square Distance: %ld arb\n", (uint32_t)meansqdist);
-	printf("end eval\n");
+	}
+
 	return;
 }

@@ -1,3 +1,3 @@
    text	   data	    bss	    dec	    hex	filename
-  78008	    120	   7144	  85272	  14d18	out/main.elf
-  78008	    120	   7144	  85272	  14d18	(TOTALS)
+  77764	    120	   7176	  85060	  14c44	out/main.elf
+  77764	    120	   7176	  85060	  14c44	(TOTALS)

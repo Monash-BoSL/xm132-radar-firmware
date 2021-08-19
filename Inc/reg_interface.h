@@ -22,8 +22,8 @@ uint32_t GENERAL_REGISTERS[0x13];
 uint32_t OUTPUT_BUFFER_LENGTH;
 uint32_t SERVICE_REGISTERS[0x23];
 uint32_t META_REGISTERS[0x05];
+uint32_t EVAL_REGISTERS[0x09];
 uint32_t REGADRERR;
-
 
 uint8_t uart_rx_buff[UART_BUFF];
 uint8_t uart_tx_buff[UART_BUFF];
@@ -37,7 +37,7 @@ uint16_t bins;
 uint32_t bufflen;
 uint32_t bufflen_far;
 
-float stdev;
+float stdev_gss;
 float kernel[CONVKER];
 float convstack[CONVKER];
 
@@ -87,6 +87,11 @@ uint16_t getdata(int16_t, int16_t);
 void setdata(int16_t, int16_t, uint16_t);
 void stackSet(void);
 float stackPush(float);
+
+void dcdatarm(void);
+float dofft(void);
+void doconv(void);
+
 void evalData(void);
 
 int8_t data_malloc(void);
