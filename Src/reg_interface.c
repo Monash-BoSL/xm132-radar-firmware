@@ -11,8 +11,8 @@
 #define cbi(sfr, bit)   (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit)   (_SFR_BYTE(sfr) |= _BV(bit))
 
-#define PRINT(var)	printf("%s: %ld @%ld\n", #var, var, __LINE__)
-#define PRINTf(var)	printf("%s: %ld @%ld\n", #var, (uint32_t)(var*1000), __LINE__)
+#define PRINT(var)	printf("%s: %ld @%d\n", #var, (int32_t)var, __LINE__)
+#define PRINTf(var)	printf("%s: %ld @%d\n", #var, (int32_t)(var*1000), __LINE__)
 
 extern UART_HandleTypeDef huart1;
 
@@ -27,11 +27,15 @@ void RegInt_Init(void){
 		if(i == 3){continue;}//writing to this reg controlls the RSS.
 		RegInt_setreg(i, 0);
 	}
+	RegInt_setregf(0x07, 115200, 1);//set default baud rate
+	RegInt_setregf(0x10, HARDWARE_REVISION, 1);//set product identification register
+	RegInt_setregf(0x11, FIRMWARE_REVISION, 1);//set firmware revision register
 	RegInt_setregf(0xD4, 600, 1);//set default mean sq distance threshold
 	RegInt_setregf(0xD5, 1000, 1);//set default radius for gf kernal
 	RegInt_setregf(0xD6, 0x0000000F, 1);//set default eval mode
 	RegInt_setregf(0xD7, 0x00000002, 1);//set default radius for averaging
 	RegInt_setregf(0xD8, 500, 1);//sets theshold data zeroing
+	RegInt_setregf(0xD9, 0x00000000, 1);//sets no bandstop
 	
 	uart_state = 0;
 	printf("reg_int rec\n");
@@ -55,6 +59,7 @@ uint32_t RegInt_getreg(uint8_t reg){
 //0xD6 :: Data Eval Mode
 //0xD7 :: Focus weight Radius
 //0xD8 :: Data zeroing threshold
+//0xD9 :: Bandstop velocity filter
 uint32_t* RegInt_regmap(uint8_t reg){
 	REGADRERR = -1;
 	uint32_t* ptr = &REGADRERR;
@@ -71,7 +76,7 @@ uint32_t* RegInt_regmap(uint8_t reg){
 	if (0x81 <= reg && reg <= 0x85){
 		ptr = &META_REGISTERS[reg - 0x81];
 	}	
-	if (0xD0 <= reg && reg <= 0xD8){
+	if (0xD0 <= reg && reg <= 0xD9){
 		ptr = &EVAL_REGISTERS[reg - 0xD0];
 	}
 	return ptr;
@@ -91,12 +96,15 @@ void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	}
 	
 	uint32_t* regptr = RegInt_regmap(reg);
-	if (!(*regptr == -1)){
+	if (!(*regptr == (uint32_t)-1)){
 		*regptr = val;
 	}
 	//main control
 	if(reg == 0x03){
 		rss_control(val);
+	}
+	if(reg == 0x07){
+		changeUART1baud(val);
 	}
 }
 
@@ -189,7 +197,7 @@ void RegInt_parsecmd(void){
 		// queue_cmd_end = far_active ? 2 : 1;
 		queue_cmd_end = 1;
 		printf("queue_cmd_end: %d\n",queue_cmd_end);
-		HAL_UART_Transmit_IT(&huart1, *data, datalen);
+		HAL_UART_Transmit_IT(&huart1, (uint8_t*) *data, datalen);
 	}
 	uart_state = 0;
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -229,6 +237,12 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 		uint8_t end = 0xCD;
 		HAL_UART_Transmit_IT(&huart1, &end, 1);
 	}
+}
+
+void changeUART1baud(uint32_t baudrate){
+	HAL_UART_DeInit(&huart1);
+	MX_USART1_UART_Init(baudrate);
+	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
 }
 
 void send_byte_ln(uint8_t byte){
@@ -280,6 +294,8 @@ void rss_control(uint32_t val){
 
 void initRSS(void){
 	printf("build at %s %s\n", __DATE__, __TIME__);
+	printf("of firmware revision: %d.%d.%d\n", get_byte(FIRMWARE_REVISION,2),get_byte(FIRMWARE_REVISION,1),get_byte(FIRMWARE_REVISION,0) );
+	printf("for hardware revision: %d.%d.%d\n", get_byte(HARDWARE_REVISION,2),get_byte(HARDWARE_REVISION,1),get_byte(HARDWARE_REVISION,0) );
 	
 	radar_hal = *acc_hal_integration_get_implementation();
 	
@@ -502,6 +518,7 @@ void stopService(void){
 	}
 	
 }
+
 
 void sparseMeasure(void){
 		//something about a periodic interrupt timer. 
@@ -732,6 +749,16 @@ void doconv(void){
 	}
 }
 
+//mode
+/*
+Bit.
+1.	dc removal
+2.	do fft
+3.	do convolution
+4.	get velocity
+5.	null below threshold
+6.	bandstop
+*/
 void evalData(void){
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
@@ -741,6 +768,7 @@ void evalData(void){
 	float thrstd = RegInt_getreg(0xD4)/1000.0f;
 	float thrnull = RegInt_getreg(0xD8)/1000.0f;
 	uint32_t mode = RegInt_getreg(0xD6);
+	uint32_t band_filt = RegInt_getreg(0xD9);
 	
 	float velocity;
 	float distance;
@@ -759,6 +787,19 @@ void evalData(void){
 	//do fft on each row of data
 	min_scale = dofft();
 	}
+	
+	
+	//bandstop filter
+	if(mode & 0x00000020){	
+		for(uint16_t j = 0; j<sweeps/2; j++){
+		if(band_filt & (1<<j)){
+			for(uint16_t i = 0; i<bins; i++){
+					data[j][i] = 0;
+			}
+		}
+		}	
+	}
+	
 	
 	if(mode & 0x00000004){
 	//do convolution

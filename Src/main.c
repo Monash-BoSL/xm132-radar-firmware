@@ -75,7 +75,7 @@ static void MX_DMA_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
-static void MX_USART1_UART_Init(void);
+void MX_USART1_UART_Init(uint32_t);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -166,7 +166,7 @@ int main(void)
   MX_I2C1_Init();
   MX_RTC_Init();
   MX_SPI1_Init();
-  MX_USART1_UART_Init();
+  MX_USART1_UART_Init(115200);
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
@@ -192,7 +192,7 @@ int main(void)
   {
 	//interrupt wake
     RegInt_parsecmd();
-	HAL_Delay(20);
+	HAL_Delay(2);
 	//check usart command
 	
 	//run command
@@ -444,7 +444,7 @@ static void MX_SPI1_Init(void)
   * @param None
   * @retval None
   */
-static void MX_USART1_UART_Init(void)
+void MX_USART1_UART_Init(uint32_t baudrate)
 {
 
   /* USER CODE BEGIN USART1_Init 0 */
@@ -455,7 +455,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = baudrate;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;

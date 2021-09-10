@@ -7,6 +7,9 @@
 #include "acc_service.h"
 #include "acc_service_sparse.h"
 
+#define HARDWARE_REVISION 0xBF010000 //0x BF MM II PP -> BoSL Firmware MM.II.PP
+#define FIRMWARE_REVISION 0xBD010100 //0x BD MM II PP -> BoSL Device MM.II.PP
+
 
 
 #define UART_BUFF 32
@@ -22,7 +25,7 @@ uint32_t GENERAL_REGISTERS[0x13];
 uint32_t OUTPUT_BUFFER_LENGTH;
 uint32_t SERVICE_REGISTERS[0x23];
 uint32_t META_REGISTERS[0x05];
-uint32_t EVAL_REGISTERS[0x09];
+uint32_t EVAL_REGISTERS[0x10];
 uint32_t REGADRERR;
 
 uint8_t uart_rx_buff[UART_BUFF];
@@ -63,6 +66,8 @@ void Reg_regand(uint8_t, uint32_t);
 void Reg_regor(uint8_t, uint32_t);
 void Reg_store_metadata(acc_service_sparse_metadata_t);
 void RegInt_parsecmd(void);
+
+void changeUART1baud(uint32_t);
 
 void send_byte_ln(uint8_t);
 uint8_t get_byte(uint32_t, uint8_t );
