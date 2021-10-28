@@ -120,11 +120,15 @@ void Reg_regor(uint8_t reg, uint32_t orbits){
 	RegInt_setregf(reg, flags, 1);
 }
 
-void Reg_store_metadata(acc_service_sparse_metadata_t metadata){
+void Reg_store_metadata(acc_service_sparse_metadata_t metadata, acc_service_sparse_metadata_t* metadata_far_ptr){
 
 	RegInt_setregf(0x81, (uint32_t)(metadata.start_m * 1000.0f),1);
 	RegInt_setregf(0x82, (uint32_t)(metadata.length_m * 1000.0f),1);
-	RegInt_setregf(0x83, (uint32_t)(metadata.data_length),1);
+	uint32_t bufflen = metadata.data_length;
+	if(metadata_far_ptr != NULL){
+		bufflen += (*metadata_far_ptr).data_length;
+	}
+	RegInt_setregf(0x83, bufflen ,1);
 	RegInt_setregf(0x84, (uint32_t)(metadata.sweep_rate * 1000.0f),1);
 	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1000.0f),1);
 }
@@ -167,26 +171,28 @@ void RegInt_parsecmd(void){
 		uart_tx_buff[9] = 0xCD;
 		HAL_UART_Transmit_IT(&huart1, uart_tx_buff, 10);
 //buffer dump
-	}else if (uart_rx_buff[0] == 0xFA && uart_rx_buff[1] == 0xE8 && cmd_length == 3){
+	}else if (uart_rx_buff[0] == 0xFA && ((uart_rx_buff[1] == 0xE8) || (uart_rx_buff[1] == 0xE9)) && cmd_length == 3){
 		uint8_t offst_h = 0;
 		uint8_t offst_l = 0;
 		offst_l = uart_rx_buff[2];
 		offst_h = uart_rx_buff[3];
 		uint16_t offst = (offst_h << 8) | offst_l;
-		//maybe we can do this offset thing at some later time
-		//i dont really need it so i'll just leave it here to be
-		//implemented when needed.
 
 		bufflen = (sparse_metadata.data_length)*sizeof(uint16_t);
 		bufflen_far = (sparse_metadata_far.data_length)*sizeof(uint16_t);
-		//uint32_t datalen = far_active ? (bufflen+bufflen_far+1) : (bufflen+1);
-		uint32_t datalen = sweeps*bins*sizeof(uint16_t);
+	
+		uint32_t datalen;
+		if(uart_rx_buff[1] == 0xE8){
+		datalen = sweeps*bins*sizeof(uint16_t);
+		}else{
+		datalen = 128*sizeof(uint16_t);
+		}
 		
 		uart_tx_buff[0] = 0xCC;
 		uart_tx_buff[1] = get_byte(datalen+1,0);
 		uart_tx_buff[2] = get_byte(datalen+1,1);
 		uart_tx_buff[3] = 0xF7;
-		uart_tx_buff[4] = 0xE8;
+		uart_tx_buff[4] = uart_rx_buff[1];
 		
 		printf("buff dump\n");
 		printf("datalen: %ld\n",datalen);
@@ -194,10 +200,9 @@ void RegInt_parsecmd(void){
 		printf("bufflenfar: %ld\n",bufflen_far);
 		
 		HAL_UART_Transmit(&huart1, uart_tx_buff, 5, 10);
-		// queue_cmd_end = far_active ? 2 : 1;
 		queue_cmd_end = 1;
 		printf("queue_cmd_end: %d\n",queue_cmd_end);
-		HAL_UART_Transmit_IT(&huart1, (uint8_t*) *data, datalen);
+		HAL_UART_Transmit_IT(&huart1, ((uint8_t*) *data + offst), datalen);
 	}
 	uart_state = 0;
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -398,7 +403,7 @@ int8_t createService(void){
 			Reg_regor(0x06, 0x0000001);
 		}
 
-		Reg_store_metadata(sparse_metadata);
+		Reg_store_metadata(sparse_metadata, NULL);
 		//this does not work with active far enabled
 		
 		printf_metadata(sparse_metadata);
@@ -415,7 +420,7 @@ int8_t createService(void){
 		acc_service_sparse_get_metadata(sparse_handle_far, &sparse_metadata_far);
 		if(data_malloc() == -1){stopService();}
 		
-		Reg_store_metadata(sparse_metadata_far);
+		Reg_store_metadata(sparse_metadata, &sparse_metadata_far);
 		//this does not work with active far.
 		Reg_regor(0x06, 0x0000001);
 		

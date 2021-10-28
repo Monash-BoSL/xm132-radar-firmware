@@ -8,7 +8,7 @@
 #include "acc_service_sparse.h"
 
 #define HARDWARE_REVISION 0xBF010000 //0x BF MM II PP -> BoSL Firmware MM.II.PP
-#define FIRMWARE_REVISION 0xBD010100 //0x BD MM II PP -> BoSL Device MM.II.PP
+#define FIRMWARE_REVISION 0xBD010201 //0x BD MM II PP -> BoSL Device MM.II.PP
 
 
 
@@ -64,7 +64,7 @@ void RegInt_setreg(uint8_t, uint32_t);
 void RegInt_setregf(uint8_t, uint32_t, uint8_t);
 void Reg_regand(uint8_t, uint32_t);
 void Reg_regor(uint8_t, uint32_t);
-void Reg_store_metadata(acc_service_sparse_metadata_t);
+void Reg_store_metadata(acc_service_sparse_metadata_t, acc_service_sparse_metadata_t*);
 void RegInt_parsecmd(void);
 
 void changeUART1baud(uint32_t);
