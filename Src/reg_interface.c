@@ -4,6 +4,8 @@
 #include "stm32g0xx_it.h"
 #include "stm32g0xx_hal.h"
 
+#include "main.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -214,18 +216,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		if (uart_rx_buff[0] == 0xCC){
 			uart_state = 1;
 			cmd_length = 0;
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 2);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 2);
 		}else{
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 		}
 	}else if (uart_state == 1){
 		cmd_length = (uart_rx_buff[0]) | (uart_rx_buff[1] << 8);
 		uart_state = 3;
 		if (cmd_length +2 > UART_BUFF){
 			uart_state = 0;
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 		}
-		HAL_UART_Receive_IT(&huart1, uart_rx_buff, 2 + cmd_length);
+		HAL_UART_Receive_IT(huart, uart_rx_buff, 2 + cmd_length);
 	}else if (uart_state == 3){
 		uart_state = 4;
 		//HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
@@ -240,7 +242,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 	}else if(queue_cmd_end == 1){
 		queue_cmd_end = 0;
 		uint8_t end = 0xCD;
-		HAL_UART_Transmit_IT(&huart1, &end, 1);
+		HAL_UART_Transmit_IT(huart, &end, 1);
 	}
 }
 
@@ -769,7 +771,7 @@ void evalData(void){
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;
 	
-	float min_scale;
+	float min_scale = 1;
 	float thrstd = RegInt_getreg(0xD4)/1000.0f;
 	float thrnull = RegInt_getreg(0xD8)/1000.0f;
 	uint32_t mode = RegInt_getreg(0xD6);
