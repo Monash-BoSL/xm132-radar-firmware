@@ -9,7 +9,7 @@ TOOLS_LD         := $(TOOLS_PREFIX)gcc
 
 TARGET_ARCHITECTURE := cm0
 
-CFLAGS += -mcpu=cortex-m0plus -mthumb -march=armv6-m -DTARGET_ARCH_cm0 -std=c99 -pedantic -Wall -Werror -Wextra -Wdouble-promotion -Wstrict-prototypes -Wcast-qual -Wmissing-prototypes -Winit-self -Wpointer-arith -MMD -MP -Os -g -fno-math-errno -ffunction-sections -fdata-sections -flto -ffat-lto-objects -DACC_SQRTF=__ieee754_sqrtf
+CFLAGS += -mcpu=cortex-m0plus -mthumb -march=armv6-m -DTARGET_ARCH_cm0 -std=c99 -pedantic -Wall -Werror -Wextra -Wdouble-promotion -Wstrict-prototypes -Wcast-qual -Wmissing-prototypes -Winit-self -Wpointer-arith -Wno-unused-function -MMD -MP -Os -g -fno-math-errno -ffunction-sections -fdata-sections -flto -ffat-lto-objects -DACC_SQRTF=__ieee754_sqrtf
 
 # Override optimization level
 ifneq ($(ACC_CFG_OPTIM_LEVEL),)

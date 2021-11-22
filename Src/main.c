@@ -28,7 +28,7 @@
 
 #include "acc_integration.h"
 
-
+#include "reg_interface.h"
 
 
 
@@ -227,8 +227,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -238,19 +237,21 @@ int main(void)
     HAL_Delay(10);
 
 
-  pin_state_t state = GetPinState(GPIOB, GPIO_PIN_13);
-  printf("PB13: %s\n", state == PIN_STATE_LOW ? "LOW" : state == PIN_STATE_HIGH ? "HIGH" : "FLOAT");
-
-
-
-
-    acconeer_main(0, NULL);
-
-
+    RegInt_Init();
+    initRSS();
 
     while (1)
-      ;
-  }
+    {
+        //interrupt wake
+        RegInt_parsecmd();
+        HAL_Delay(2);
+        //check usart command
+
+        //run command
+
+        //sleep
+
+    }
   /* USER CODE END 3 */
 }
 
