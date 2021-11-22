@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "acc_definitions.h"
+#include "acc_definitions_common.h"
 
 
 /**
@@ -69,7 +69,7 @@ typedef void (*acc_os_mem_free_function_t)(void *);
 
 
 /**
- * @brief Definition of a time retrival function
+ * @brief Definition of a time retrieval function
  *
  * The time returned must be in milliseconds.
  *
@@ -166,6 +166,7 @@ typedef struct
 	acc_hal_get_frequency_function_t             get_reference_frequency;
 } acc_rss_integration_sensor_device_t;
 
+
 /**
  * @}
  */
@@ -218,19 +219,6 @@ typedef struct
 
 
 /**
- * @brief This enum represents the different log levels for RSS
- */
-typedef enum
-{
-	ACC_LOG_LEVEL_ERROR,
-	ACC_LOG_LEVEL_WARNING,
-	ACC_LOG_LEVEL_INFO,
-	ACC_LOG_LEVEL_VERBOSE,
-	ACC_LOG_LEVEL_DEBUG
-} acc_log_level_t;
-
-
-/**
  * @brief Definition of a log function
  */
 typedef void (*acc_log_function_t)(acc_log_level_t level, const char *module, const char *format, ...);
@@ -276,6 +264,4 @@ typedef struct
 /**
  * @}
  */
-
-
 #endif

@@ -6,7 +6,8 @@
 
 #include <stdbool.h>
 
-#include "acc_definitions.h"
+#include "acc_definitions_a111.h"
+#include "acc_definitions_common.h"
 #include "acc_hal_definitions.h"
 
 
@@ -23,7 +24,7 @@
  * @brief Activate the Acconeer Radar System Software, RSS
  *
  * A HAL struct containing integration functions (such as 'wait_for_interrupt', 'mem_alloc' and 'log')
- * needed by RSS must first be populated and then sent in. See 'acc_definitions.h' for a full list
+ * needed by RSS must first be populated and then sent in. See 'acc_definitions_common.h' for a full list
  * of functions needed.
  *
  * This function must be called before any other RSS function. If it is not, or it failed,

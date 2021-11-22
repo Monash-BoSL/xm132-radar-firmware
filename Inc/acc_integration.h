@@ -9,20 +9,6 @@
 #include <stdlib.h>
 
 
-typedef uint32_t acc_integration_thread_id_t;
-
-struct acc_integration_thread_handle;
-
-typedef struct acc_integration_thread_handle *acc_integration_thread_handle_t;
-
-struct acc_integration_mutex;
-
-typedef struct acc_integration_mutex *acc_integration_mutex_t;
-
-struct acc_integration_semaphore;
-
-typedef struct acc_integration_semaphore *acc_integration_semaphore_t;
-
 typedef void (*acc_integration_uart_read_func_t)(uint8_t data, uint32_t status);
 
 

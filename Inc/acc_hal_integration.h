@@ -4,7 +4,7 @@
 #ifndef ACC_HAL_INTEGRATION_H_
 #define ACC_HAL_INTEGRATION_H_
 
-#include "acc_definitions.h"
+#include "acc_definitions_common.h"
 #include "acc_hal_definitions.h"
 
 

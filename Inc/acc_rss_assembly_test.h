@@ -4,7 +4,7 @@
 #ifndef ACC_RSS_ASSEMBLY_TEST_H_
 #define ACC_RSS_ASSEMBLY_TEST_H_
 
-#include "acc_definitions.h"
+#include "acc_definitions_common.h"
 #include <stdbool.h>
 
 
@@ -76,11 +76,27 @@ acc_sensor_id_t acc_rss_assembly_test_configuration_sensor_get(acc_rss_assembly_
 
 
 /**
+ * @brief Enable the sensor communication read test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_communication_read_test_enable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
  * @brief Disable the sensor communication read test
  *
  * @param[in] configuration An assembly test configuration
  */
 void acc_rss_assembly_test_configuration_communication_read_test_disable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
+ * @brief Enable the sensor communication write and read test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_communication_write_read_test_enable(acc_rss_assembly_test_configuration_t configuration);
 
 
 /**
@@ -92,11 +108,27 @@ void acc_rss_assembly_test_configuration_communication_write_read_test_disable(a
 
 
 /**
+ * @brief Enalbe the sensor communication interrupt test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_communication_interrupt_test_enable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
  * @brief Disable the sensor communication interrupt test
  *
  * @param[in] configuration An assembly test configuration
  */
 void acc_rss_assembly_test_configuration_communication_interrupt_test_disable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
+ * @brief Enable the sensor communication hibernate test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_communication_hibernate_test_enable(acc_rss_assembly_test_configuration_t configuration);
 
 
 /**
@@ -108,6 +140,14 @@ void acc_rss_assembly_test_configuration_communication_hibernate_test_disable(ac
 
 
 /**
+ * @brief Enable the supply test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_supply_test_enable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
  * @brief Disable the supply test
  *
  * @param[in] configuration An assembly test configuration
@@ -116,11 +156,27 @@ void acc_rss_assembly_test_configuration_supply_test_disable(acc_rss_assembly_te
 
 
 /**
+ * @brief Enable the clock test
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_clock_test_enable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
  * @brief Disable the clock test
  *
  * @param[in] configuration An assembly test configuration
  */
 void acc_rss_assembly_test_configuration_clock_test_disable(acc_rss_assembly_test_configuration_t configuration);
+
+
+/**
+ * @brief Disable all tests
+ *
+ * @param[in] configuration An assembly test configuration
+ */
+void acc_rss_assembly_test_configuration_all_tests_disable(acc_rss_assembly_test_configuration_t configuration);
 
 
 /**

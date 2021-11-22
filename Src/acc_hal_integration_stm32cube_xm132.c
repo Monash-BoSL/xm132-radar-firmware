@@ -12,10 +12,11 @@
 
 #include "main.h"
 
-#include "acc_definitions.h"
+#include "acc_definitions_common.h"
 #include "acc_hal_definitions.h"
 #include "acc_hal_integration.h"
 #include "acc_integration.h"
+#include "acc_integration_log.h"
 
 /* spi handle */
 extern SPI_HandleTypeDef A111_SPI_HANDLE;
@@ -24,11 +25,6 @@ extern SPI_HandleTypeDef A111_SPI_HANDLE;
  * @brief The number of sensors available on the board
  */
 #define SENSOR_COUNT 1
-
-/**
- * @brief Max buffer size for the RSS logging
- */
-#define LOG_BUFFER_MAX_SIZE 150
 
 /**
  * @brief Size of SPI transfer buffer
@@ -42,11 +38,6 @@ extern SPI_HandleTypeDef A111_SPI_HANDLE;
  * @brief The reference frequency used by this board
  */
 #define ACC_BOARD_REF_FREQ 24000000
-
-/**
- * @brief Format for the RSS logging
- */
-#define LOG_FORMAT "%02u:%02u:%02u.%03u (%c) (%s): %s\n"
 
 
 static inline void disable_interrupts(void)
@@ -148,6 +139,36 @@ static void acc_hal_integration_sensor_power_off(acc_sensor_id_t sensor_id)
 }
 
 
+static bool acc_hal_integration_wait_for_sensor_interrupt(acc_sensor_id_t sensor_id, uint32_t timeout_ms)
+{
+	(void)sensor_id; // Ignore parameter sensor_id
+
+	const uint32_t wait_begin_ms = HAL_GetTick();
+	while ((HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) != GPIO_PIN_SET) &&
+	       (HAL_GetTick() - wait_begin_ms < timeout_ms))
+	{
+		// Wait for the GPIO interrupt
+		disable_interrupts();
+		// Check again so that IRQ did not occur
+		if (HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) != GPIO_PIN_SET)
+		{
+			__WFI();
+		}
+
+		// Enable interrupts again to allow pending interrupt to be handled
+		enable_interrupts();
+	}
+
+	return HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) == GPIO_PIN_SET;
+}
+
+
+static float acc_hal_integration_get_reference_frequency(void)
+{
+	return ACC_BOARD_REF_FREQ;
+}
+
+
 static void pulse_hibernate_pin(uint32_t nbr_pulses)
 {
 	for (uint32_t i = 0; i < nbr_pulses; i++)
@@ -190,75 +211,6 @@ static void acc_hal_integration_sensor_hibernate_exit(acc_sensor_id_t sensor_id)
 }
 
 
-static bool acc_hal_integration_wait_for_sensor_interrupt(acc_sensor_id_t sensor_id, uint32_t timeout_ms)
-{
-	(void)sensor_id; // Ignore parameter sensor_id
-
-	const uint32_t wait_begin_ms = HAL_GetTick();
-	while ((HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) != GPIO_PIN_SET) &&
-	       (HAL_GetTick() - wait_begin_ms < timeout_ms))
-	{
-		// Wait for the GPIO interrupt
-		disable_interrupts();
-		// Check again so that IRQ did not occur
-		if (HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) != GPIO_PIN_SET)
-		{
-			__WFI();
-		}
-
-		// Enable interrupts again to allow pending interrupt to be handled
-		enable_interrupts();
-	}
-
-	return HAL_GPIO_ReadPin(A111_SENSOR_INTERRUPT_GPIO_Port, A111_SENSOR_INTERRUPT_Pin) == GPIO_PIN_SET;
-}
-
-
-static float acc_hal_integration_get_reference_frequency(void)
-{
-	return ACC_BOARD_REF_FREQ;
-}
-
-
-static uint32_t acc_hal_integration_get_current_time(void)
-{
-	return HAL_GetTick();
-}
-
-
-static void acc_hal_integration_log(acc_log_level_t level, const char *module, const char *format, ...)
-{
-	char    log_buffer[LOG_BUFFER_MAX_SIZE];
-	va_list ap;
-
-	va_start(ap, format);
-
-	int ret = vsnprintf(log_buffer, LOG_BUFFER_MAX_SIZE, format, ap);
-	if (ret >= LOG_BUFFER_MAX_SIZE)
-	{
-		log_buffer[LOG_BUFFER_MAX_SIZE - 4] = '.';
-		log_buffer[LOG_BUFFER_MAX_SIZE - 3] = '.';
-		log_buffer[LOG_BUFFER_MAX_SIZE - 2] = '.';
-		log_buffer[LOG_BUFFER_MAX_SIZE - 1] = 0;
-	}
-
-	uint32_t time_ms = acc_hal_integration_get_current_time();
-	char     level_ch;
-
-	unsigned int timestamp    = time_ms;
-	unsigned int hours        = timestamp / 1000 / 60 / 60;
-	unsigned int minutes      = timestamp / 1000 / 60 % 60;
-	unsigned int seconds      = timestamp / 1000 % 60;
-	unsigned int milliseconds = timestamp % 1000;
-
-	level_ch = (level <= ACC_LOG_LEVEL_DEBUG) ? "EWIVD"[level] : '?';
-
-	printf(LOG_FORMAT, hours, minutes, seconds, milliseconds, level_ch, module, log_buffer);
-
-	va_end(ap);
-}
-
-
 static const acc_hal_t hal =
 {
 	.properties.sensor_count          = SENSOR_COUNT,
@@ -274,10 +226,10 @@ static const acc_hal_t hal =
 
 	.os.mem_alloc = malloc,
 	.os.mem_free  = free,
-	.os.gettime   = acc_hal_integration_get_current_time,
+	.os.gettime   = acc_integration_get_time,
 
 	.log.log_level = ACC_LOG_LEVEL_INFO,
-	.log.log       = acc_hal_integration_log
+	.log.log       = acc_integration_log
 };
 
 

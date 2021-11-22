@@ -10,7 +10,7 @@ $(eval .PHONY: $(1)) \
 $(eval $(1): $(OUT_DIR)/$(1).elf $(OUT_DIR)/$(1).hex) \
 $(eval $(OUT_DIR)/$(1).elf: $(OBJECTS) $(EXTRA_OBJECTS) $(BUILD_LIBS) | $$(OUT_DIR)
 	@echo "Linking $$@"
-	$$(SUPPRESS)$$(TOOLS_LD) -Wl,-Map=$$(basename $$@).map $$(LDFLAGS) $$^ $$(LDLIBS) -o $$@
+	$$(SUPPRESS)$$(TOOLS_LD) -Wl,-Map=$$(basename $$@).map $$(LDFLAGS) $(OBJECTS) $(EXTRA_OBJECTS) $$(LDLIBS) -o $$@
 	$$(SUPPRESS)$$(TOOLS_OBJDUMP) -h -S $$@ > $$(basename $$@).list
 	$$(SUPPRESS)$$(TOOLS_OBJCOPY) -O binary -S $$@ $$(basename $$@).bin
 	$$(SUPPRESS)$$(TOOLS_SIZE) -t $$@ > $$(basename $$@)_size.txt) \

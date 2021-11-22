@@ -166,8 +166,8 @@ void acc_service_sparse_sampling_mode_set(acc_service_configuration_t service_co
  * Gets the downsampling factor - the number of steps taken between each data point. A downsampling factor of 1 samples
  * every possible point in the range. A downsampling factor of 2 samples every other point, and so on.
  *
- * In the sparse service, the base step length is ~6cm. Thus, for example setting downsampling factor to 3 makes
- * the distance between two points in the measured range ~18cm.
+ * In the sparse service, the base step length is ~6cm. Thus, for example setting downsampling factor to 4 makes
+ * the distance between two points in the measured range ~24cm.
  *
  * @param[in] service_configuration The configuration to get downsampling factor from
  * @return The downsampling factor
@@ -181,10 +181,10 @@ uint16_t acc_service_sparse_downsampling_factor_get(acc_service_configuration_t 
  * Sets the downsampling factor - the number of steps taken between each data point. A downsampling factor of 1 samples
  * every possible point in the range. A downsampling factor of 2 samples every other point, and so on.
  *
- * In the sparse service, the base step length is ~6cm. Thus, for example setting downsampling factor to 3 makes
- * the distance between two points in the measured range ~18cm.
+ * In the sparse service, the base step length is ~6cm. Thus, for example setting downsampling factor to 4 makes
+ * the distance between two points in the measured range ~24cm.
  *
- * The sparse service supports setting an arbitrary downsampling factor of at least 1.
+ * The sparse service supports setting the downsampling factor to 1, 2, 4, or 8.
  *
  * @param[in] service_configuration The configuration to set downsampling factor in
  * @param[in] downsampling_factor The downsampling factor

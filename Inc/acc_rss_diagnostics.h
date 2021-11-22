@@ -4,7 +4,7 @@
 #ifndef ACC_RSS_DIAGNOSTICS_H_
 #define ACC_RSS_DIAGNOSTICS_H_
 
-#include "acc_definitions.h"
+#include "acc_definitions_common.h"
 #include <stdbool.h>
 
 

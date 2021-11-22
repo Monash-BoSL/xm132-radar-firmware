@@ -8,8 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "acc_service.h"
-
+#include "acc_definitions_a111.h"
+#include "acc_definitions_common.h"
 
 /**
  * @defgroup Presence Presence Detector

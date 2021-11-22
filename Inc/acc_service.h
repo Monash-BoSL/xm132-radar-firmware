@@ -7,7 +7,8 @@
 #include <stdbool.h>
 
 #include "acc_base_configuration.h"
-#include "acc_definitions.h"
+#include "acc_definitions_a111.h"
+#include "acc_definitions_common.h"
 
 /**
  * @defgroup Services Services
@@ -17,7 +18,7 @@
  * @defgroup Experimental Experimental
  * @brief Features in an early version
  *
- *          In our code you might encounter features tagged “experimental”.
+ *          In our code you might encounter features tagged “Experimental”.
  *          This means that the feature in question is an early version that has a
  *          limited test scope, and the API and/or functionality might change in
  *          upcoming releases.
@@ -373,8 +374,10 @@ void acc_service_maximize_signal_attenuation_set(acc_service_configuration_t ser
                                                  bool                        maximize_signal_attenuation);
 
 
-/** @ingroup Experimental
+/**
  * @brief Set the maximum unambiguous range
+ *
+ * Experimental.
  *
  * Sets the maximum unambiguous range (MUR), which in turn sets the maximum measurable
  * distance (MMD). A higher setting gives a larger MUR/MMD, but comes at a cost of
@@ -386,7 +389,7 @@ void acc_service_maximize_signal_attenuation_set(acc_service_configuration_t ser
  * The MUR is the maximum distance at which an object can be located to guarantee
  * that its reflection corresponds to the most recent transmitted pulse. Objects
  * farther away than the MUR may fold into the measured range. For example,
- * with a MUR of 10 m, an object at 12 m could become visible at 2 m.
+ * with a MUR of 11.5 m, an object at 13.5 m could become visible at 2 m.
  *
  * This setting changes the pulse repetition frequency (PRF) of the radar system.
  * The relation between PRF and MUR is
@@ -398,10 +401,7 @@ void acc_service_maximize_signal_attenuation_set(acc_service_configuration_t ser
  * | ACC_SERVICE_MUR_6 | 11.5 m |  7.0 m | 13.0 MHz |
  * | ACC_SERVICE_MUR_9 | 17.3 m | 12.7 m |  8.7 MHz |
  *
- * It is only possible to change the default mur when using the envelope or power bins
- * services.
- *
- * This is an experimental feature.
+ * It is not possible to change MUR for the IQ service.
  *
  * @param[in] service_configuration The configuration
  * @param[in] max_unambiguous_range The desired maximum unambiguous range
@@ -410,12 +410,12 @@ void acc_service_mur_set(acc_service_configuration_t service_configuration,
                          acc_service_mur_t           max_unambiguous_range);
 
 
-/** @ingroup Experimental
+/**
  * @brief Get the maximum unambiguous range
  *
- * This gets the maximum unambiguous range. For more information see acc_service_mur_set().
+ * Experimental.
  *
- * This is an experimental feature.
+ * This gets the maximum unambiguous range. For more information see acc_service_mur_set().
  *
  * @param[in] service_configuration The configuration
  * @return Maximum unambiguous range
