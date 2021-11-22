@@ -7,7 +7,7 @@
 #include "acc_service.h"
 #include "acc_service_sparse.h"
 
-#define FIRMWARE_REVISION 0xBF010201 //0x BF MM II PP -> BoSL Firmware MM.II.PP
+#define FIRMWARE_REVISION 0xBF010300 //0x BF MM II PP -> BoSL Firmware MM.II.PP
 #define HARDWARE_REVISION 0xBD010100 //0x BD MM II PP -> BoSL Device MM.II.PP
 
 

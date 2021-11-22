@@ -221,6 +221,7 @@ int main(void)
   MX_SPI1_Init();
   MX_USART1_UART_Init(115200);
   MX_USART2_UART_Init();
+
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -241,15 +242,16 @@ int main(void)
     initRSS();
 
     while (1)
-    {
-        //interrupt wake
+    {      
+        //parse_command
         RegInt_parsecmd();
-        HAL_Delay(2);
-        //check usart command
-
-        //run command
-
+        
         //sleep
+        HAL_SuspendTick(); //1.23947
+        HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFE);
+        HAL_ResumeTick();
+        
+        // HAL_Delay(1);//1.2834
 
     }
   /* USER CODE END 3 */

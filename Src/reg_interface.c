@@ -136,6 +136,7 @@ void Reg_store_metadata(acc_service_sparse_metadata_t metadata, acc_service_spar
 }
 
 void RegInt_parsecmd(void){
+    
 	if (uart_state != 4){return;}
 //read	
 	if (uart_rx_buff[0] == 0xF8 && cmd_length == 1){
@@ -230,7 +231,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		HAL_UART_Receive_IT(huart, uart_rx_buff, 2 + cmd_length);
 	}else if (uart_state == 3){
 		uart_state = 4;
-		//HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+		//HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 	}
 
 }
@@ -238,7 +239,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 	if (queue_cmd_end == 2){
 		queue_cmd_end = 1;
-		//HAL_UART_Transmit_IT(&huart1, sparse_data_far, bufflen_far);
+		//HAL_UART_Transmit_IT(huart, sparse_data_far, bufflen_far);
 	}else if(queue_cmd_end == 1){
 		queue_cmd_end = 0;
 		uint8_t end = 0xCD;
