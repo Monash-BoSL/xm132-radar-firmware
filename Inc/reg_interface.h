@@ -75,6 +75,7 @@ uint32_t roundUp(uint32_t, uint32_t );
 uint32_t roundDown(uint32_t, uint32_t );
 
 void rss_control(uint32_t);
+void sleepMCU(uint32_t);
 void initRSS(void);
 
 void updateConfig(acc_service_configuration_t, uint16_t, uint16_t);

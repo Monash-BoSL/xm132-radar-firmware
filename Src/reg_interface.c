@@ -30,6 +30,7 @@ void RegInt_Init(void){
 		RegInt_setreg(i, 0);
 	}
 	RegInt_setregf(0x07, 115200, 1);//set default baud rate
+	RegInt_setregf(0x0A, 0, 1);//set default baud rate
 	RegInt_setregf(0x10, HARDWARE_REVISION, 1);//set product identification register
 	RegInt_setregf(0x11, FIRMWARE_REVISION, 1);//set firmware revision register
 	RegInt_setregf(0xD4, 600, 1);//set default mean sq distance threshold
@@ -107,6 +108,9 @@ void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	}
 	if(reg == 0x07){
 		changeUART1baud(val);
+	}
+    if(reg == 0x0A){
+		sleepMCU(val);
 	}
 }
 
@@ -245,6 +249,29 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 		uint8_t end = 0xCD;
 		HAL_UART_Transmit_IT(huart, &end, 1);
 	}
+}
+
+void sleepMCU(uint32_t mode){
+    if(mode == 0x00000000){return;}
+    if(mode == 0x00000001){    
+        stopService();
+        
+        printf("sleeping\n");
+        
+        
+        HAL_SuspendTick();
+        HAL_PWR_DisableSleepOnExit();
+        HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFE);
+        SystemClock_Config();
+        HAL_ResumeTick();
+        uint32_t baudrate = RegInt_getreg(0x07);
+        changeUART1baud(baudrate);
+        
+        printf("wake\n");
+        
+    }
+    RegInt_setregf(0x0A,0x00000000,1);
+    return;
 }
 
 void changeUART1baud(uint32_t baudrate){
