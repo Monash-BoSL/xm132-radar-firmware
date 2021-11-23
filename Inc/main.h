@@ -54,7 +54,8 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-
+void SystemClock_Config(void);
+void MX_USART1_UART_Init(uint32_t);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

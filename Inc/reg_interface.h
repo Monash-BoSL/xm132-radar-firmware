@@ -7,8 +7,8 @@
 #include "acc_service.h"
 #include "acc_service_sparse.h"
 
-#define HARDWARE_REVISION 0xBF010000 //0x BF MM II PP -> BoSL Firmware MM.II.PP
-#define FIRMWARE_REVISION 0xBD010201 //0x BD MM II PP -> BoSL Device MM.II.PP
+#define FIRMWARE_REVISION 0xBF010300 //0x BF MM II PP -> BoSL Firmware MM.II.PP
+#define HARDWARE_REVISION 0xBD010100 //0x BD MM II PP -> BoSL Device MM.II.PP
 
 
 
@@ -75,6 +75,7 @@ uint32_t roundUp(uint32_t, uint32_t );
 uint32_t roundDown(uint32_t, uint32_t );
 
 void rss_control(uint32_t);
+void sleepMCU(uint32_t);
 void initRSS(void);
 
 void updateConfig(acc_service_configuration_t, uint16_t, uint16_t);

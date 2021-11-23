@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "reg_interface.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -28,6 +27,8 @@
 #include <stdio.h>
 
 #include "acc_integration.h"
+
+#include "reg_interface.h"
 
 
 
@@ -42,8 +43,15 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+typedef enum {
+  PIN_STATE_LOW,
+  PIN_STATE_HIGH,
+  PIN_STATE_FLOATING,
+} pin_state_t;
 
-// extern bool acconeer_example(void);
+
+
+extern int acconeer_main(int argc, char *argv[]);
 
 /* USER CODE END PD */
 
@@ -69,13 +77,13 @@ DMA_HandleTypeDef hdma_usart1_rx;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
+
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
-void MX_USART1_UART_Init(uint32_t);
+
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -131,6 +139,51 @@ static void EnableBootLoader(void)
   printf("BOOT0 enable failed\n");
 }
 
+
+static pin_state_t GetPinState(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+  pin_state_t pin_state = PIN_STATE_FLOATING;
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitStruct.Pin = GPIO_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+
+  // Delay in order to stabilize
+  HAL_Delay(1);
+  GPIO_PinState Pin_Pullup = HAL_GPIO_ReadPin(GPIOx, GPIO_Pin);
+
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+
+  // Delay in order to stabilize
+  HAL_Delay(1);
+  GPIO_PinState Pin_Pulldown = HAL_GPIO_ReadPin(GPIOx, GPIO_Pin);
+
+  if ((Pin_Pulldown == GPIO_PIN_RESET) && (Pin_Pullup == GPIO_PIN_RESET))
+  {
+    // Pin is low with both pull-up and and pull-down which means that it is tied to GND
+    pin_state = PIN_STATE_LOW;
+  }
+  else if ((Pin_Pulldown == GPIO_PIN_SET) && (Pin_Pullup == GPIO_PIN_SET))
+  {
+    // Pin is high with both pull-up and and pull-down which means that it is tied to VIO
+    pin_state = PIN_STATE_HIGH;
+  }
+
+  // Configure to analog in order to minimize power consumtion
+  HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+
+  return pin_state;
+}
+
+
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -168,38 +221,39 @@ int main(void)
   MX_SPI1_Init();
   MX_USART1_UART_Init(115200);
   MX_USART2_UART_Init();
+
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
-  EnableBootLoader();
-  
-  // Delay in order to handle rampup of voltage from buck converter
-  HAL_Delay(10);
-  /* This loop will be the run execution loop */
-  RegInt_Init();
-  initRSS();
-  
-  //gauge free mem with this function
-  // // for(int k = 0; k < 0x0F; k++){
-	// // uint32_t ptr = malloc(0x1000);
-	// // printf("mem allocation: 0x%08X\n", ptr);
-  // // }
-  // // while(1);
-  
-  while (1)
-  {
-	//interrupt wake
-    RegInt_parsecmd();
-	HAL_Delay(2);
-	//check usart command
-	
-	//run command
+  /* USER CODE BEGIN WHILE */
 
-	//sleep
-	
-  }
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    EnableBootLoader();
+
+    // Delay in order to handle rampup of voltage from buck converter
+    HAL_Delay(10);
+
+
+    RegInt_Init();
+    initRSS();
+
+    while (1)
+    {      
+        //parse_command
+        RegInt_parsecmd();
+        
+        //sleep
+        HAL_SuspendTick(); //1.23947
+        HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFE);
+        HAL_ResumeTick();
+        
+        // HAL_Delay(1);//1.2834
+
+    }
   /* USER CODE END 3 */
 }
 

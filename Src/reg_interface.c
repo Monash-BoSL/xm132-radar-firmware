@@ -4,6 +4,8 @@
 #include "stm32g0xx_it.h"
 #include "stm32g0xx_hal.h"
 
+#include "main.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -28,6 +30,7 @@ void RegInt_Init(void){
 		RegInt_setreg(i, 0);
 	}
 	RegInt_setregf(0x07, 115200, 1);//set default baud rate
+	RegInt_setregf(0x0A, 0, 1);//set default baud rate
 	RegInt_setregf(0x10, HARDWARE_REVISION, 1);//set product identification register
 	RegInt_setregf(0x11, FIRMWARE_REVISION, 1);//set firmware revision register
 	RegInt_setregf(0xD4, 600, 1);//set default mean sq distance threshold
@@ -106,6 +109,9 @@ void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	if(reg == 0x07){
 		changeUART1baud(val);
 	}
+    if(reg == 0x0A){
+		sleepMCU(val);
+	}
 }
 
 void Reg_regand(uint8_t reg, uint32_t andbits){
@@ -134,6 +140,7 @@ void Reg_store_metadata(acc_service_sparse_metadata_t metadata, acc_service_spar
 }
 
 void RegInt_parsecmd(void){
+    
 	if (uart_state != 4){return;}
 //read	
 	if (uart_rx_buff[0] == 0xF8 && cmd_length == 1){
@@ -214,21 +221,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		if (uart_rx_buff[0] == 0xCC){
 			uart_state = 1;
 			cmd_length = 0;
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 2);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 2);
 		}else{
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 		}
 	}else if (uart_state == 1){
 		cmd_length = (uart_rx_buff[0]) | (uart_rx_buff[1] << 8);
 		uart_state = 3;
 		if (cmd_length +2 > UART_BUFF){
 			uart_state = 0;
-			HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+			HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 		}
-		HAL_UART_Receive_IT(&huart1, uart_rx_buff, 2 + cmd_length);
+		HAL_UART_Receive_IT(huart, uart_rx_buff, 2 + cmd_length);
 	}else if (uart_state == 3){
 		uart_state = 4;
-		//HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
+		//HAL_UART_Receive_IT(huart, uart_rx_buff, 1);
 	}
 
 }
@@ -236,12 +243,35 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 	if (queue_cmd_end == 2){
 		queue_cmd_end = 1;
-		//HAL_UART_Transmit_IT(&huart1, sparse_data_far, bufflen_far);
+		//HAL_UART_Transmit_IT(huart, sparse_data_far, bufflen_far);
 	}else if(queue_cmd_end == 1){
 		queue_cmd_end = 0;
 		uint8_t end = 0xCD;
-		HAL_UART_Transmit_IT(&huart1, &end, 1);
+		HAL_UART_Transmit_IT(huart, &end, 1);
 	}
+}
+
+void sleepMCU(uint32_t mode){
+    if(mode == 0x00000000){return;}
+    if(mode == 0x00000001){    
+        stopService();
+        
+        printf("sleeping\n");
+        
+        
+        HAL_SuspendTick();
+        HAL_PWR_DisableSleepOnExit();
+        HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFE);
+        SystemClock_Config();
+        HAL_ResumeTick();
+        uint32_t baudrate = RegInt_getreg(0x07);
+        changeUART1baud(baudrate);
+        
+        printf("wake\n");
+        
+    }
+    RegInt_setregf(0x0A,0x00000000,1);
+    return;
 }
 
 void changeUART1baud(uint32_t baudrate){
@@ -769,7 +799,7 @@ void evalData(void){
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;
 	
-	float min_scale;
+	float min_scale = 1;
 	float thrstd = RegInt_getreg(0xD4)/1000.0f;
 	float thrnull = RegInt_getreg(0xD8)/1000.0f;
 	uint32_t mode = RegInt_getreg(0xD6);

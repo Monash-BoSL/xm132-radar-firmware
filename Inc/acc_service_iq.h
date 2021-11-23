@@ -65,7 +65,7 @@ typedef struct
 	bool data_saturated;
 	/** Indication of bad data quality that may be addressed by restarting the service to recalibrate the sensor */
 	bool data_quality_warning;
-	/** Power bin with information close to the sensor. Experimental */
+	/** Power bin with information close to the sensor. Experimental. */
 	uint16_t proximity_power;
 } acc_service_iq_result_info_t;
 
@@ -192,8 +192,10 @@ bool acc_service_iq_noise_level_normalization_get(acc_service_configuration_t se
 void acc_service_iq_noise_level_normalization_set(acc_service_configuration_t service_configuration, bool noise_level_normalization);
 
 
-/** @ingroup Experimental
+/**
  * @brief Get if power bin with information close to the sensor is enabled
+ *
+ * Experimental.
  *
  * This function controls enabling of a power bin with information close to the sensor
  *
@@ -203,8 +205,10 @@ void acc_service_iq_noise_level_normalization_set(acc_service_configuration_t se
 bool acc_service_iq_proximity_power_get(acc_service_configuration_t service_configuration);
 
 
-/** @ingroup Experimental
+/**
  * @brief Set to enable of a power bin with information close to the sensor
+ *
+ * Experimental.
  *
  * This function controls enabling of a power bin with information close to the sensor
  *

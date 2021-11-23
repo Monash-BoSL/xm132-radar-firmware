@@ -7,7 +7,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "acc_definitions.h"
+#include "acc_definitions_a111.h"
+#include "acc_definitions_common.h"
 
 
 /**

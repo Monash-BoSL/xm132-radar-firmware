@@ -8,7 +8,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "acc_definitions.h"
+#include "acc_definitions_a111.h"
+#include "acc_definitions_common.h"
 
 
 /**
@@ -796,8 +797,10 @@ void acc_detector_distance_configuration_service_data_callback_set(
 	acc_detector_distance_service_data_callback_t service_data_callback);
 
 
-/** @ingroup Experimental
+/**
  * @brief Set the maximum unambiguous range
+ *
+ * Experimental.
  *
  * See acc_service_mur_set() for more detailed information.
  *
@@ -808,8 +811,10 @@ void acc_detector_distance_configuration_mur_set(acc_detector_distance_configura
                                                  acc_service_mur_t                     max_unambiguous_range);
 
 
-/** @ingroup Experimental
+/**
  * @brief Get the maximum unambiguous range
+ *
+ * Experimental.
  *
  * See acc_service_mur_get() for more detailed information.
  *
