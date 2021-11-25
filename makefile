@@ -51,7 +51,8 @@ RSS_INTEGRATION_FILES := \
 SOURCES_MAIN := \
     main.c \
     reg_interface.c \
-    arduinoFFTfix.c 
+    arduinoFFTfix.c \
+    util.c
     
 _SOURCES := $(STM32_CUBE_INTEGRATION_FILES) $(STM32_CUBE_GENERATED_FILES) $(RSS_INTEGRATION_FILES)
 

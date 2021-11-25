@@ -28,6 +28,7 @@
 
 #include "acc_integration.h"
 
+#include "util.h"
 #include "reg_interface.h"
 
 

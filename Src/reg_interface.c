@@ -5,16 +5,13 @@
 #include "stm32g0xx_hal.h"
 
 #include "main.h"
+#include "util.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#define cbi(sfr, bit)   (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit)   (_SFR_BYTE(sfr) |= _BV(bit))
 
-#define PRINT(var)	printf("%s: %ld @%d\n", #var, (int32_t)var, __LINE__)
-#define PRINTf(var)	printf("%s: %ld @%d\n", #var, (int32_t)(var*1000), __LINE__)
 
 extern UART_HandleTypeDef huart1;
 
@@ -41,9 +38,9 @@ void RegInt_Init(void){
 	RegInt_setregf(0xD9, 0x00000000, 1);//sets no bandstop
 	
 	uart_state = 0;
-	printf("reg_int rec\n");
+
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
-	printf("reg_int success\n");
+	DBG_PRINTLN("Registers Initialised");
 }
 
 uint32_t RegInt_getreg(uint8_t reg){
@@ -89,20 +86,26 @@ void RegInt_setreg(uint8_t reg, uint32_t val){
 	RegInt_setregf(reg, val, 0);
 }
 
-void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
-	if(!force){
-	uint8_t read_only_addr[10] = {0x06, 0x10, 0x11, 0x12, 0x81, 0x82,0x83,0x84,0x85, 0xE9}; //please have this list be ordered.
+int8_t RegInt_writeable(uint8_t reg){
+    //if service is activeated lock mode
+    if(reg == 0x02){
+        if(RegInt_getreg(0x06) || 0x00000001){
+            return 0;
+        }
+    }
+    
+    //read only addresses
+    uint8_t read_only_addr[10] = {0x06, 0x10, 0x11, 0x12, 0x81, 0x82,0x83,0x84,0x85, 0xE9}; //please have this list be ordered.
 	for(uint8_t i = 0; i < 10; i++){
-		if (reg == read_only_addr[i]){return;}
+		if (reg == read_only_addr[i]){return 0;}
 		if (reg < read_only_addr[i]){break;}
 	}
-	}
-	
-	uint32_t* regptr = RegInt_regmap(reg);
-	if (!(*regptr == (uint32_t)-1)){
-		*regptr = val;
-	}
-	//main control
+    
+    return 1;
+}
+
+void RegInt_regaction(uint8_t reg, uint32_t val){
+    //main control
 	if(reg == 0x03){
 		rss_control(val);
 	}
@@ -112,6 +115,19 @@ void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
     if(reg == 0x0A){
 		sleepMCU(val);
 	}
+}
+
+void RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
+	if(!force){
+        if (!RegInt_writeable(reg)){return;}
+	}
+    
+	uint32_t* regptr = RegInt_regmap(reg);
+	if (!(*regptr == (uint32_t)-1)){
+		*regptr = val;
+	}
+    
+    RegInt_regaction(reg, val);
 }
 
 void Reg_regand(uint8_t reg, uint32_t andbits){
@@ -126,7 +142,17 @@ void Reg_regor(uint8_t reg, uint32_t orbits){
 	RegInt_setregf(reg, flags, 1);
 }
 
-void Reg_store_metadata(acc_service_sparse_metadata_t metadata, acc_service_sparse_metadata_t* metadata_far_ptr){
+void Reg_store_envelope_metadata(acc_service_envelope_metadata_t metadata){
+    
+	RegInt_setregf(0x81, (uint32_t)(metadata.start_m * 1000.0f),1);
+	RegInt_setregf(0x82, (uint32_t)(metadata.length_m * 1000.0f),1);
+	RegInt_setregf(0x83, (uint32_t)metadata.data_length ,1);
+	RegInt_setregf(0x84, (uint32_t)metadata.stitch_count,1);
+	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1000.0f),1);
+   
+}
+
+void Reg_store_sparse_metadata(acc_service_sparse_metadata_t metadata, acc_service_sparse_metadata_t* metadata_far_ptr){
 
 	RegInt_setregf(0x81, (uint32_t)(metadata.start_m * 1000.0f),1);
 	RegInt_setregf(0x82, (uint32_t)(metadata.length_m * 1000.0f),1);
@@ -201,14 +227,14 @@ void RegInt_parsecmd(void){
 		uart_tx_buff[3] = 0xF7;
 		uart_tx_buff[4] = uart_rx_buff[1];
 		
-		printf("buff dump\n");
-		printf("datalen: %ld\n",datalen);
-		printf("bufflen: %ld\n",bufflen);
-		printf("bufflenfar: %ld\n",bufflen_far);
+		DBG_PRINTLN("buffer transmitt");
+		DBG_PRINTINT(datalen);
+		DBG_PRINTINT(bufflen);
+		DBG_PRINTINT(bufflen_far);
 		
 		HAL_UART_Transmit(&huart1, uart_tx_buff, 5, 10);
 		queue_cmd_end = 1;
-		printf("queue_cmd_end: %d\n",queue_cmd_end);
+		DBG_PRINTINT(queue_cmd_end);
 		HAL_UART_Transmit_IT(&huart1, ((uint8_t*) *data + offst), datalen);
 	}
 	uart_state = 0;
@@ -256,7 +282,7 @@ void sleepMCU(uint32_t mode){
     if(mode == 0x00000001){    
         stopService();
         
-        printf("sleeping\n");
+        INF_PRINTLN("STM32 Sleep");
         
         
         HAL_SuspendTick();
@@ -267,7 +293,7 @@ void sleepMCU(uint32_t mode){
         uint32_t baudrate = RegInt_getreg(0x07);
         changeUART1baud(baudrate);
         
-        printf("wake\n");
+        INF_PRINTLN("STM32 Wake");
         
     }
     RegInt_setregf(0x0A,0x00000000,1);
@@ -280,39 +306,7 @@ void changeUART1baud(uint32_t baudrate){
 	HAL_UART_Receive_IT(&huart1, uart_rx_buff, 1);
 }
 
-void send_byte_ln(uint8_t byte){
-	uint8_t nl = '\n';
-	HAL_UART_Transmit(&huart1, &byte, 1, 1000);	
-	HAL_UART_Transmit(&huart1, &nl, 1, 1000);	
-}
 
-uint8_t get_byte(uint32_t val, uint8_t byte){
-	return (val & (0xFFL << (8*byte))) >> (8*byte);
-}
-
-uint32_t roundUp(uint32_t numToRound, uint32_t multiple)
-{
-    if (multiple == 0)
-        return numToRound;
-
-    uint32_t remainder = numToRound % multiple;
-    if (remainder == 0)
-        return numToRound;
-
-    return numToRound + multiple - remainder;
-}
-
-uint32_t roundDown(uint32_t numToRound, uint32_t multiple)
-{
-    if (multiple == 0)
-        return numToRound;
-
-    uint32_t remainder = numToRound % multiple;
-    if (remainder == 0)
-        return numToRound;
-
-    return numToRound - remainder;
-}
 
 void rss_control(uint32_t val){
 	if (val == 0x00){stopService();}
@@ -328,16 +322,16 @@ void rss_control(uint32_t val){
 
 
 void initRSS(void){
-	printf("build at %s %s\n", __DATE__, __TIME__);
-	printf("of firmware revision: %d.%d.%d\n", get_byte(FIRMWARE_REVISION,2),get_byte(FIRMWARE_REVISION,1),get_byte(FIRMWARE_REVISION,0) );
-	printf("for hardware revision: %d.%d.%d\n", get_byte(HARDWARE_REVISION,2),get_byte(HARDWARE_REVISION,1),get_byte(HARDWARE_REVISION,0) );
+	INF_PRINTLN("build at %s %s", __DATE__, __TIME__);
+	INF_PRINTLN("of firmware revision: %d.%d.%d", get_byte(FIRMWARE_REVISION,2),get_byte(FIRMWARE_REVISION,1),get_byte(FIRMWARE_REVISION,0) );
+	INF_PRINTLN("for hardware revision: %d.%d.%d", get_byte(HARDWARE_REVISION,2),get_byte(HARDWARE_REVISION,1),get_byte(HARDWARE_REVISION,0) );
 	
 	radar_hal = *acc_hal_integration_get_implementation();
 	
 	if (!acc_rss_activate(&radar_hal))
 	{
 		/* handle error */
-		printf("rssfail @%d\n", __LINE__);
+		ERR_PRINTLN("RSS activation fail");
 	}
 	acc_rss_override_sensor_id_check_at_creation(true);
 	
@@ -346,7 +340,7 @@ void initRSS(void){
 	if (sparse_config == NULL)
 	{
 		/* Handle error */
-		printf("config @%d\n", __LINE__);
+		ERR_PRINTLN("sparse config creation fail");
 	}
 	
 	sparse_config_far = acc_service_sparse_configuration_create();
@@ -354,12 +348,20 @@ void initRSS(void){
 	if (sparse_config_far == NULL)
 	{
 		/* Handle error */
-		printf("config @%d\n", __LINE__);
+		ERR_PRINTLN("far sparse config creation fail");
+	}
+    
+    envelope_config = acc_service_envelope_configuration_create();
+ 
+	if (envelope_config == NULL)
+	{
+		/* Handle error */
+		printf("envelope config creation fail");
 	}
 
 }
 
-void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint16_t sweep_length){
+void updateSparseConfig(acc_service_configuration_t config, uint16_t sweep_start, uint16_t sweep_length){
 	
 	acc_service_profile_set(config, RegInt_getreg(0x28));
 	
@@ -371,11 +373,9 @@ void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint
 	}else{
 		/* error handle */
 	}
-	
-	acc_service_sparse_downsampling_factor_set(config, RegInt_getreg(0x29));
-	
-	acc_service_hw_accelerated_average_samples_set(config, RegInt_getreg(0x30));
-	
+
+    acc_service_tx_disable_set(config, RegInt_getreg(0x26));
+		
 	acc_service_power_save_mode_set(config, RegInt_getreg(0x25));
 	
 	acc_service_asynchronous_measurement_set(config,RegInt_getreg(0x33));
@@ -387,6 +387,8 @@ void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint
 	acc_service_receiver_gain_set (config, (float)RegInt_getreg(0x24)/1000.0f);
 	
 	acc_service_hw_accelerated_average_samples_set (config, RegInt_getreg(0x30));
+    
+    acc_service_maximize_signal_attenuation_set (config, RegInt_getreg(0x32));
 	
 	acc_service_sparse_configuration_sweeps_per_frame_set (config, RegInt_getreg(0x40));
 	
@@ -395,81 +397,160 @@ void updateConfig(acc_service_configuration_t config, uint16_t sweep_start, uint
 	acc_service_sparse_sampling_mode_set (config, RegInt_getreg(0x42));
 	
 	acc_service_sparse_downsampling_factor_set (config, RegInt_getreg(0x29));
+			
+}
+
+void updateEnvelopeConfig(acc_service_configuration_t config){
+    
+    acc_service_profile_set(config, RegInt_getreg(0x28));
 	
+	uint32_t rep_mode = RegInt_getreg(0x22); 
+	if(rep_mode == 0x01){
+		acc_service_repetition_mode_streaming_set(config, ((float)RegInt_getreg(0x23))/1000.0f);
+	}else if (rep_mode == 0x02){
+		acc_service_repetition_mode_on_demand_set(config);
+	}else{
+		/* error handle */
+	}
+	
+    acc_service_tx_disable_set(config, RegInt_getreg(0x26));
+    
+	acc_service_envelope_downsampling_factor_set(config, RegInt_getreg(0x29));
+		
+	acc_service_power_save_mode_set(config, RegInt_getreg(0x25));
+	
+	acc_service_asynchronous_measurement_set(config,RegInt_getreg(0x33));
+	
+	acc_service_requested_start_set (config, (float)RegInt_getreg(0x20)/1000.0f);
+	
+	acc_service_requested_length_set (config, (float)RegInt_getreg(0x21)/1000.0f);
+	
+	acc_service_receiver_gain_set (config, (float)RegInt_getreg(0x24)/1000.0f);
+	
+	acc_service_hw_accelerated_average_samples_set (config, RegInt_getreg(0x30));
+    
+    acc_service_envelope_noise_level_normalization_set (config, RegInt_getreg(0x31));
+    
+    acc_service_maximize_signal_attenuation_set (config, RegInt_getreg(0x32));
+    
+    acc_service_mur_set (config, RegInt_getreg(0x34));
+	
+	acc_service_envelope_running_average_factor_set(config, (float)RegInt_getreg(0x40)/1000.0f);
+    
 }
 
 int8_t createService(void){
+    uint32_t service_type = RegInt_getreg(0x02);
+    int8_t success;
+    if(service_type == 0x02){success = createEnvelopeService();}
+    else if(service_type == 0x04){success = createSparseService();}
+    else {Reg_regor(0x06, 0x0040000); return 0;}
+    
+    if(success){
+        Reg_regor(0x06, 0x00000001);
+        return 1;
+    }else{
+        Reg_regor(0x06, 0x00080000);
+        return 0;
+    }
+}
+
+int8_t createEnvelopeService(void){
+    updateEnvelopeConfig(envelope_config);
+    
+   	envelope_handle = acc_service_create(envelope_config);	
+	
+	if (envelope_handle == NULL){//handles error
+		ERR_PRINTLN("envelope service creation failed");
+		return 0;
+	}else{
+		acc_service_envelope_get_metadata(envelope_handle, &envelope_metadata);
+		
+        if(envelope_data_malloc() == -1){stopService();}
+
+		Reg_store_envelope_metadata(envelope_metadata);
+		//this does not work with active far enabled
+		
+		printf_envelope_metadata(envelope_metadata);
+	}
+	return 1;
+}
+
+int8_t createSparseService(void){
 	uint32_t start_reg = roundDown(RegInt_getreg(0x20),60);
 	uint32_t len_reg = roundDown(RegInt_getreg(0x21),60);
 	if (len_reg < 1891){
 		far_active = 0;
-		updateConfig(sparse_config,start_reg, len_reg);
+        DBG_PRINTLN("updating sparse config");
+		updateSparseConfig(sparse_config,start_reg, len_reg);
 		//single service will do
 	}else if (len_reg < 3811){
 		far_active = 1;
-		printf("updating sparse config\n");
-		updateConfig(sparse_config,start_reg, 1890);
-		printf("updating sparse far config\n");
+		DBG_PRINTLN("updating sparse config");
+		updateSparseConfig(sparse_config,start_reg, 1890);
+		DBG_PRINTLN("updating sparse far config");
 		int16_t far_len; 
 		far_len = (len_reg > 1920) ? len_reg-1920 : 1; 
-		PRINT(far_len);
-		updateConfig(sparse_config_far,start_reg+1920,far_len);
-		printf("done updating config\n");
+		DBG_PRINTINT(far_len);
+		updateSparseConfig(sparse_config_far,start_reg+1920,far_len);
 	}else{
-		Reg_regor(0x06, 0x00080000);
-		printf("creation failed (too long)\n");
+		ERR_PRINTLN("sparse service creation failed (too long)");
 		return 0;
 	}
 	sparse_handle = acc_service_create(sparse_config);	
 	
 	if (sparse_handle == NULL){//handles error
-		Reg_regor(0x06, 0x00080000);
-		printf("creation failed\n");
+		ERR_PRINTLN("sparse service creation fail");
 		return 0;
 	}else{
 		acc_service_sparse_get_metadata(sparse_handle, &sparse_metadata);
 		if(!far_active){
-			if(data_malloc() == -1){stopService();}
-			Reg_regor(0x06, 0x0000001);
+			if(sparse_data_malloc() == -1){stopService();}
 		}
 
-		Reg_store_metadata(sparse_metadata, NULL);
-		//this does not work with active far enabled
+		Reg_store_sparse_metadata(sparse_metadata, NULL);
 		
-		printf_metadata(sparse_metadata);
+		printf_sparse_metadata(sparse_metadata);
 	}
 	
 	if(far_active){
 	sparse_handle_far = acc_service_create(sparse_config_far);
 	
 	if (sparse_handle_far == NULL){//handles error		
-		Reg_regor(0x06, 0x00080000);
-		printf("creation failed\n");
+		ERR_PRINTLN("sparse far service creation fail");
 		return 0;
 	}else{
 		acc_service_sparse_get_metadata(sparse_handle_far, &sparse_metadata_far);
-		if(data_malloc() == -1){stopService();}
+		if(sparse_data_malloc() == -1){stopService();}
 		
-		Reg_store_metadata(sparse_metadata, &sparse_metadata_far);
-		//this does not work with active far.
-		Reg_regor(0x06, 0x0000001);
-		
-		printf_metadata(sparse_metadata_far);
+		Reg_store_sparse_metadata(sparse_metadata, &sparse_metadata_far);
+        
+		printf_sparse_metadata(sparse_metadata_far);
 	}
 	}
 	return 1;
 }
 
-int8_t data_malloc(void){
-	//this creates data array where data[i][j] is the i-th sweep and the j-th distance bin.
+int8_t envelope_data_malloc(void){
+    bins = envelope_metadata.data_length;
+    return data_malloc(1,bins);
+}
+
+int8_t sparse_data_malloc(void){
 	sweeps = acc_service_sparse_configuration_sweeps_per_frame_get (sparse_config);
 	
 	bins = sparse_metadata.data_length/sweeps;
 	if(far_active){
 		bins += sparse_metadata_far.data_length/sweeps;
 	}
-	printf("malloc sweeps: %d\n", sweeps);
-	printf("malloc bins: %d\n", bins);
+	return data_malloc(sweeps,bins);
+}
+
+
+int8_t data_malloc(uint16_t sweeps, uint16_t bins){
+	//this creates data array where data[i][j] is the i-th sweep and the j-th distance bin.
+	DBG_PRINTLN("malloc sweeps: %d", sweeps);
+	DBG_PRINTLN("malloc bins: %d", bins);
 	
 	uint32_t len = 0;
 	uint16_t r=sweeps, c=bins;//r: sweeps, c: bins
@@ -479,11 +560,11 @@ int8_t data_malloc(void){
     data = (uint16_t **)malloc(len);
  
 	if (data == NULL){
-		printf("data buffer allociation failed\n");
+		ERR_PRINTLN("data buffer allociation failed");
 		return -1;
 	}else{
-		printf("data buffer allociation success\n");
-		printf("data buffer len: %ld\n", len);
+		DBG_PRINTLN("data buffer allociation success");
+		DBG_PRINTLN("data buffer len: %ld", len);
 	}
  
     // ptr is now pointing to the first element in of 2D array
@@ -504,41 +585,75 @@ void data_free(void){
 	bins = 0;
 }
 
-void printf_metadata(acc_service_sparse_metadata_t metadata){
+void printf_sparse_metadata(acc_service_sparse_metadata_t metadata){
+    printf("Sparse* Serivce Metadata\n");
 	printf("Start: %ld mm\n", (int32_t)(metadata.start_m * 1000.0f));
-		printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
-		printf("Data length: %lu\n", (uint32_t)metadata.data_length);
-		printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.sweep_rate * 1000.0f));
-		printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
+    if(! far_active){
+        printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
+    }else{
+       printf("Length (far): %lu mm\n", (uint32_t)((metadata.length_m+ sparse_metadata_far.length_m) * 1000.0f)); 
+    }
+    printf("Data length: %lu\n", (uint32_t)metadata.data_length);
+    printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.sweep_rate * 1000.0f));
+    printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
 }
 
-void activateService(void){
-	if (!acc_service_activate(sparse_handle))
+void printf_envelope_metadata(acc_service_envelope_metadata_t metadata){
+    printf("Envelope Serivce Metadata\n");
+	printf("Start: %ld mm\n", (int32_t)(metadata.start_m * 1000.0f));
+    printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
+    printf("Data length: %lu\n", (uint32_t)metadata.data_length);
+    printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.stitch_count));
+    printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
+}
+
+int8_t activateService(void){
+    uint32_t service_type = RegInt_getreg(0x02);
+    int8_t success;
+    if(service_type == 0x02){success = activateService_handle(envelope_handle);}
+    else if(service_type == 0x04){success = activateService_handle(sparse_handle);}
+    else {Reg_regor(0x06, 0x0040000); return 0;}
+    
+    if(success){
+        Reg_regor(0x06, 0x00000002);
+    }else{
+        Reg_regor(0x06, 0x00100000);
+    }
+    return success;
+}
+
+int8_t activateService_handle(acc_service_handle_t handle){
+    
+	if (!acc_service_activate(handle))
 	{
-		printf("acc_service_activate() failed\n");
-		acc_service_destroy(&sparse_handle);
+		ERR_PRINTLN("acc_service_activate() failed");
+		acc_service_destroy(&handle);
 		data_free();
 		
 		if(far_active){acc_service_destroy(&sparse_handle_far);}
 		
 		// acc_rss_deactivate();
-		
-		Reg_regor(0x06, 0x00100000);
-		return;
+
+		return 0;
 	}else{
-		Reg_regor(0x06, 0x00000002);
-		printf("activato\n");
+		DBG_PRINTLN("service handle activated\n");
+        return 1;
 	}
 	
 }
 
 void stopService(void){
-	if(acc_service_deactivate(sparse_handle)){
-		acc_service_destroy(&sparse_handle);	
+    uint32_t service_type = RegInt_getreg(0x02);
+    acc_service_handle_t handle;
+    if(service_type == 0x02){handle = envelope_handle;}
+    else if(service_type == 0x04){handle = sparse_handle;}
+    
+	if(acc_service_deactivate(handle)){
+		acc_service_destroy(&handle);	
 		data_free();
-		printf("service destroyed @%d\n", __LINE__);
+		DBG_PRINTLN("sparse service destroyed");
 	}else{
-		printf("deactivation fail @%d\n", __LINE__);
+		ERR_PRINTLN("sparse service deactivation fail");
 	}
 	
 	if(far_active){
@@ -546,9 +661,9 @@ void stopService(void){
 		acc_service_destroy(&sparse_handle_far);	
 		data_free();
 		far_active = 0;
-		printf("far service destroyed @%d\n", __LINE__);
+		DBG_PRINTLN("far sparse service destroyed");
 	}else{
-		printf("far deactivation fail @%d\n", __LINE__);
+		ERR_PRINTLN("far sparse service deactivation fail");
 	}
 	}
 	
@@ -557,19 +672,19 @@ void stopService(void){
 
 void sparseMeasure(void){
 		//something about a periodic interrupt timer. 
-	printf("Start measurement\n");
+	INF_PRINTLN("Start Sparse measurement");
 	acc_service_sparse_get_next_by_reference(sparse_handle, &sparse_data, &sparse_result_info);
 	//filling the data buffer for near data
 	filldata(0);
-	printf("Done measurement\n");
+	INF_PRINTLN("Sparse measurement complete");
 		
 	if(far_active){
 		if(!acc_service_deactivate(sparse_handle)){
-			printf("acc_service_deactivate() for sparse failed\n");
+			ERR_PRINTLN("acc_service_deactivate() for sparse failed");
 		}
 		
 		if (!acc_service_activate(sparse_handle_far)){
-			printf("acc_service_activate() for sparse far failed\n");
+			ERR_PRINTLN("acc_service_activate() for sparse far failed");
 			//handle error
 		}
 			
@@ -578,17 +693,15 @@ void sparseMeasure(void){
 		filldata(1);
 		
 		if(!acc_service_deactivate(sparse_handle_far)){
-			printf("acc_service_deactivate() for sparse far failed\n");
+			ERR_PRINTLN("acc_service_deactivate() for sparse far failed");
 		}
 		if (!acc_service_activate(sparse_handle)){
-			printf("acc_service_activate() for sparse failed\n");
+			ERR_PRINTLN("acc_service_activate() for sparse failed");
 			//handle error
 		}
 		
-		printf("Done far measurement\n");
+		INF_PRINTLN("Sparse Far measurement complete\n");
 	}
-	
-	
 }
 
 void filldata(uint8_t far){
@@ -620,14 +733,14 @@ void makekernel(void){
 	}
 }
 
-void convolve1d(uint16_t indx, uint8_t dir){
+int8_t convolve1d(uint16_t indx, uint8_t dir){
 	stackSet();
 	uint8_t cent = (CONVKER-1)/2;
 	if(dir == 0){	
 		// stackSet();
 		if(indx >= bins){
-			printf("bin too great to convolve\n");
-			return;
+			ERR_PRINTLN("bin count too great to convolve");
+			return 0;
 		}
 		for(int i = 0; i< sweeps/2 + CONVKER-2; i++){
 			float sum = 0.0f;
@@ -643,8 +756,8 @@ void convolve1d(uint16_t indx, uint8_t dir){
 	}else{
 		// stackSet();
 		if(indx >= sweeps){
-			printf("sweep too great to convolve\n");
-			return;
+			ERR_PRINTLN("sweep count too great to convolve");
+			return 0;
 		}
 		for(int i = 0; i< bins + CONVKER-2; i++){
 			float sum = 0.0f;
@@ -657,7 +770,7 @@ void convolve1d(uint16_t indx, uint8_t dir){
 		}
 		//setdata(0, 0);	
 	}
-	return;
+	return 1;
 }
 
 
@@ -734,7 +847,6 @@ float dofft(void){
 		
 		//Compute FFT
 		scales[i] = fftRangeScaling(real, sweeps);
-		// PRINT((uint32_t)(scales[i]*1000.0f));
 		fftWindowing(real, sweeps, FFT_FORWARD);
 		fftCompute(real, imag, sweeps, FFT_FORWARD);
 		fftComplexToMagnitude(real, imag, sweeps);
@@ -810,7 +922,7 @@ void evalData(void){
 	float amplitude;
 	float meansqdist;
 
-	PRINT(mode);
+	DBG_PRINTINT(mode);
 
 	if(mode & 0x00000001){
 	//dc removal
@@ -856,9 +968,9 @@ void evalData(void){
 	}
 	}
 	
-	PRINT(apex);
-	PRINT(mbin);
-	PRINT(msweep);
+	DBG_PRINTINT(apex);
+	DBG_PRINTINT(mbin);
+	DBG_PRINTINT(msweep);
 	
 	meansqdist = 0.0f;
 	float mass = 0.0f;
@@ -920,11 +1032,11 @@ void evalData(void){
 	RegInt_setregf(0xD3,(uint32_t)meansqdist, 1);
 	
 	
-	printf("RESULTS\n");
-	printf("Velocity: %ld mm\\s\n", (uint32_t)velocity);
-	printf("Distance: %ld mm\n", (uint32_t)distance);
-	printf("Amplitude: %ld arb\n", (uint32_t)amplitude);
-	printf("Mean Square Distance: %ld arb\n", (uint32_t)meansqdist);
+	INF_PRINTLN("RESULTS");
+	INF_PRINTLN("Velocity: %ld mm\\s", (uint32_t)velocity);
+	INF_PRINTLN("Distance: %ld mm", (uint32_t)distance);
+	INF_PRINTLN("Amplitude: %ld arb", (uint32_t)amplitude);
+	INF_PRINTLN("Mean Square Distance: %ld arb", (uint32_t)meansqdist);
 	}
 
 	return;

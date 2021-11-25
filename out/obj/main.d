@@ -33,10 +33,11 @@ out/obj/main.o: Src/main.c Inc/main.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h \
- Inc/acc_integration.h Inc/reg_interface.h Inc/acc_hal_definitions.h \
- Inc/acc_definitions_common.h Inc/acc_hal_integration.h Inc/acc_rss.h \
- Inc/acc_definitions_a111.h Inc/acc_service.h \
- Inc/acc_base_configuration.h Inc/acc_service_sparse.h
+ Inc/acc_integration.h Inc/util.h Inc/acc_hal_integration.h \
+ Inc/acc_definitions_common.h Inc/acc_hal_definitions.h \
+ Inc/reg_interface.h Inc/acc_rss.h Inc/acc_definitions_a111.h \
+ Inc/acc_service.h Inc/acc_base_configuration.h Inc/acc_service_sparse.h \
+ Inc/acc_service_envelope.h
 
 Inc/main.h:
 
@@ -110,13 +111,15 @@ Inc/stm32g0xx_hal_conf.h:
 
 Inc/acc_integration.h:
 
-Inc/reg_interface.h:
+Inc/util.h:
 
-Inc/acc_hal_definitions.h:
+Inc/acc_hal_integration.h:
 
 Inc/acc_definitions_common.h:
 
-Inc/acc_hal_integration.h:
+Inc/acc_hal_definitions.h:
+
+Inc/reg_interface.h:
 
 Inc/acc_rss.h:
 
@@ -127,3 +130,5 @@ Inc/acc_service.h:
 Inc/acc_base_configuration.h:
 
 Inc/acc_service_sparse.h:
+
+Inc/acc_service_envelope.h:

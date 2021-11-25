@@ -2,7 +2,7 @@ out/obj/reg_interface.o: Src/reg_interface.c Inc/reg_interface.h \
  Inc/acc_hal_definitions.h Inc/acc_definitions_common.h \
  Inc/acc_hal_integration.h Inc/acc_rss.h Inc/acc_definitions_a111.h \
  Inc/acc_service.h Inc/acc_base_configuration.h Inc/acc_service_sparse.h \
- Inc/arduinoFFTfix.h Inc/stm32g0xx_it.h \
+ Inc/acc_service_envelope.h Inc/arduinoFFTfix.h Inc/stm32g0xx_it.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  Inc/stm32g0xx_hal_conf.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_rcc.h \
@@ -37,7 +37,8 @@ out/obj/reg_interface.o: Src/reg_interface.c Inc/reg_interface.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
  Inc/main.h \
- /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h
+ /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h \
+ Inc/util.h
 
 Inc/reg_interface.h:
 
@@ -56,6 +57,8 @@ Inc/acc_service.h:
 Inc/acc_base_configuration.h:
 
 Inc/acc_service_sparse.h:
+
+Inc/acc_service_envelope.h:
 
 Inc/arduinoFFTfix.h:
 
@@ -130,3 +133,5 @@ Inc/stm32g0xx_hal_conf.h:
 Inc/main.h:
 
 /mnt/d/Git/acconeer/sdk/STM32Cube_FW_G0_V1.3.0/Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_system.h:
+
+Inc/util.h:
