@@ -59,19 +59,21 @@ uint32_t RegInt_getreg(uint8_t reg){
 }
 
 int8_t RegInt_setreg(uint8_t reg, uint32_t val){
+	DBG_PRINTINT(reg);
+	DBG_PRINTINT(val);
 	return RegInt_setregf(reg, val, 0);
 }
 
 int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	if(!force){
-        if (!RegInt_writeable(reg)){return 0;}
+        if (!RegInt_writeable(reg)){DBG_PRINTLN("not writable");return 0;}
 	}
     
 	uint32_t* regptr = RegInt_regmap(reg);
 	if (!(*regptr == (uint32_t)-1)){
 		*regptr = val;
 	}
-    
+    DBG_PRINTLN("write success");
 	return 1;
 }
 
@@ -112,8 +114,8 @@ void Reg_regor(uint8_t reg, uint32_t orbits){
 void RegInt_Init(void){
 	queue_cmd_end = 0;
 	for(uint8_t i = 0; i < 0xFF; i++){
-		if(i == 3){continue;}//writing to this reg controlls the RSS.
-		RegInt_setreg(i, 0);
+		if(i == 3){continue;}//writing to this reg controlls the RSS.//remove if works
+		RegInt_setregf(i, 0, 1);
 	}
 	RegInt_setregf(0x07, 115200, 1);//set default baud rate
 	RegInt_setregf(0x0A, 0, 1);//set default baud rate
@@ -133,7 +135,6 @@ void RegInt_Init(void){
 }
 
 void RegInt_parsecmd(void){
-
 	if (uart_state != 4){return;}
 //read	
 	if (uart_rx_buff[0] == 0xF8 && cmd_length == 1){
@@ -171,6 +172,7 @@ void RegInt_parsecmd(void){
 		uart_tx_buff[7] = get_byte(val,2);
 		uart_tx_buff[8] = get_byte(val,3);
 		uart_tx_buff[9] = 0xCD;
+		DBG_PRINTLN("transmitt");
 		HAL_UART_Transmit_IT(&huart1, uart_tx_buff, 10);
 //buffer dump
 	}else if (uart_rx_buff[0] == 0xFA && ((uart_rx_buff[1] == 0xE8) || (uart_rx_buff[1] == 0xE9)) && cmd_length == 3){
@@ -756,6 +758,7 @@ Bit.
 6.	bandstop
 */
 void evalData(void){
+	return;
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;

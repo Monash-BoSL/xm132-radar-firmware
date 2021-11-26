@@ -103,3 +103,4 @@ $(foreach target, $(TARGETS), $(eval $(call define_jlink_flash_target, $(target)
 .PHONY : clean
 clean:
 	$(SUPPRESS)rm -rf out
+
