@@ -52,8 +52,9 @@ SOURCES_MAIN := \
     main.c \
     reg_interface.c \
     arduinoFFTfix.c \
-    util.c
-    
+    util.c \
+    radar_dsp.c
+	    
 _SOURCES := $(STM32_CUBE_INTEGRATION_FILES) $(STM32_CUBE_GENERATED_FILES) $(RSS_INTEGRATION_FILES)
 
 include $(sort $(wildcard rule/makefile_target_*.inc))
