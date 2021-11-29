@@ -59,9 +59,8 @@ uint32_t RegInt_getreg(uint8_t reg){
 }
 
 int8_t RegInt_setreg(uint8_t reg, uint32_t val){
-	DBG_PRINTINT(reg);
-	DBG_PRINTINT(val);
-	return RegInt_setregf(reg, val, 0);
+	int8_t success = RegInt_setregf(reg, val, 0);
+	return success;
 }
 
 int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
@@ -73,7 +72,7 @@ int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	if (!(*regptr == (uint32_t)-1)){
 		*regptr = val;
 	}
-    DBG_PRINTLN("write success");
+    // printf(" ");
 	return 1;
 }
 
@@ -154,13 +153,13 @@ void RegInt_parsecmd(void){
 		HAL_UART_Transmit_IT(&huart1, uart_tx_buff, 10);
 //write
 	}else if (uart_rx_buff[0] == 0xF9 && cmd_length == 5){
-		DBG_PRINTLN("writing");
 		uint8_t reg = uart_rx_buff[1];
 		uint32_t val = 0;
 		for(uint8_t i = 0; i < 4; i++){
 			val |= uart_rx_buff[2+i] << (i%4)*8;
 		}
-		if(RegInt_setreg(reg, val)){RegInt_regaction(reg, val);}
+		// if(RegInt_setreg(reg, val)){RegInt_regaction(reg, val);}
+        RegInt_setreg(reg, val);
 		val = RegInt_getreg(reg);
 		uart_tx_buff[0] = 0xCC;
 		uart_tx_buff[1] = 0x05;
@@ -172,7 +171,6 @@ void RegInt_parsecmd(void){
 		uart_tx_buff[7] = get_byte(val,2);
 		uart_tx_buff[8] = get_byte(val,3);
 		uart_tx_buff[9] = 0xCD;
-		DBG_PRINTLN("transmitt");
 		HAL_UART_Transmit_IT(&huart1, uart_tx_buff, 10);
 //buffer dump
 	}else if (uart_rx_buff[0] == 0xFA && ((uart_rx_buff[1] == 0xE8) || (uart_rx_buff[1] == 0xE9)) && cmd_length == 3){
