@@ -107,6 +107,7 @@ int8_t activateService_handle(acc_service_handle_t);
 
 void stopService(void);
 
+void measure(void);
 void sparseMeasure(void);
 void envelopeMeasure(void);
 

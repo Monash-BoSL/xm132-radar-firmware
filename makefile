@@ -5,8 +5,7 @@
 
 TARGETS := \
     main \
-    
-V := a
+
 # Variable to modify output messages
 ifneq ($(V),)
 SUPPRESS :=
@@ -62,8 +61,8 @@ include $(sort $(wildcard rule/makefile_target_*.inc))
 include $(sort $(wildcard rule/makefile_define_*.inc))
 include $(sort $(wildcard rule/makefile_build_*.inc))
 
-# CFLAGS-$(OUT_OBJ_DIR)/arduinoFFTfix.o = -O3
-# CFLAGS-$(OUT_OBJ_DIR)/radar_dsp.o = -O3
+CFLAGS-$(OUT_OBJ_DIR)/arduinoFFTfix.o = -O3
+CFLAGS-$(OUT_OBJ_DIR)/radar_dsp.o = -O3
 CFLAGS-$(OUT_OBJ_DIR)/syscalls.o += -fno-lto
 CFLAGS-$(OUT_OBJ_DIR)/sysmem.o = -std=gnu11 -Wno-strict-prototypes -Wno-pedantic -Wno-missing-prototypes -fno-lto
 CFLAGS-$(OUT_OBJ_DIR)/printf.o = -DPRINTF_DISABLE_SUPPORT_FLOAT -DPRINTF_DISABLE_SUPPORT_EXPONENTIAL -fno-lto

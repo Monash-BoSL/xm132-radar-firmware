@@ -185,6 +185,8 @@ void RegInt_parsecmd(void){
 	
 		uint32_t datalen;
 		if(uart_rx_buff[1] == 0xE8){
+        DBG_PRINTINT(bins);
+        DBG_PRINTINT(sweeps);
 		datalen = sweeps*bins*sizeof(uint16_t);
 		}else{
 		datalen = 128*sizeof(uint16_t);
@@ -325,7 +327,7 @@ void rss_control(uint32_t val){
 		if(createService()){activateService();}
 	}
 	if (val == 0x04){Reg_regand(0x06,0x000000FF);}//clear error bits
-	if (val == 0x05){sparseMeasure();}
+	if (val == 0x05){measure();}
 	if (val == 0x06){evalData();}
 }
 
@@ -372,7 +374,8 @@ void initRSS(void){
 
 int8_t envelope_data_malloc(void){
     bins = envelope_metadata.data_length;
-    return data_malloc(1,bins);
+    sweeps = 1;
+    return data_malloc(sweeps,bins);
 }
 
 int8_t sparse_data_malloc(void){
@@ -541,7 +544,12 @@ int8_t createService(void){
 
 int8_t createEnvelopeService(void){
     updateEnvelopeConfig(envelope_config);
-    
+    // // //gauge free mem with this function
+    // // for(int k = 0; k < 0x0F; k++){
+    // // unsigned int ptr = (unsigned int)malloc(0x1000);
+    // // printf("mem allocation: 0x%08X\n", ptr);
+    // // }
+    // // while(1){}
    	envelope_handle = acc_service_create(envelope_config);	
 	
 	if (envelope_handle == NULL){//handles error
@@ -550,7 +558,10 @@ int8_t createEnvelopeService(void){
 	}else{
 		acc_service_envelope_get_metadata(envelope_handle, &envelope_metadata);
 		
-        if(envelope_data_malloc() == -1){stopService();}
+        if(envelope_data_malloc() == -1){
+            DBG_PRINTLN("data buffer allocation failed");
+            stopService();
+            }
 
 		Reg_store_envelope_metadata(envelope_metadata);
 		//this does not work with active far enabled
@@ -589,7 +600,10 @@ int8_t createSparseService(void){
 	}else{
 		acc_service_sparse_get_metadata(sparse_handle, &sparse_metadata);
 		if(!far_active){
-			if(sparse_data_malloc() == -1){stopService();}
+			if(sparse_data_malloc() == -1){
+                DBG_PRINTLN("data buffer allocation failed");
+                stopService();
+                }
 		}
 
 		Reg_store_sparse_metadata(sparse_metadata, NULL);
@@ -605,7 +619,10 @@ int8_t createSparseService(void){
 		return 0;
 	}else{
 		acc_service_sparse_get_metadata(sparse_handle_far, &sparse_metadata_far);
-		if(sparse_data_malloc() == -1){stopService();}
+		if(sparse_data_malloc() == -1){
+            DBG_PRINTLN("data buffer allocation failed");
+            stopService();
+            }
 		
 		Reg_store_sparse_metadata(sparse_metadata, &sparse_metadata_far);
         
@@ -663,7 +680,7 @@ void stopService(void){
     
 	if(acc_service_deactivate(handle)){
 		acc_service_destroy(&handle);	
-		data_free();
+		data_free();//maybe a memory leak?
 		DBG_PRINTLN("sparse service destroyed");
 	}else{
 		ERR_PRINTLN("sparse service deactivation fail");
@@ -686,6 +703,11 @@ void stopService(void){
 	
 }
 
+void measure(void){
+    uint32_t service_type = RegInt_getreg(0x02);
+    if(service_type == 0x02){envelopeMeasure();}
+    else if(service_type == 0x04){sparseMeasure();}
+}
 
 void sparseMeasure(void){
 		//something about a periodic interrupt timer. 
@@ -717,14 +739,14 @@ void sparseMeasure(void){
 			//handle error
 		}
 		
-		INF_PRINTLN("Sparse Far measurement complete");
+		INF_PRINTLN("Sparse Far measurement end");
 	}
 }
 
 void envelopeMeasure(void){
 	
 	INF_PRINTLN("Start Envelope measurement");
-	acc_service_envelope_get_next_by_reference(sparse_handle, &envelope_data, &envelope_result_info);
+    acc_service_envelope_get_next_by_reference(sparse_handle, &envelope_data, &envelope_result_info);
 	//filling the data buffer for near data
 	filldata_envelope();
 	INF_PRINTLN("Envelope measurement complete");
