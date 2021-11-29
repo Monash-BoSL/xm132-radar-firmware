@@ -5,8 +5,8 @@
 
 TARGETS := \
     main \
+    
 
-V := true
 # Variable to modify output messages
 ifneq ($(V),)
 SUPPRESS :=
@@ -14,13 +14,11 @@ else
 SUPPRESS := @
 endif
 
-INC_FOLDERS := -I. -IInc
+OUT_DIR     := out
+OUT_OBJ_DIR := $(OUT_DIR)/obj
+OUT_LIB_DIR := $(OUT_DIR)/lib
 
-OUT_OBJ_FOLDER := obj
-OUT_LIB_FOLDER := lib
-OUT_DIR := out
-OUT_OBJ_DIR := $(addprefix $(OUT_DIR)/,$(OUT_OBJ_FOLDER))
-OUT_LIB_DIR := $(addprefix $(OUT_DIR)/,$(OUT_LIB_FOLDER))
+INC_FOLDERS := -I. -IInc
 
 vpath %.c Src
 vpath %.s Src
@@ -69,7 +67,7 @@ CFLAGS-$(OUT_OBJ_DIR)/sysmem.o = -std=gnu11 -Wno-strict-prototypes -Wno-pedantic
 CFLAGS-$(OUT_OBJ_DIR)/printf.o = -DPRINTF_DISABLE_SUPPORT_FLOAT -DPRINTF_DISABLE_SUPPORT_EXPONENTIAL -fno-lto
 
 .PHONY: binary
-binary: $(DEBUG) $(TARGETS)
+binary: $(TARGETS)
 
 $(BUILD_LIBS) : | $(OUT_LIB_DIR)
 
@@ -100,16 +98,16 @@ uc = $(subst a,A,$(subst b,B,$(subst c,C,$(subst d,D,$(subst e,E,$(subst f,F,$(s
 # Create all target recipes
 $(foreach target, $(TARGETS), $(eval SOURCES := $(_SOURCES) $($(addsuffix $(call uc,$(target)),SOURCES_))) $(call define_target,$(target)))
 
+# Create jlink flash targets
+$(foreach target, $(TARGETS), $(eval $(call define_jlink_flash_target, $(target))))
 
 .PHONY: all
-all: DEBUG = -Os
 all: binary
 
 .PHONY: debug
-debug: DEBUG = -g -gstabs -Og 
+debug: DEBUG_FLAGS = -ggdb -Og
 debug: binary
 
-.PHONY: clean
+.PHONY : clean
 clean:
 	$(SUPPRESS)rm -rf out
-
