@@ -72,7 +72,7 @@ int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 	if (!(*regptr == (uint32_t)-1)){
 		*regptr = val;
 	}
-    // printf(" ");
+    
 	return 1;
 }
 
@@ -158,8 +158,8 @@ void RegInt_parsecmd(void){
 		for(uint8_t i = 0; i < 4; i++){
 			val |= uart_rx_buff[2+i] << (i%4)*8;
 		}
-		// if(RegInt_setreg(reg, val)){RegInt_regaction(reg, val);}
-        RegInt_setreg(reg, val);
+		if(RegInt_setreg(reg, val)){RegInt_regaction(reg, val);}
+        // RegInt_setreg(reg, val);
 		val = RegInt_getreg(reg);
 		uart_tx_buff[0] = 0xCC;
 		uart_tx_buff[1] = 0x05;
@@ -652,9 +652,11 @@ int8_t activateService_handle(acc_service_handle_t handle){
 
 void stopService(void){
     uint32_t service_type = RegInt_getreg(0x02);
-    acc_service_handle_t handle;
+    
+    acc_service_handle_t handle = NULL;
     if(service_type == 0x02){handle = envelope_handle;}
     else if(service_type == 0x04){handle = sparse_handle;}
+    else{return;}
     
 	if(acc_service_deactivate(handle)){
 		acc_service_destroy(&handle);	
@@ -674,6 +676,7 @@ void stopService(void){
 		ERR_PRINTLN("far sparse service deactivation fail");
 	}
 	}
+    Reg_regor(0x06, 0xFFFFFFFE);
 	
 }
 
@@ -756,7 +759,8 @@ Bit.
 6.	bandstop
 */
 void evalData(void){
-	return;
+    // #warning implentation removed for debuging
+    // return;
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;

@@ -1,3 +1,0 @@
-   text	   data	    bss	    dec	    hex	filename
-  93592	    120	   6984	 100696	  18958	out/main.elf
-  93592	    120	   6984	 100696	  18958	(TOTALS)
