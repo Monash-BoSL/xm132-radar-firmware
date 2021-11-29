@@ -237,7 +237,7 @@ void Reg_store_sparse_metadata(acc_service_sparse_metadata_t metadata, acc_servi
 	}
 	RegInt_setregf(0x83, bufflen ,1);
 	RegInt_setregf(0x84, (uint32_t)(metadata.sweep_rate * 1000.0f),1);
-	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1000.0f),1);
+	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1.0e6f),1);
 }
 
 void Reg_store_envelope_metadata(acc_service_envelope_metadata_t metadata){
@@ -246,7 +246,7 @@ void Reg_store_envelope_metadata(acc_service_envelope_metadata_t metadata){
 	RegInt_setregf(0x82, (uint32_t)(metadata.length_m * 1000.0f),1);
 	RegInt_setregf(0x83, (uint32_t)metadata.data_length ,1);
 	RegInt_setregf(0x84, (uint32_t)metadata.stitch_count,1);
-	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1000.0f),1);
+	RegInt_setregf(0x85, (uint32_t)(metadata.step_length_m * 1.0e6f),1);
    
 }
 
@@ -746,7 +746,7 @@ void sparseMeasure(void){
 void envelopeMeasure(void){
 	
 	INF_PRINTLN("Start Envelope measurement");
-    acc_service_envelope_get_next_by_reference(sparse_handle, &envelope_data, &envelope_result_info);
+    acc_service_envelope_get_next_by_reference(envelope_handle, &envelope_data, &envelope_result_info);
 	//filling the data buffer for near data
 	filldata_envelope();
 	INF_PRINTLN("Envelope measurement complete");
@@ -763,7 +763,7 @@ void printf_sparse_metadata(acc_service_sparse_metadata_t metadata){
     }
     printf("Data length: %lu\n", (uint32_t)metadata.data_length);
     printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.sweep_rate * 1000.0f));
-    printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
+    printf("Step length: %lu um\n", (uint32_t)(metadata.step_length_m * 1.0e6f));
 }
 
 void printf_envelope_metadata(acc_service_envelope_metadata_t metadata){
@@ -772,7 +772,7 @@ void printf_envelope_metadata(acc_service_envelope_metadata_t metadata){
     printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
     printf("Data length: %lu\n", (uint32_t)metadata.data_length);
     printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.stitch_count));
-    printf("Step length: %lu mm\n", (uint32_t)(metadata.step_length_m * 1000.0f));
+    printf("Step length: %lu um\n", (uint32_t)(metadata.step_length_m * 1.0e6f));
 }
 
 
