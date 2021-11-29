@@ -79,8 +79,8 @@ int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 int8_t RegInt_writeable(uint8_t reg){
     //if service is activeated lock mode
     if(reg == 0x02){
-        if(RegInt_getreg(0x06) || 0x00000001){
-            return 0;
+        if(RegInt_getreg(0x06) && 0x00000001){
+            return 1;
         }
     }
     
@@ -445,7 +445,7 @@ void filldata_envelope(void){
 }
 
 void updateSparseConfig(acc_service_configuration_t config, uint16_t sweep_start, uint16_t sweep_length){
-	
+	DBG_PRINTLN("updating config");
 	acc_service_profile_set(config, RegInt_getreg(0x28));
 	
 	uint32_t rep_mode = RegInt_getreg(0x22); 
@@ -484,7 +484,7 @@ void updateSparseConfig(acc_service_configuration_t config, uint16_t sweep_start
 }
 
 void updateEnvelopeConfig(acc_service_configuration_t config){
-    
+    DBG_PRINTLN("updating config");
     acc_service_profile_set(config, RegInt_getreg(0x28));
 	
 	uint32_t rep_mode = RegInt_getreg(0x22); 
@@ -523,6 +523,7 @@ void updateEnvelopeConfig(acc_service_configuration_t config){
 }
 
 int8_t createService(void){
+    DBG_PRINTLN("creating service");
     uint32_t service_type = RegInt_getreg(0x02);
     int8_t success;
     if(service_type == 0x02){success = createEnvelopeService();}
@@ -616,6 +617,7 @@ int8_t createSparseService(void){
 
 
 int8_t activateService(void){
+    DBG_PRINTLN("activating service");
     uint32_t service_type = RegInt_getreg(0x02);
     int8_t success;
     if(service_type == 0x02){success = activateService_handle(envelope_handle);}
@@ -644,13 +646,14 @@ int8_t activateService_handle(acc_service_handle_t handle){
 
 		return 0;
 	}else{
-		DBG_PRINTLN("service handle activated\n");
+		DBG_PRINTLN("service handle activated");
         return 1;
 	}
 	
 }
 
 void stopService(void){
+    DBG_PRINTLN("stopping service");
     uint32_t service_type = RegInt_getreg(0x02);
     
     acc_service_handle_t handle = NULL;
@@ -676,7 +679,10 @@ void stopService(void){
 		ERR_PRINTLN("far sparse service deactivation fail");
 	}
 	}
-    Reg_regor(0x06, 0xFFFFFFFE);
+    
+    uint32_t setbits = RegInt_getreg(0x06);
+    setbits &= 0xFFFFFFFE;
+    RegInt_setregf(0x06, setbits, 1);
 	
 }
 
@@ -711,7 +717,7 @@ void sparseMeasure(void){
 			//handle error
 		}
 		
-		INF_PRINTLN("Sparse Far measurement complete\n");
+		INF_PRINTLN("Sparse Far measurement complete");
 	}
 }
 
