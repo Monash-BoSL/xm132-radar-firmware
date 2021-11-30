@@ -222,19 +222,19 @@ out/lib/libstm32cube_fw_g0.a(stm32g0xx_hal_uart_ex.o)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(_exit.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-exit.o) (_exit)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_cos.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (cos)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (cos)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fmax.o)
-                              /tmp/ccAULJ3h.ltrans1.ltrans.o (fmaxf)
+                              /tmp/ccVqMBBy.ltrans1.ltrans.o (fmaxf)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fpclassify.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fmax.o) (__fpclassifyf)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_round.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (roundf)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (roundf)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (sqrt)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (sqrt)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (expf)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (expf)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o)
-                              /tmp/ccAULJ3h.ltrans1.ltrans.o (log10f)
+                              /tmp/ccVqMBBy.ltrans1.ltrans.o (log10f)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_cos.o) (__ieee754_rem_pio2)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_sqrt.o)
@@ -268,33 +268,33 @@ out/lib/libstm32cube_fw_g0.a(stm32g0xx_hal_uart_ex.o)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_copysign.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_scalbn.o) (copysign)
 out/lib/libwrapprintf.a(acc_wrap_printf.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__wrap_puts)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__wrap_puts)
 out/lib/libwrapprintf.a(printf.o)
                               out/lib/libwrapprintf.a(acc_wrap_printf.o) (vsnprintf_)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_thumb1_case_sqi.o)
-                              /tmp/ccAULJ3h.ltrans2.ltrans.o (__gnu_thumb1_case_sqi)
+                              /tmp/ccVqMBBy.ltrans2.ltrans.o (__gnu_thumb1_case_sqi)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_thumb1_case_uqi.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__gnu_thumb1_case_uqi)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__gnu_thumb1_case_uqi)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_thumb1_case_uhi.o)
-                              /tmp/ccAULJ3h.ltrans1.ltrans.o (__gnu_thumb1_case_uhi)
+                              /tmp/ccVqMBBy.ltrans1.ltrans.o (__gnu_thumb1_case_uhi)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_udivsi3.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_uidiv)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_uidiv)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_divsi3.o)
-                              /tmp/ccAULJ3h.ltrans1.ltrans.o (__aeabi_idiv)
+                              /tmp/ccVqMBBy.ltrans1.ltrans.o (__aeabi_idiv)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_dvmd_tls.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_udivsi3.o) (__aeabi_idiv0)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_arm_cmpdf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o) (__aeabi_dcmpeq)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_arm_cmpsf2.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_fcmpeq)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_fcmpeq)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_aeabi_ldivmod.o)
-                              /tmp/ccAULJ3h.ltrans2.ltrans.o (__aeabi_ldivmod)
+                              /tmp/ccVqMBBy.ltrans2.ltrans.o (__aeabi_ldivmod)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_aeabi_uldivmod.o)
-                              /tmp/ccAULJ3h.ltrans2.ltrans.o (__aeabi_uldivmod)
+                              /tmp/ccVqMBBy.ltrans2.ltrans.o (__aeabi_uldivmod)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_fixunssfsi.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_f2uiz)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_f2uiz)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_fixunsdfsi.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_d2uiz)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_d2uiz)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_udivmoddi4.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_aeabi_uldivmod.o) (__udivmoddi4)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(bpabi.o)
@@ -308,15 +308,15 @@ out/lib/libwrapprintf.a(printf.o)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(unordsf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o) (__aeabi_fcmpun)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(fixsfsi.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_f2iz)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_f2iz)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(floatsisf.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_i2f)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_i2f)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(floatunsisf.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_ui2f)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_ui2f)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(adddf3.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_dadd)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_dadd)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(divdf3.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_ddiv)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_ddiv)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(eqdf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_arm_cmpdf2.o) (__eqdf2)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(gedf2.o)
@@ -324,19 +324,19 @@ out/lib/libwrapprintf.a(printf.o)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(ledf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_arm_cmpdf2.o) (__ledf2)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(muldf3.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_dmul)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_dmul)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(subdf3.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_dsub)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_dsub)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(unorddf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o) (__aeabi_dcmpun)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(fixdfsi.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_d2iz)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_d2iz)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(floatsidf.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_i2d)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_i2d)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(floatunsidf.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_ui2d)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (__aeabi_ui2d)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(extendsfdf2.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (__aeabi_f2d)
+                              /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o) (__aeabi_f2d)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(truncdfsf2.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o) (__aeabi_d2f)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_clzdi2.o)
@@ -346,11 +346,11 @@ out/lib/libwrapprintf.a(printf.o)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_divdi3.o)
                               /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(bpabi.o) (__divdi3)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-malloc.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (malloc)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (malloc)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memcpy-stub.o)
-                              /tmp/ccAULJ3h.ltrans0.ltrans.o (memcpy)
+                              /tmp/ccVqMBBy.ltrans0.ltrans.o (memcpy)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memmove.o)
-                              /tmp/ccAULJ3h.ltrans1.ltrans.o (memmove)
+                              /tmp/ccVqMBBy.ltrans1.ltrans.o (memmove)
 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-strlen.o)
                               out/lib/libwrapprintf.a(acc_wrap_printf.o) (strlen)
 
@@ -389,7 +389,7 @@ queue_cmd_end       0x1               out/obj/main.o (symbol from plugin)
 kernel              0x24              out/obj/reg_interface.o (symbol from plugin)
 sparse_result_info_far
                     0x3               out/obj/main.o (symbol from plugin)
-huart2              0x8c              /tmp/ccAULJ3h.ltrans0.ltrans.o
+huart2              0x8c              /tmp/ccVqMBBy.ltrans0.ltrans.o
 _conv_data          0x4               out/obj/reg_interface.o (symbol from plugin)
 bins                0x2               out/obj/main.o (symbol from plugin)
 sparse_data_far     0x4               out/obj/main.o (symbol from plugin)
@@ -413,9 +413,9 @@ Discarded input sections
  .ARM.exidx     0x0000000000000000        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1b /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
- .data          0x0000000000000000        0x0 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .data          0x0000000000000000        0x0 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .bss           0x0000000000000000        0x0 /tmp/ccAULJ3h.ltrans1.ltrans.o
+ .data          0x0000000000000000        0x0 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .data          0x0000000000000000        0x0 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .bss           0x0000000000000000        0x0 /tmp/ccVqMBBy.ltrans1.ltrans.o
  .text          0x0000000000000000        0x0 out/obj/syscalls.o
  .data          0x0000000000000000        0x0 out/obj/syscalls.o
  .bss           0x0000000000000000        0x0 out/obj/syscalls.o
@@ -754,9 +754,9 @@ Linker script and memory map
 LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
 LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/crt0.o
-LOAD /tmp/ccAULJ3h.ltrans0.ltrans.o
-LOAD /tmp/ccAULJ3h.ltrans1.ltrans.o
-LOAD /tmp/ccAULJ3h.ltrans2.ltrans.o
+LOAD /tmp/ccVqMBBy.ltrans0.ltrans.o
+LOAD /tmp/ccVqMBBy.ltrans1.ltrans.o
+LOAD /tmp/ccVqMBBy.ltrans2.ltrans.o
 LOAD out/obj/syscalls.o
 LOAD out/obj/startup_stm32g071xx.o
 LOAD out/obj/sysmem.o
@@ -797,11 +797,11 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x0000000008000000                g_pfnVectors
                 0x00000000080000bc                . = ALIGN (0x4)
 
-.text           0x00000000080000bc    0x15480
+.text           0x00000000080000bc    0x15438
                 0x00000000080000bc                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080000bc       0x48 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
- .text          0x0000000008000104     0x47dc /tmp/ccAULJ3h.ltrans0.ltrans.o
+ .text          0x0000000008000104     0x47dc /tmp/ccVqMBBy.ltrans0.ltrans.o
                 0x0000000008000280                RegInt_getreg
                 0x0000000008001e40                acc_base_configuration_asynchronous_measurement_get
                 0x0000000008001e52                acc_base_configuration_noise_level_normalization_get
@@ -834,7 +834,7 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x0000000008003bea                NMI_Handler
                 0x0000000008003bec                SVC_Handler
                 0x0000000008003bee                HardFault_Handler
- .text          0x00000000080048e0     0x520c /tmp/ccAULJ3h.ltrans1.ltrans.o
+ .text          0x00000000080048e0     0x520c /tmp/ccVqMBBy.ltrans1.ltrans.o
                 0x00000000080048e0                validate.lto_priv.266
                 0x0000000008004934                event.lto_priv.279
                 0x000000000800494e                noise_level_normalization_u16.lto_priv.673
@@ -897,7 +897,7 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x000000000800678c                acc_sensor_manager_prepare_radar_engine
                 0x0000000008007d30                acc_base_configuration_print.part.5
                 0x0000000008009abc                acc_sensor_r2_conf_write_instr
- .text          0x0000000008009aec     0x448c /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .text          0x0000000008009aec     0x448c /tmp/ccVqMBBy.ltrans2.ltrans.o
                 0x0000000008009d0c                UART_DMAAbortOnError.lto_priv.676
                 0x0000000008009f38                validate.lto_priv.170
                 0x0000000008009fa0                reset.lto_priv.175.lto_priv.636
@@ -1086,481 +1086,481 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
  *(.text*)
  *fill*         0x000000000801115a        0x2 
  .text.unlikely
-                0x000000000801115c      0xccc /tmp/ccAULJ3h.ltrans0.ltrans.o
- .text.startup  0x0000000008011e28      0x984 /tmp/ccAULJ3h.ltrans0.ltrans.o
-                0x0000000008011e28                main
- .text._write   0x00000000080127ac       0x1c out/obj/syscalls.o
-                0x00000000080127ac                _write
+                0x000000000801115c      0xc84 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .text.startup  0x0000000008011de0      0x984 /tmp/ccVqMBBy.ltrans0.ltrans.o
+                0x0000000008011de0                main
+ .text._write   0x0000000008012764       0x1c out/obj/syscalls.o
+                0x0000000008012764                _write
  .text.Reset_Handler
-                0x00000000080127c8       0x50 out/obj/startup_stm32g071xx.o
-                0x00000000080127c8                Reset_Handler
+                0x0000000008012780       0x50 out/obj/startup_stm32g071xx.o
+                0x0000000008012780                Reset_Handler
  .text.Default_Handler
-                0x0000000008012818        0x2 out/obj/startup_stm32g071xx.o
-                0x0000000008012818                USART3_4_LPUART1_IRQHandler
-                0x0000000008012818                TIM1_CC_IRQHandler
-                0x0000000008012818                ADC1_COMP_IRQHandler
-                0x0000000008012818                PVD_IRQHandler
-                0x0000000008012818                TIM7_LPTIM2_IRQHandler
-                0x0000000008012818                SPI1_IRQHandler
-                0x0000000008012818                I2C2_IRQHandler
-                0x0000000008012818                TIM17_IRQHandler
-                0x0000000008012818                TIM16_IRQHandler
-                0x0000000008012818                TIM3_IRQHandler
-                0x0000000008012818                RCC_IRQHandler
-                0x0000000008012818                Default_Handler
-                0x0000000008012818                CEC_IRQHandler
-                0x0000000008012818                TIM14_IRQHandler
-                0x0000000008012818                TIM15_IRQHandler
-                0x0000000008012818                EXTI0_1_IRQHandler
-                0x0000000008012818                SPI2_IRQHandler
-                0x0000000008012818                TIM6_DAC_LPTIM1_IRQHandler
-                0x0000000008012818                WWDG_IRQHandler
-                0x0000000008012818                TIM2_IRQHandler
-                0x0000000008012818                DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler
-                0x0000000008012818                UCPD1_2_IRQHandler
-                0x0000000008012818                USART2_IRQHandler
-                0x0000000008012818                FLASH_IRQHandler
-                0x0000000008012818                TIM1_BRK_UP_TRG_COM_IRQHandler
- *fill*         0x000000000801281a        0x2 
- .text._sbrk    0x000000000801281c       0x40 out/obj/sysmem.o
-                0x000000000801281c                _sbrk
+                0x00000000080127d0        0x2 out/obj/startup_stm32g071xx.o
+                0x00000000080127d0                USART3_4_LPUART1_IRQHandler
+                0x00000000080127d0                TIM1_CC_IRQHandler
+                0x00000000080127d0                ADC1_COMP_IRQHandler
+                0x00000000080127d0                PVD_IRQHandler
+                0x00000000080127d0                TIM7_LPTIM2_IRQHandler
+                0x00000000080127d0                SPI1_IRQHandler
+                0x00000000080127d0                I2C2_IRQHandler
+                0x00000000080127d0                TIM17_IRQHandler
+                0x00000000080127d0                TIM16_IRQHandler
+                0x00000000080127d0                TIM3_IRQHandler
+                0x00000000080127d0                RCC_IRQHandler
+                0x00000000080127d0                Default_Handler
+                0x00000000080127d0                CEC_IRQHandler
+                0x00000000080127d0                TIM14_IRQHandler
+                0x00000000080127d0                TIM15_IRQHandler
+                0x00000000080127d0                EXTI0_1_IRQHandler
+                0x00000000080127d0                SPI2_IRQHandler
+                0x00000000080127d0                TIM6_DAC_LPTIM1_IRQHandler
+                0x00000000080127d0                WWDG_IRQHandler
+                0x00000000080127d0                TIM2_IRQHandler
+                0x00000000080127d0                DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler
+                0x00000000080127d0                UCPD1_2_IRQHandler
+                0x00000000080127d0                USART2_IRQHandler
+                0x00000000080127d0                FLASH_IRQHandler
+                0x00000000080127d0                TIM1_BRK_UP_TRG_COM_IRQHandler
+ *fill*         0x00000000080127d2        0x2 
+ .text._sbrk    0x00000000080127d4       0x40 out/obj/sysmem.o
+                0x00000000080127d4                _sbrk
  .text.__ieee754_sqrtf
-                0x000000000801285c       0xb4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_sqrt.o)
-                0x000000000801285c                __ieee754_sqrtf
- .text.__errno  0x0000000008012910        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-errno.o)
-                0x0000000008012910                __errno
+                0x0000000008012814       0xb4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_sqrt.o)
+                0x0000000008012814                __ieee754_sqrtf
+ .text.__errno  0x00000000080128c8        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-errno.o)
+                0x00000000080128c8                __errno
  .text.__sflush_r
-                0x000000000801291c      0x114 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
-                0x000000000801291c                __sflush_r
+                0x00000000080128d4      0x114 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
+                0x00000000080128d4                __sflush_r
  .text._fflush_r
-                0x0000000008012a30       0x58 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
-                0x0000000008012a30                _fflush_r
- .text.fflush   0x0000000008012a88       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
-                0x0000000008012a88                fflush
- .text.std      0x0000000008012ab0       0x48 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x00000000080129e8       0x58 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
+                0x00000000080129e8                _fflush_r
+ .text.fflush   0x0000000008012a40       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fflush.o)
+                0x0000000008012a40                fflush
+ .text.std      0x0000000008012a68       0x48 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
  .text._cleanup_r
-                0x0000000008012af8       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x0000000008012af8                _cleanup_r
+                0x0000000008012ab0       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x0000000008012ab0                _cleanup_r
  .text.__sfmoreglue
-                0x0000000008012b08       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x0000000008012b08                __sfmoreglue
- .text.__sinit  0x0000000008012b34       0x68 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x0000000008012b34                __sinit
- .text.__sfp    0x0000000008012b9c       0x7c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x0000000008012b9c                __sfp
+                0x0000000008012ac0       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x0000000008012ac0                __sfmoreglue
+ .text.__sinit  0x0000000008012aec       0x68 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x0000000008012aec                __sinit
+ .text.__sfp    0x0000000008012b54       0x7c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x0000000008012b54                __sfp
  .text._fwalk_reent
-                0x0000000008012c18       0x42 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fwalk.o)
-                0x0000000008012c18                _fwalk_reent
- *fill*         0x0000000008012c5a        0x2 
+                0x0000000008012bd0       0x42 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-fwalk.o)
+                0x0000000008012bd0                _fwalk_reent
+ *fill*         0x0000000008012c12        0x2 
  .text.__libc_init_array
-                0x0000000008012c5c       0x48 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-init.o)
-                0x0000000008012c5c                __libc_init_array
- .text.memset   0x0000000008012ca4       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memset.o)
-                0x0000000008012ca4                memset
- .text._free_r  0x0000000008012cb4       0x94 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-nano-freer.o)
-                0x0000000008012cb4                _free_r
+                0x0000000008012c14       0x48 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-init.o)
+                0x0000000008012c14                __libc_init_array
+ .text.memset   0x0000000008012c5c       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memset.o)
+                0x0000000008012c5c                memset
+ .text._free_r  0x0000000008012c6c       0x94 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-nano-freer.o)
+                0x0000000008012c6c                _free_r
  .text._malloc_r
-                0x0000000008012d48       0xbc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-nano-mallocr.o)
-                0x0000000008012d48                _malloc_r
- .text._sbrk_r  0x0000000008012e04       0x24 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-sbrkr.o)
-                0x0000000008012e04                _sbrk_r
- .text.__sread  0x0000000008012e28       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
-                0x0000000008012e28                __sread
+                0x0000000008012d00       0xbc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008012d00                _malloc_r
+ .text._sbrk_r  0x0000000008012dbc       0x24 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-sbrkr.o)
+                0x0000000008012dbc                _sbrk_r
+ .text.__sread  0x0000000008012de0       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
+                0x0000000008012de0                __sread
  .text.__swrite
-                0x0000000008012e50       0x38 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
-                0x0000000008012e50                __swrite
- .text.__sseek  0x0000000008012e88       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
-                0x0000000008012e88                __sseek
+                0x0000000008012e08       0x38 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
+                0x0000000008012e08                __swrite
+ .text.__sseek  0x0000000008012e40       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
+                0x0000000008012e40                __sseek
  .text.__sclose
-                0x0000000008012eb4        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
-                0x0000000008012eb4                __sclose
+                0x0000000008012e6c        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-stdio.o)
+                0x0000000008012e6c                __sclose
  .text._write_r
-                0x0000000008012ec0       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-writer.o)
-                0x0000000008012ec0                _write_r
+                0x0000000008012e78       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-writer.o)
+                0x0000000008012e78                _write_r
  .text._close_r
-                0x0000000008012ee8       0x24 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-closer.o)
-                0x0000000008012ee8                _close_r
+                0x0000000008012ea0       0x24 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-closer.o)
+                0x0000000008012ea0                _close_r
  .text._lseek_r
-                0x0000000008012f0c       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-lseekr.o)
-                0x0000000008012f0c                _lseek_r
+                0x0000000008012ec4       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-lseekr.o)
+                0x0000000008012ec4                _lseek_r
  .text.__malloc_lock
-                0x0000000008012f34        0x2 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-mlock.o)
-                0x0000000008012f34                __malloc_lock
+                0x0000000008012eec        0x2 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-mlock.o)
+                0x0000000008012eec                __malloc_lock
  .text.__malloc_unlock
-                0x0000000008012f36        0x2 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-mlock.o)
-                0x0000000008012f36                __malloc_unlock
- .text._read_r  0x0000000008012f38       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-readr.o)
-                0x0000000008012f38                _read_r
- .text._close   0x0000000008012f60       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(close.o)
-                0x0000000008012f60                _close
- .text._lseek   0x0000000008012f70       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(lseek.o)
-                0x0000000008012f70                _lseek
- .text._read    0x0000000008012f80       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(read.o)
-                0x0000000008012f80                _read
- .text.cos      0x0000000008012f90       0x8c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_cos.o)
-                0x0000000008012f90                cos
- .text.fmaxf    0x000000000801301c       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fmax.o)
-                0x000000000801301c                fmaxf
+                0x0000000008012eee        0x2 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-mlock.o)
+                0x0000000008012eee                __malloc_unlock
+ .text._read_r  0x0000000008012ef0       0x28 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-readr.o)
+                0x0000000008012ef0                _read_r
+ .text._close   0x0000000008012f18       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(close.o)
+                0x0000000008012f18                _close
+ .text._lseek   0x0000000008012f28       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(lseek.o)
+                0x0000000008012f28                _lseek
+ .text._read    0x0000000008012f38       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libnosys.a(read.o)
+                0x0000000008012f38                _read
+ .text.cos      0x0000000008012f48       0x8c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_cos.o)
+                0x0000000008012f48                cos
+ .text.fmaxf    0x0000000008012fd4       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fmax.o)
+                0x0000000008012fd4                fmaxf
  .text.__fpclassifyf
-                0x0000000008013048       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fpclassify.o)
-                0x0000000008013048                __fpclassifyf
- .text.roundf   0x0000000008013088       0x44 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_round.o)
-                0x0000000008013088                roundf
- .text.sqrt     0x00000000080130cc       0xc0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o)
-                0x00000000080130cc                sqrt
- .text.expf     0x000000000801318c       0xe8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o)
-                0x000000000801318c                expf
- .text.log10f   0x0000000008013274       0xf8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o)
-                0x0000000008013274                log10f
+                0x0000000008013000       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_fpclassify.o)
+                0x0000000008013000                __fpclassifyf
+ .text.roundf   0x0000000008013040       0x44 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_round.o)
+                0x0000000008013040                roundf
+ .text.sqrt     0x0000000008013084       0xc0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o)
+                0x0000000008013084                sqrt
+ .text.expf     0x0000000008013144       0xe8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o)
+                0x0000000008013144                expf
+ .text.log10f   0x000000000801322c       0xf8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o)
+                0x000000000801322c                log10f
  .text.__ieee754_rem_pio2
-                0x000000000801336c      0x420 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
-                0x000000000801336c                __ieee754_rem_pio2
+                0x0000000008013324      0x420 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
+                0x0000000008013324                __ieee754_rem_pio2
  .text.__ieee754_sqrt
-                0x000000000801378c      0x1b0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_sqrt.o)
-                0x000000000801378c                __ieee754_sqrt
+                0x0000000008013744      0x1b0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_sqrt.o)
+                0x0000000008013744                __ieee754_sqrt
  .text.__ieee754_expf
-                0x000000000801393c      0x1f4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
-                0x000000000801393c                __ieee754_expf
+                0x00000000080138f4      0x1f4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
+                0x00000000080138f4                __ieee754_expf
  .text.__ieee754_log10f
-                0x0000000008013b30       0xb0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_log10.o)
-                0x0000000008013b30                __ieee754_log10f
+                0x0000000008013ae8       0xb0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_log10.o)
+                0x0000000008013ae8                __ieee754_log10f
  .text.__kernel_cos
-                0x0000000008013be0      0x234 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_cos.o)
-                0x0000000008013be0                __kernel_cos
+                0x0000000008013b98      0x234 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_cos.o)
+                0x0000000008013b98                __kernel_cos
  .text.__kernel_rem_pio2
-                0x0000000008013e14      0x8c0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
-                0x0000000008013e14                __kernel_rem_pio2
+                0x0000000008013dcc      0x8c0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
+                0x0000000008013dcc                __kernel_rem_pio2
  .text.__kernel_sin
-                0x00000000080146d4      0x164 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_sin.o)
-                0x00000000080146d4                __kernel_sin
- .text.fabs     0x0000000008014838        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_fabs.o)
-                0x0000000008014838                fabs
- .text.floor    0x0000000008014840      0x138 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_floor.o)
-                0x0000000008014840                floor
- .text.matherr  0x0000000008014978        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_matherr.o)
-                0x0000000008014978                matherr
- .text.nan      0x000000000801497c        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_nan.o)
-                0x000000000801497c                nan
- .text.scalbn   0x0000000008014988       0xd0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_scalbn.o)
-                0x0000000008014988                scalbn
- .text.finitef  0x0000000008014a58       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_finite.o)
-                0x0000000008014a58                finitef
+                0x000000000801468c      0x164 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_sin.o)
+                0x000000000801468c                __kernel_sin
+ .text.fabs     0x00000000080147f0        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_fabs.o)
+                0x00000000080147f0                fabs
+ .text.floor    0x00000000080147f8      0x138 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_floor.o)
+                0x00000000080147f8                floor
+ .text.matherr  0x0000000008014930        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_matherr.o)
+                0x0000000008014930                matherr
+ .text.nan      0x0000000008014934        0xc /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_nan.o)
+                0x0000000008014934                nan
+ .text.scalbn   0x0000000008014940       0xd0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_scalbn.o)
+                0x0000000008014940                scalbn
+ .text.finitef  0x0000000008014a10       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-sf_finite.o)
+                0x0000000008014a10                finitef
  .text.__ieee754_logf
-                0x0000000008014a6c      0x28c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_log.o)
-                0x0000000008014a6c                __ieee754_logf
+                0x0000000008014a24      0x28c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_log.o)
+                0x0000000008014a24                __ieee754_logf
  .text.copysign
-                0x0000000008014cf8       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_copysign.o)
-                0x0000000008014cf8                copysign
+                0x0000000008014cb0       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-s_copysign.o)
+                0x0000000008014cb0                copysign
  .text.out_func
-                0x0000000008014d08       0x20 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+                0x0000000008014cc0       0x20 out/lib/libwrapprintf.a(acc_wrap_printf.o)
  .text.__wrap_puts
-                0x0000000008014d28       0x24 out/lib/libwrapprintf.a(acc_wrap_printf.o)
-                0x0000000008014d28                __wrap_puts
+                0x0000000008014ce0       0x24 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+                0x0000000008014ce0                __wrap_puts
  .text.__wrap_printf
-                0x0000000008014d4c       0x44 out/lib/libwrapprintf.a(acc_wrap_printf.o)
-                0x0000000008014d4c                __wrap_printf
+                0x0000000008014d04       0x44 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+                0x0000000008014d04                __wrap_printf
  .text.__wrap_vsnprintf
-                0x0000000008014d90        0x8 out/lib/libwrapprintf.a(acc_wrap_printf.o)
-                0x0000000008014d90                __wrap_vsnprintf
+                0x0000000008014d48        0x8 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+                0x0000000008014d48                __wrap_vsnprintf
  .text._out_buffer
-                0x0000000008014d98        0x8 out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014d50        0x8 out/lib/libwrapprintf.a(printf.o)
  .text._out_null
-                0x0000000008014da0        0x2 out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014d58        0x2 out/lib/libwrapprintf.a(printf.o)
  .text._out_fct
-                0x0000000008014da2        0xe out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014d5a        0xe out/lib/libwrapprintf.a(printf.o)
  .text._ntoa_format
-                0x0000000008014db0      0x14a out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014d68      0x14a out/lib/libwrapprintf.a(printf.o)
  .text._ntoa_long
-                0x0000000008014efa       0x90 out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014eb2       0x90 out/lib/libwrapprintf.a(printf.o)
  .text._ntoa_long_long
-                0x0000000008014f8a       0xa4 out/lib/libwrapprintf.a(printf.o)
- *fill*         0x000000000801502e        0x2 
+                0x0000000008014f42       0xa4 out/lib/libwrapprintf.a(printf.o)
+ *fill*         0x0000000008014fe6        0x2 
  .text._vsnprintf
-                0x0000000008015030      0x45c out/lib/libwrapprintf.a(printf.o)
+                0x0000000008014fe8      0x45c out/lib/libwrapprintf.a(printf.o)
  .text.vsnprintf_
-                0x000000000801548c       0x18 out/lib/libwrapprintf.a(printf.o)
-                0x000000000801548c                vsnprintf_
+                0x0000000008015444       0x18 out/lib/libwrapprintf.a(printf.o)
+                0x0000000008015444                vsnprintf_
  .text.fctvprintf
-                0x00000000080154a4       0x20 out/lib/libwrapprintf.a(printf.o)
-                0x00000000080154a4                fctvprintf
- .text.malloc   0x00000000080154c4       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-malloc.o)
-                0x00000000080154c4                malloc
- .text.free     0x00000000080154d8       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-malloc.o)
-                0x00000000080154d8                free
- .text.memcpy   0x00000000080154ec       0x12 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memcpy-stub.o)
-                0x00000000080154ec                memcpy
- .text.memmove  0x00000000080154fe       0x26 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memmove.o)
-                0x00000000080154fe                memmove
+                0x000000000801545c       0x20 out/lib/libwrapprintf.a(printf.o)
+                0x000000000801545c                fctvprintf
+ .text.malloc   0x000000000801547c       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-malloc.o)
+                0x000000000801547c                malloc
+ .text.free     0x0000000008015490       0x14 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-malloc.o)
+                0x0000000008015490                free
+ .text.memcpy   0x00000000080154a4       0x12 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memcpy-stub.o)
+                0x00000000080154a4                memcpy
+ .text.memmove  0x00000000080154b6       0x26 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-memmove.o)
+                0x00000000080154b6                memmove
  *(.glue_7)
- .glue_7        0x0000000008015524        0x0 linker stubs
+ .glue_7        0x00000000080154dc        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008015524        0x0 linker stubs
+ .glue_7t       0x00000000080154dc        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0000000008015524        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ .eh_frame      0x00000000080154dc        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
  *(.init)
- .init          0x0000000008015524        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x0000000008015524                _init
- .init          0x0000000008015528        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+ .init          0x00000000080154dc        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x00000000080154dc                _init
+ .init          0x00000000080154e0        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
  *(.fini)
- .fini          0x0000000008015530        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x0000000008015530                _fini
- .fini          0x0000000008015534        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
-                0x000000000801553c                . = ALIGN (0x4)
-                0x000000000801553c                _etext = .
+ .fini          0x00000000080154e8        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x00000000080154e8                _fini
+ .fini          0x00000000080154ec        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+                0x00000000080154f4                . = ALIGN (0x4)
+                0x00000000080154f4                _etext = .
 
-.vfp11_veneer   0x000000000801553c        0x0
- .vfp11_veneer  0x000000000801553c        0x0 linker stubs
+.vfp11_veneer   0x00000000080154f4        0x0
+ .vfp11_veneer  0x00000000080154f4        0x0 linker stubs
 
-.v4_bx          0x000000000801553c        0x0
- .v4_bx         0x000000000801553c        0x0 linker stubs
+.v4_bx          0x00000000080154f4        0x0
+ .v4_bx         0x00000000080154f4        0x0 linker stubs
 
-.iplt           0x000000000801553c        0x0
- .iplt          0x000000000801553c        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.iplt           0x00000000080154f4        0x0
+ .iplt          0x00000000080154f4        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
-.rodata         0x0000000008015540     0x9058
-                0x0000000008015540                . = ALIGN (0x4)
+.rodata         0x00000000080154f8     0x9058
+                0x00000000080154f8                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x0000000008015540       0xa6 /tmp/ccAULJ3h.ltrans0.ltrans.o
- *fill*         0x00000000080155e6        0x2 
- .rodata        0x00000000080155e8     0x35fc /tmp/ccAULJ3h.ltrans1.ltrans.o
- .rodata        0x0000000008018be4     0x2bcc /tmp/ccAULJ3h.ltrans2.ltrans.o
-                0x0000000008018e10                __compound_literal.134.lto_priv.614
-                0x0000000008018e18                __compound_literal.133.lto_priv.612
-                0x0000000008018e2c                __compound_literal.132.lto_priv.610
-                0x0000000008018e38                __compound_literal.131.lto_priv.608
-                0x0000000008018e40                __compound_literal.130.lto_priv.606
-                0x0000000008018e54                __compound_literal.129.lto_priv.604
-                0x0000000008018e5c                __compound_literal.128.lto_priv.602
-                0x0000000008018e68                __compound_literal.127.lto_priv.600
-                0x0000000008018e74                __compound_literal.126.lto_priv.598
-                0x0000000008018e88                __compound_literal.125.lto_priv.596
-                0x0000000008018e90                __compound_literal.124.lto_priv.594
-                0x0000000008018e98                __compound_literal.123.lto_priv.592
-                0x0000000008018ea0                __compound_literal.122.lto_priv.590
-                0x0000000008018ea8                __compound_literal.121.lto_priv.588
-                0x0000000008018eb0                __compound_literal.120.lto_priv.586
-                0x0000000008018eb8                __compound_literal.119.lto_priv.584
-                0x0000000008018ed0                __compound_literal.118.lto_priv.582
-                0x0000000008018edc                __compound_literal.117.lto_priv.580
-                0x0000000008018ee4                __compound_literal.116.lto_priv.578
-                0x0000000008018ef8                __compound_literal.115.lto_priv.576
-                0x0000000008018f04                __compound_literal.114.lto_priv.574
-                0x0000000008019098                __compound_literal.113.lto_priv.572
-                0x00000000080190a4                __compound_literal.112.lto_priv.570
-                0x00000000080190ac                __compound_literal.111.lto_priv.568
-                0x00000000080190b4                __compound_literal.110.lto_priv.566
-                0x00000000080190bc                __compound_literal.109.lto_priv.564
-                0x00000000080190c4                __compound_literal.108.lto_priv.562
-                0x00000000080190e4                __compound_literal.107.lto_priv.560
-                0x00000000080190ec                __compound_literal.106.lto_priv.558
-                0x00000000080190f4                __compound_literal.105.lto_priv.556
-                0x00000000080190fc                __compound_literal.104.lto_priv.554
-                0x0000000008019104                __compound_literal.103.lto_priv.552
-                0x000000000801913c                __compound_literal.102.lto_priv.550
-                0x0000000008019144                __compound_literal.101.lto_priv.548
-                0x000000000801914c                __compound_literal.100.lto_priv.546
-                0x0000000008019154                __compound_literal.99.lto_priv.544
-                0x000000000801915c                __compound_literal.98.lto_priv.542
-                0x0000000008019168                __compound_literal.97.lto_priv.540
-                0x000000000801917c                __compound_literal.96.lto_priv.538
-                0x0000000008019184                __compound_literal.95.lto_priv.536
-                0x000000000801918c                __compound_literal.94.lto_priv.534
-                0x00000000080191a0                __compound_literal.93.lto_priv.532
-                0x00000000080191a8                __compound_literal.92.lto_priv.530
-                0x00000000080191b0                __compound_literal.91.lto_priv.528
-                0x00000000080191b8                __compound_literal.90.lto_priv.526
-                0x00000000080191c4                __compound_literal.89.lto_priv.524
-                0x00000000080191dc                __compound_literal.88.lto_priv.522
-                0x00000000080191e4                __compound_literal.87.lto_priv.520
-                0x00000000080191ec                __compound_literal.86.lto_priv.518
-                0x00000000080191f4                __compound_literal.85.lto_priv.516
-                0x00000000080191fc                __compound_literal.84.lto_priv.514
-                0x0000000008019204                __compound_literal.83.lto_priv.512
-                0x000000000801920c                __compound_literal.82.lto_priv.510
-                0x0000000008019214                __compound_literal.81.lto_priv.508
-                0x0000000008019228                __compound_literal.80.lto_priv.506
-                0x0000000008019230                __compound_literal.79.lto_priv.504
-                0x0000000008019238                __compound_literal.78.lto_priv.502
-                0x0000000008019240                __compound_literal.77.lto_priv.500
-                0x0000000008019248                __compound_literal.76.lto_priv.498
-                0x0000000008019254                __compound_literal.75.lto_priv.496
-                0x000000000801925c                __compound_literal.74.lto_priv.494
-                0x0000000008019264                __compound_literal.73.lto_priv.492
-                0x000000000801926c                __compound_literal.72.lto_priv.490
-                0x0000000008019274                __compound_literal.71.lto_priv.488
-                0x000000000801927c                __compound_literal.70.lto_priv.486
-                0x00000000080192b4                __compound_literal.69.lto_priv.484
-                0x00000000080192bc                __compound_literal.68.lto_priv.482
-                0x00000000080192d0                __compound_literal.67.lto_priv.480
-                0x00000000080192dc                __compound_literal.66.lto_priv.478
-                0x00000000080192e8                __compound_literal.65.lto_priv.476
-                0x00000000080192fc                __compound_literal.64.lto_priv.474
-                0x0000000008019310                __compound_literal.63.lto_priv.472
-                0x0000000008019324                __compound_literal.62.lto_priv.470
-                0x000000000801932c                __compound_literal.61.lto_priv.468
-                0x0000000008019334                __compound_literal.60.lto_priv.466
-                0x0000000008019340                __compound_literal.59.lto_priv.464
-                0x0000000008019354                __compound_literal.58.lto_priv.462
-                0x000000000801935c                __compound_literal.57.lto_priv.460
-                0x0000000008019364                __compound_literal.56.lto_priv.458.lto_priv.620
-                0x0000000008019378                __compound_literal.55.lto_priv.455
-                0x000000000801938c                __compound_literal.54.lto_priv.452
-                0x0000000008019398                __compound_literal.53.lto_priv.449
-                0x00000000080193a0                __compound_literal.52.lto_priv.446
-                0x00000000080193d0                __compound_literal.51.lto_priv.443
-                0x00000000080193d8                __compound_literal.50.lto_priv.440
-                0x00000000080193e0                __compound_literal.49.lto_priv.437
-                0x00000000080193e8                __compound_literal.48.lto_priv.434
-                0x00000000080193f0                __compound_literal.47.lto_priv.431
-                0x00000000080193f8                __compound_literal.46.lto_priv.428
-                0x0000000008019400                __compound_literal.45.lto_priv.425
-                0x0000000008019408                __compound_literal.44.lto_priv.422
-                0x0000000008019410                __compound_literal.43.lto_priv.419
-                0x0000000008019418                __compound_literal.42.lto_priv.416
-                0x0000000008019420                __compound_literal.41.lto_priv.413
-                0x0000000008019428                __compound_literal.40.lto_priv.410
-                0x0000000008019430                __compound_literal.39.lto_priv.407
-                0x0000000008019438                __compound_literal.38.lto_priv.404
-                0x0000000008019440                __compound_literal.37.lto_priv.401
-                0x0000000008019448                __compound_literal.36.lto_priv.255
-                0x0000000008019454                __compound_literal.35.lto_priv.253
-                0x0000000008019460                __compound_literal.34.lto_priv.251
-                0x0000000008019468                __compound_literal.33.lto_priv.249
-                0x0000000008019470                __compound_literal.32.lto_priv.247
-                0x0000000008019478                __compound_literal.31.lto_priv.245
-                0x0000000008019480                __compound_literal.30.lto_priv.243
-                0x0000000008019488                __compound_literal.29.lto_priv.241
-                0x0000000008019490                __compound_literal.28.lto_priv.239
-                0x0000000008019498                __compound_literal.27.lto_priv.237
-                0x00000000080194a0                __compound_literal.26.lto_priv.235
-                0x00000000080194a8                __compound_literal.25.lto_priv.233
-                0x00000000080194b0                __compound_literal.24.lto_priv.231
-                0x00000000080194b8                __compound_literal.23.lto_priv.229.lto_priv.619
-                0x00000000080194c0                __compound_literal.22.lto_priv.227.lto_priv.618
-                0x00000000080194c8                __compound_literal.21.lto_priv.225
-                0x00000000080194d0                __compound_literal.20.lto_priv.223
-                0x00000000080194d8                __compound_literal.19.lto_priv.221.lto_priv.617
-                0x00000000080194e0                __compound_literal.18.lto_priv.219
-                0x00000000080194e8                __compound_literal.17.lto_priv.217
-                0x00000000080194f0                __compound_literal.16.lto_priv.215
-                0x0000000008019510                __compound_literal.15.lto_priv.213
-                0x0000000008019518                __compound_literal.14.lto_priv.211
-                0x0000000008019520                __compound_literal.13.lto_priv.209
-                0x0000000008019528                __compound_literal.12.lto_priv.207
-                0x0000000008019530                __compound_literal.11.lto_priv.205
-                0x0000000008019538                __compound_literal.10.lto_priv.203
-                0x0000000008019540                __compound_literal.9.lto_priv.201.lto_priv.616
-                0x0000000008019548                __compound_literal.8.lto_priv.199
-                0x0000000008019550                __compound_literal.7.lto_priv.197
-                0x0000000008019558                __compound_literal.6.lto_priv.195
-                0x0000000008019560                __compound_literal.5.lto_priv.193
-                0x0000000008019568                __compound_literal.4.lto_priv.191
-                0x0000000008019570                __compound_literal.3.lto_priv.189
-                0x0000000008019578                __compound_literal.2.lto_priv.187
-                0x0000000008019580                __compound_literal.1.lto_priv.185
-                0x0000000008019588                __compound_literal.0.lto_priv.183
-                0x0000000008019590                CSWTCH.1.lto_priv.647
-                0x00000000080197e4                acc_image_a111_r2c_sweep_param_table
-                0x0000000008019e20                uwTickFreq
-                0x0000000008019e24                log_funcs.lto_priv.319
-                0x000000000801a990                acc_image_a111_r2c_sweep
- .rodata        0x000000000801b7b0       0x80 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(divsf3.o)
- .rodata        0x000000000801b830       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(mulsf3.o)
- .rodata        0x000000000801b870       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(divdf3.o)
- .rodata        0x000000000801b8b0       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(muldf3.o)
+ .rodata        0x00000000080154f8       0xa6 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ *fill*         0x000000000801559e        0x2 
+ .rodata        0x00000000080155a0     0x35fc /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .rodata        0x0000000008018b9c     0x2bcc /tmp/ccVqMBBy.ltrans2.ltrans.o
+                0x0000000008018dc8                __compound_literal.134.lto_priv.614
+                0x0000000008018dd0                __compound_literal.133.lto_priv.612
+                0x0000000008018de4                __compound_literal.132.lto_priv.610
+                0x0000000008018df0                __compound_literal.131.lto_priv.608
+                0x0000000008018df8                __compound_literal.130.lto_priv.606
+                0x0000000008018e0c                __compound_literal.129.lto_priv.604
+                0x0000000008018e14                __compound_literal.128.lto_priv.602
+                0x0000000008018e20                __compound_literal.127.lto_priv.600
+                0x0000000008018e2c                __compound_literal.126.lto_priv.598
+                0x0000000008018e40                __compound_literal.125.lto_priv.596
+                0x0000000008018e48                __compound_literal.124.lto_priv.594
+                0x0000000008018e50                __compound_literal.123.lto_priv.592
+                0x0000000008018e58                __compound_literal.122.lto_priv.590
+                0x0000000008018e60                __compound_literal.121.lto_priv.588
+                0x0000000008018e68                __compound_literal.120.lto_priv.586
+                0x0000000008018e70                __compound_literal.119.lto_priv.584
+                0x0000000008018e88                __compound_literal.118.lto_priv.582
+                0x0000000008018e94                __compound_literal.117.lto_priv.580
+                0x0000000008018e9c                __compound_literal.116.lto_priv.578
+                0x0000000008018eb0                __compound_literal.115.lto_priv.576
+                0x0000000008018ebc                __compound_literal.114.lto_priv.574
+                0x0000000008019050                __compound_literal.113.lto_priv.572
+                0x000000000801905c                __compound_literal.112.lto_priv.570
+                0x0000000008019064                __compound_literal.111.lto_priv.568
+                0x000000000801906c                __compound_literal.110.lto_priv.566
+                0x0000000008019074                __compound_literal.109.lto_priv.564
+                0x000000000801907c                __compound_literal.108.lto_priv.562
+                0x000000000801909c                __compound_literal.107.lto_priv.560
+                0x00000000080190a4                __compound_literal.106.lto_priv.558
+                0x00000000080190ac                __compound_literal.105.lto_priv.556
+                0x00000000080190b4                __compound_literal.104.lto_priv.554
+                0x00000000080190bc                __compound_literal.103.lto_priv.552
+                0x00000000080190f4                __compound_literal.102.lto_priv.550
+                0x00000000080190fc                __compound_literal.101.lto_priv.548
+                0x0000000008019104                __compound_literal.100.lto_priv.546
+                0x000000000801910c                __compound_literal.99.lto_priv.544
+                0x0000000008019114                __compound_literal.98.lto_priv.542
+                0x0000000008019120                __compound_literal.97.lto_priv.540
+                0x0000000008019134                __compound_literal.96.lto_priv.538
+                0x000000000801913c                __compound_literal.95.lto_priv.536
+                0x0000000008019144                __compound_literal.94.lto_priv.534
+                0x0000000008019158                __compound_literal.93.lto_priv.532
+                0x0000000008019160                __compound_literal.92.lto_priv.530
+                0x0000000008019168                __compound_literal.91.lto_priv.528
+                0x0000000008019170                __compound_literal.90.lto_priv.526
+                0x000000000801917c                __compound_literal.89.lto_priv.524
+                0x0000000008019194                __compound_literal.88.lto_priv.522
+                0x000000000801919c                __compound_literal.87.lto_priv.520
+                0x00000000080191a4                __compound_literal.86.lto_priv.518
+                0x00000000080191ac                __compound_literal.85.lto_priv.516
+                0x00000000080191b4                __compound_literal.84.lto_priv.514
+                0x00000000080191bc                __compound_literal.83.lto_priv.512
+                0x00000000080191c4                __compound_literal.82.lto_priv.510
+                0x00000000080191cc                __compound_literal.81.lto_priv.508
+                0x00000000080191e0                __compound_literal.80.lto_priv.506
+                0x00000000080191e8                __compound_literal.79.lto_priv.504
+                0x00000000080191f0                __compound_literal.78.lto_priv.502
+                0x00000000080191f8                __compound_literal.77.lto_priv.500
+                0x0000000008019200                __compound_literal.76.lto_priv.498
+                0x000000000801920c                __compound_literal.75.lto_priv.496
+                0x0000000008019214                __compound_literal.74.lto_priv.494
+                0x000000000801921c                __compound_literal.73.lto_priv.492
+                0x0000000008019224                __compound_literal.72.lto_priv.490
+                0x000000000801922c                __compound_literal.71.lto_priv.488
+                0x0000000008019234                __compound_literal.70.lto_priv.486
+                0x000000000801926c                __compound_literal.69.lto_priv.484
+                0x0000000008019274                __compound_literal.68.lto_priv.482
+                0x0000000008019288                __compound_literal.67.lto_priv.480
+                0x0000000008019294                __compound_literal.66.lto_priv.478
+                0x00000000080192a0                __compound_literal.65.lto_priv.476
+                0x00000000080192b4                __compound_literal.64.lto_priv.474
+                0x00000000080192c8                __compound_literal.63.lto_priv.472
+                0x00000000080192dc                __compound_literal.62.lto_priv.470
+                0x00000000080192e4                __compound_literal.61.lto_priv.468
+                0x00000000080192ec                __compound_literal.60.lto_priv.466
+                0x00000000080192f8                __compound_literal.59.lto_priv.464
+                0x000000000801930c                __compound_literal.58.lto_priv.462
+                0x0000000008019314                __compound_literal.57.lto_priv.460
+                0x000000000801931c                __compound_literal.56.lto_priv.458.lto_priv.620
+                0x0000000008019330                __compound_literal.55.lto_priv.455
+                0x0000000008019344                __compound_literal.54.lto_priv.452
+                0x0000000008019350                __compound_literal.53.lto_priv.449
+                0x0000000008019358                __compound_literal.52.lto_priv.446
+                0x0000000008019388                __compound_literal.51.lto_priv.443
+                0x0000000008019390                __compound_literal.50.lto_priv.440
+                0x0000000008019398                __compound_literal.49.lto_priv.437
+                0x00000000080193a0                __compound_literal.48.lto_priv.434
+                0x00000000080193a8                __compound_literal.47.lto_priv.431
+                0x00000000080193b0                __compound_literal.46.lto_priv.428
+                0x00000000080193b8                __compound_literal.45.lto_priv.425
+                0x00000000080193c0                __compound_literal.44.lto_priv.422
+                0x00000000080193c8                __compound_literal.43.lto_priv.419
+                0x00000000080193d0                __compound_literal.42.lto_priv.416
+                0x00000000080193d8                __compound_literal.41.lto_priv.413
+                0x00000000080193e0                __compound_literal.40.lto_priv.410
+                0x00000000080193e8                __compound_literal.39.lto_priv.407
+                0x00000000080193f0                __compound_literal.38.lto_priv.404
+                0x00000000080193f8                __compound_literal.37.lto_priv.401
+                0x0000000008019400                __compound_literal.36.lto_priv.255
+                0x000000000801940c                __compound_literal.35.lto_priv.253
+                0x0000000008019418                __compound_literal.34.lto_priv.251
+                0x0000000008019420                __compound_literal.33.lto_priv.249
+                0x0000000008019428                __compound_literal.32.lto_priv.247
+                0x0000000008019430                __compound_literal.31.lto_priv.245
+                0x0000000008019438                __compound_literal.30.lto_priv.243
+                0x0000000008019440                __compound_literal.29.lto_priv.241
+                0x0000000008019448                __compound_literal.28.lto_priv.239
+                0x0000000008019450                __compound_literal.27.lto_priv.237
+                0x0000000008019458                __compound_literal.26.lto_priv.235
+                0x0000000008019460                __compound_literal.25.lto_priv.233
+                0x0000000008019468                __compound_literal.24.lto_priv.231
+                0x0000000008019470                __compound_literal.23.lto_priv.229.lto_priv.619
+                0x0000000008019478                __compound_literal.22.lto_priv.227.lto_priv.618
+                0x0000000008019480                __compound_literal.21.lto_priv.225
+                0x0000000008019488                __compound_literal.20.lto_priv.223
+                0x0000000008019490                __compound_literal.19.lto_priv.221.lto_priv.617
+                0x0000000008019498                __compound_literal.18.lto_priv.219
+                0x00000000080194a0                __compound_literal.17.lto_priv.217
+                0x00000000080194a8                __compound_literal.16.lto_priv.215
+                0x00000000080194c8                __compound_literal.15.lto_priv.213
+                0x00000000080194d0                __compound_literal.14.lto_priv.211
+                0x00000000080194d8                __compound_literal.13.lto_priv.209
+                0x00000000080194e0                __compound_literal.12.lto_priv.207
+                0x00000000080194e8                __compound_literal.11.lto_priv.205
+                0x00000000080194f0                __compound_literal.10.lto_priv.203
+                0x00000000080194f8                __compound_literal.9.lto_priv.201.lto_priv.616
+                0x0000000008019500                __compound_literal.8.lto_priv.199
+                0x0000000008019508                __compound_literal.7.lto_priv.197
+                0x0000000008019510                __compound_literal.6.lto_priv.195
+                0x0000000008019518                __compound_literal.5.lto_priv.193
+                0x0000000008019520                __compound_literal.4.lto_priv.191
+                0x0000000008019528                __compound_literal.3.lto_priv.189
+                0x0000000008019530                __compound_literal.2.lto_priv.187
+                0x0000000008019538                __compound_literal.1.lto_priv.185
+                0x0000000008019540                __compound_literal.0.lto_priv.183
+                0x0000000008019548                CSWTCH.1.lto_priv.647
+                0x000000000801979c                acc_image_a111_r2c_sweep_param_table
+                0x0000000008019dd8                uwTickFreq
+                0x0000000008019ddc                log_funcs.lto_priv.319
+                0x000000000801a948                acc_image_a111_r2c_sweep
+ .rodata        0x000000000801b768       0x80 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(divsf3.o)
+ .rodata        0x000000000801b7e8       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(mulsf3.o)
+ .rodata        0x000000000801b828       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(divdf3.o)
+ .rodata        0x000000000801b868       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(muldf3.o)
  *(.rodata*)
  .rodata.str1.1
-                0x000000000801b8f0      0x3e9 /tmp/ccAULJ3h.ltrans0.ltrans.o
+                0x000000000801b8a8      0x3e9 /tmp/ccVqMBBy.ltrans0.ltrans.o
                                         0x3f1 (size before relaxing)
- *fill*         0x000000000801bcd9        0x3 
+ *fill*         0x000000000801bc91        0x3 
  .rodata.str1.4
-                0x000000000801bcdc      0x82a /tmp/ccAULJ3h.ltrans0.ltrans.o
+                0x000000000801bc94      0x82a /tmp/ccVqMBBy.ltrans0.ltrans.o
                                         0x886 (size before relaxing)
  .rodata.str1.1
-                0x000000000801c506     0x1202 /tmp/ccAULJ3h.ltrans1.ltrans.o
+                0x000000000801c4be     0x1202 /tmp/ccVqMBBy.ltrans1.ltrans.o
                                        0x124d (size before relaxing)
  .rodata.str1.4
-                0x000000000801d708       0x26 /tmp/ccAULJ3h.ltrans1.ltrans.o
+                0x000000000801d6c0       0x26 /tmp/ccVqMBBy.ltrans1.ltrans.o
  .rodata.str1.1
-                0x000000000801d72e      0xb50 /tmp/ccAULJ3h.ltrans2.ltrans.o
+                0x000000000801d6e6      0xb50 /tmp/ccVqMBBy.ltrans2.ltrans.o
                                         0xc43 (size before relaxing)
- *fill*         0x000000000801e27e        0x2 
+ *fill*         0x000000000801e236        0x2 
  .rodata.str1.4
-                0x000000000801e280       0xab /tmp/ccAULJ3h.ltrans2.ltrans.o
- *fill*         0x000000000801e32b        0x1 
+                0x000000000801e238       0xab /tmp/ccVqMBBy.ltrans2.ltrans.o
+ *fill*         0x000000000801e2e3        0x1 
  .rodata.__sf_fake_stderr
-                0x000000000801e32c       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x000000000801e32c                __sf_fake_stderr
+                0x000000000801e2e4       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x000000000801e2e4                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x000000000801e34c       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x000000000801e34c                __sf_fake_stdin
+                0x000000000801e304       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x000000000801e304                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x000000000801e36c       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
-                0x000000000801e36c                __sf_fake_stdout
+                0x000000000801e324       0x20 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-findfp.o)
+                0x000000000801e324                __sf_fake_stdout
  .rodata._global_impure_ptr
-                0x000000000801e38c        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-impure.o)
-                0x000000000801e38c                _global_impure_ptr
+                0x000000000801e344        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-impure.o)
+                0x000000000801e344                _global_impure_ptr
  .rodata.sqrt.str1.4
-                0x000000000801e390        0x5 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o)
- *fill*         0x000000000801e395        0x3 
+                0x000000000801e348        0x5 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-w_sqrt.o)
+ *fill*         0x000000000801e34d        0x3 
  .rodata.expf.str1.4
-                0x000000000801e398        0x5 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o)
- *fill*         0x000000000801e39d        0x3 
+                0x000000000801e350        0x5 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_exp.o)
+ *fill*         0x000000000801e355        0x3 
  .rodata.log10f.str1.4
-                0x000000000801e3a0        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o)
+                0x000000000801e358        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-wf_log10.o)
                                           0x9 (size before relaxing)
  .rodata.npio2_hw
-                0x000000000801e3a8       0x80 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
+                0x000000000801e360       0x80 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
  .rodata.two_over_pi
-                0x000000000801e428      0x108 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
- .rodata.halF   0x000000000801e530        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
- .rodata.ln2HI  0x000000000801e538        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
- .rodata.ln2LO  0x000000000801e540        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
- .rodata.PIo2   0x000000000801e548       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
+                0x000000000801e3e0      0x108 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-e_rem_pio2.o)
+ .rodata.halF   0x000000000801e4e8        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
+ .rodata.ln2HI  0x000000000801e4f0        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
+ .rodata.ln2LO  0x000000000801e4f8        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_exp.o)
+ .rodata.PIo2   0x000000000801e500       0x40 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
  .rodata.init_jk
-                0x000000000801e588       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
+                0x000000000801e540       0x10 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-k_rem_pio2.o)
  .rodata.__wrap_puts.str1.1
-                0x000000000801e598      0xb50 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+                0x000000000801e550      0xb50 out/lib/libwrapprintf.a(acc_wrap_printf.o)
                                           0x2 (size before relaxing)
-                0x000000000801f0e8                . = ALIGN (0x4)
+                0x000000000801f0a0                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000801e598        0x8
-                0x000000000801e598                __exidx_start = .
+.ARM            0x000000000801e550        0x8
+                0x000000000801e550                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x000000000801e598        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_udivmoddi4.o)
-                0x000000000801e5a0                __exidx_end = .
+ .ARM.exidx     0x000000000801e550        0x8 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/libgcc.a(_udivmoddi4.o)
+                0x000000000801e558                __exidx_end = .
 
-.rel.dyn        0x000000000801e5a0        0x0
- .rel.iplt      0x000000000801e5a0        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.rel.dyn        0x000000000801e558        0x0
+ .rel.iplt      0x000000000801e558        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
-.preinit_array  0x000000000801e5a0        0x0
-                0x000000000801e5a0                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x000000000801e558        0x0
+                0x000000000801e558                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x000000000801e5a0                PROVIDE (__preinit_array_end = .)
+                0x000000000801e558                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x000000000801e5a0        0x4
-                0x000000000801e5a0                PROVIDE (__init_array_start = .)
+.init_array     0x000000000801e558        0x4
+                0x000000000801e558                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x000000000801e5a0        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
-                0x000000000801e5a4                PROVIDE (__init_array_end = .)
+ .init_array    0x000000000801e558        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+                0x000000000801e55c                PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000801e5a4        0x4
+.fini_array     0x000000000801e55c        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x000000000801e5a4        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ .fini_array    0x000000000801e55c        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x000000000801e5a8                _sidata = LOADADDR (.data)
+                0x000000000801e560                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x70 load address 0x000000000801e5a8
+.data           0x0000000020000000       0x70 load address 0x000000000801e560
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
- .data          0x0000000020000000        0x8 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .data          0x0000000020000000        0x8 /tmp/ccVqMBBy.ltrans2.ltrans.o
                 0x0000000020000000                SystemCoreClock
                 0x0000000020000004                uwTickPrio
  *(.data*)
@@ -1576,17 +1576,17 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
  *fill*         0x000000002000006d        0x3 
                 0x0000000020000070                _edata = .
 
-.igot.plt       0x0000000020000070        0x0 load address 0x000000000801e618
+.igot.plt       0x0000000020000070        0x0 load address 0x000000000801e5d0
  .igot.plt      0x0000000020000070        0x0 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 0x0000000020000070                . = ALIGN (0x4)
 
-.bss            0x0000000020000070      0x65c load address 0x000000000801e618
+.bss            0x0000000020000070      0x65c load address 0x000000000801e5d0
                 0x0000000020000070                _sbss = .
                 0x0000000020000070                __bss_start__ = _sbss
  *(.bss)
  .bss           0x0000000020000070       0x1c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
- .bss           0x000000002000008c      0x1fc /tmp/ccAULJ3h.ltrans0.ltrans.o
- .bss           0x0000000020000288      0x3a8 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .bss           0x000000002000008c      0x1fc /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .bss           0x0000000020000288      0x3a8 /tmp/ccVqMBBy.ltrans2.ltrans.o
                 0x0000000020000288                hrtc
                 0x00000000200002b4                uwTick
                 0x00000000200002b8                concrete_hal
@@ -1615,7 +1615,7 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x0000000020000638        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-nano-mallocr.o)
                 0x0000000020000638                __malloc_sbrk_start
  *(COMMON)
- COMMON         0x000000002000063c       0x8c /tmp/ccAULJ3h.ltrans0.ltrans.o
+ COMMON         0x000000002000063c       0x8c /tmp/ccVqMBBy.ltrans0.ltrans.o
                 0x000000002000063c                huart2
  COMMON         0x00000000200006c8        0x4 /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-reent.o)
                 0x00000000200006c8                errno
@@ -1624,7 +1624,7 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x00000000200006cc                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x00000000200006cc     0x1604 load address 0x000000000801e618
+                0x00000000200006cc     0x1604 load address 0x000000000801e5d0
                 0x00000000200006d0                . = ALIGN (0x8)
  *fill*         0x00000000200006cc        0x4 
                 [!provide]                        PROVIDE (end = .)
@@ -1648,11 +1648,11 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
  .ARM.attributes
                 0x000000000000001e       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
  .ARM.attributes
-                0x000000000000004a       0x30 /tmp/ccAULJ3h.ltrans0.ltrans.o
+                0x000000000000004a       0x30 /tmp/ccVqMBBy.ltrans0.ltrans.o
  .ARM.attributes
-                0x000000000000007a       0x30 /tmp/ccAULJ3h.ltrans1.ltrans.o
+                0x000000000000007a       0x30 /tmp/ccVqMBBy.ltrans1.ltrans.o
  .ARM.attributes
-                0x00000000000000aa       0x30 /tmp/ccAULJ3h.ltrans2.ltrans.o
+                0x00000000000000aa       0x30 /tmp/ccVqMBBy.ltrans2.ltrans.o
  .ARM.attributes
                 0x00000000000000da       0x32 out/obj/syscalls.o
  .ARM.attributes
@@ -1839,28 +1839,28 @@ LOAD /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none
                 0x0000000000000fe3       0x1c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libg_nano.a(lib_a-strlen.o)
 OUTPUT(out/main.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x3260f
- .debug_info    0x0000000000000000    0x144f3 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_info    0x00000000000144f3     0xf1fa /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_info    0x00000000000236ed     0xc0a7 /tmp/ccAULJ3h.ltrans2.ltrans.o
- .debug_info    0x000000000002f794      0x7fc out/obj/syscalls.o
- .debug_info    0x000000000002ff90      0x9a7 out/obj/sysmem.o
- .debug_info    0x0000000000030937      0xd4a out/lib/libwrapprintf.a(acc_wrap_printf.o)
- .debug_info    0x0000000000031681      0xf8e out/lib/libwrapprintf.a(printf.o)
+.debug_info     0x0000000000000000    0x3259b
+ .debug_info    0x0000000000000000    0x1447f /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_info    0x000000000001447f     0xf1fa /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_info    0x0000000000023679     0xc0a7 /tmp/ccVqMBBy.ltrans2.ltrans.o
+ .debug_info    0x000000000002f720      0x7fc out/obj/syscalls.o
+ .debug_info    0x000000000002ff1c      0x9a7 out/obj/sysmem.o
+ .debug_info    0x00000000000308c3      0xd4a out/lib/libwrapprintf.a(acc_wrap_printf.o)
+ .debug_info    0x000000000003160d      0xf8e out/lib/libwrapprintf.a(printf.o)
 
 .debug_abbrev   0x0000000000000000     0x238a
- .debug_abbrev  0x0000000000000000      0x922 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_abbrev  0x0000000000000922      0x870 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_abbrev  0x0000000000001192      0x8b3 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .debug_abbrev  0x0000000000000000      0x922 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_abbrev  0x0000000000000922      0x870 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_abbrev  0x0000000000001192      0x8b3 /tmp/ccVqMBBy.ltrans2.ltrans.o
  .debug_abbrev  0x0000000000001a45      0x187 out/obj/syscalls.o
  .debug_abbrev  0x0000000000001bcc      0x1f9 out/obj/sysmem.o
  .debug_abbrev  0x0000000000001dc5      0x2c7 out/lib/libwrapprintf.a(acc_wrap_printf.o)
  .debug_abbrev  0x000000000000208c      0x2fe out/lib/libwrapprintf.a(printf.o)
 
 .debug_loc      0x0000000000000000    0x1b1a4
- .debug_loc     0x0000000000000000     0x9dca /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_loc     0x0000000000009dca     0x9fa6 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_loc     0x0000000000013d70     0x5aab /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .debug_loc     0x0000000000000000     0x9dca /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_loc     0x0000000000009dca     0x9fa6 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_loc     0x0000000000013d70     0x5aab /tmp/ccVqMBBy.ltrans2.ltrans.o
  .debug_loc     0x000000000001981b       0x6b out/obj/syscalls.o
  .debug_loc     0x0000000000019886       0x4a out/obj/sysmem.o
  .debug_loc     0x00000000000198d0      0x279 out/lib/libwrapprintf.a(acc_wrap_printf.o)
@@ -1868,11 +1868,11 @@ OUTPUT(out/main.elf elf32-littlearm)
 
 .debug_aranges  0x0000000000000000      0x1e0
  .debug_aranges
-                0x0000000000000000       0x80 /tmp/ccAULJ3h.ltrans0.ltrans.o
+                0x0000000000000000       0x80 /tmp/ccVqMBBy.ltrans0.ltrans.o
  .debug_aranges
-                0x0000000000000080       0x20 /tmp/ccAULJ3h.ltrans1.ltrans.o
+                0x0000000000000080       0x20 /tmp/ccVqMBBy.ltrans1.ltrans.o
  .debug_aranges
-                0x00000000000000a0       0x20 /tmp/ccAULJ3h.ltrans2.ltrans.o
+                0x00000000000000a0       0x20 /tmp/ccVqMBBy.ltrans2.ltrans.o
  .debug_aranges
                 0x00000000000000c0       0x20 out/obj/syscalls.o
  .debug_aranges
@@ -1883,43 +1883,43 @@ OUTPUT(out/main.elf elf32-littlearm)
                 0x0000000000000150       0x90 out/lib/libwrapprintf.a(printf.o)
 
 .debug_ranges   0x0000000000000000     0x5eb0
- .debug_ranges  0x0000000000000000     0x28e8 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_ranges  0x00000000000028e8     0x25f0 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_ranges  0x0000000000004ed8      0xde0 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .debug_ranges  0x0000000000000000     0x28e8 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_ranges  0x00000000000028e8     0x25f0 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_ranges  0x0000000000004ed8      0xde0 /tmp/ccVqMBBy.ltrans2.ltrans.o
  .debug_ranges  0x0000000000005cb8       0x10 out/obj/syscalls.o
  .debug_ranges  0x0000000000005cc8       0x10 out/obj/sysmem.o
  .debug_ranges  0x0000000000005cd8       0x40 out/lib/libwrapprintf.a(acc_wrap_printf.o)
  .debug_ranges  0x0000000000005d18      0x198 out/lib/libwrapprintf.a(printf.o)
 
-.debug_line     0x0000000000000000     0x92ad
- .debug_line    0x0000000000000000     0x35c1 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_line    0x00000000000035c1     0x2aa5 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_line    0x0000000000006066     0x2459 /tmp/ccAULJ3h.ltrans2.ltrans.o
- .debug_line    0x00000000000084bf      0x2f4 out/obj/syscalls.o
- .debug_line    0x00000000000087b3      0x228 out/obj/sysmem.o
- .debug_line    0x00000000000089db      0x355 out/lib/libwrapprintf.a(acc_wrap_printf.o)
- .debug_line    0x0000000000008d30      0x57d out/lib/libwrapprintf.a(printf.o)
+.debug_line     0x0000000000000000     0x92a3
+ .debug_line    0x0000000000000000     0x35b7 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_line    0x00000000000035b7     0x2aa5 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_line    0x000000000000605c     0x2459 /tmp/ccVqMBBy.ltrans2.ltrans.o
+ .debug_line    0x00000000000084b5      0x2f4 out/obj/syscalls.o
+ .debug_line    0x00000000000087a9      0x228 out/obj/sysmem.o
+ .debug_line    0x00000000000089d1      0x355 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+ .debug_line    0x0000000000008d26      0x57d out/lib/libwrapprintf.a(printf.o)
 
-.debug_str      0x0000000000000000     0xd0ab
- .debug_str     0x0000000000000000     0x67c0 /tmp/ccAULJ3h.ltrans0.ltrans.o
-                                       0x7a98 (size before relaxing)
- .debug_str     0x00000000000067c0     0x39f1 /tmp/ccAULJ3h.ltrans1.ltrans.o
+.debug_str      0x0000000000000000     0xd095
+ .debug_str     0x0000000000000000     0x67aa /tmp/ccVqMBBy.ltrans0.ltrans.o
+                                       0x7a82 (size before relaxing)
+ .debug_str     0x00000000000067aa     0x39f1 /tmp/ccVqMBBy.ltrans1.ltrans.o
                                        0x604d (size before relaxing)
- .debug_str     0x000000000000a1b1     0x21a9 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .debug_str     0x000000000000a19b     0x21a9 /tmp/ccVqMBBy.ltrans2.ltrans.o
                                        0x64f1 (size before relaxing)
- .debug_str     0x000000000000c35a      0x690 out/obj/syscalls.o
+ .debug_str     0x000000000000c344      0x690 out/obj/syscalls.o
                                         0x76f (size before relaxing)
- .debug_str     0x000000000000c9ea      0x4f8 out/obj/sysmem.o
+ .debug_str     0x000000000000c9d4      0x4f8 out/obj/sysmem.o
                                         0x641 (size before relaxing)
- .debug_str     0x000000000000cee2       0xb3 out/lib/libwrapprintf.a(acc_wrap_printf.o)
+ .debug_str     0x000000000000cecc       0xb3 out/lib/libwrapprintf.a(acc_wrap_printf.o)
                                         0x6a1 (size before relaxing)
- .debug_str     0x000000000000cf95      0x116 out/lib/libwrapprintf.a(printf.o)
+ .debug_str     0x000000000000cf7f      0x116 out/lib/libwrapprintf.a(printf.o)
                                         0x358 (size before relaxing)
 
 .comment        0x0000000000000000       0x7f
- .comment       0x0000000000000000       0x80 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .comment       0x0000000000000000       0x80 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .comment       0x0000000000000000       0x80 /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .comment       0x0000000000000000       0x80 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .comment       0x0000000000000000       0x80 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .comment       0x0000000000000000       0x80 /tmp/ccVqMBBy.ltrans2.ltrans.o
  .comment       0x0000000000000000       0x7f out/obj/syscalls.o
                                          0x80 (size before relaxing)
  .comment       0x000000000000007f       0x80 out/obj/sysmem.o
@@ -1927,9 +1927,9 @@ OUTPUT(out/main.elf elf32-littlearm)
  .comment       0x000000000000007f       0x80 out/lib/libwrapprintf.a(printf.o)
 
 .debug_frame    0x0000000000000000     0x3488
- .debug_frame   0x0000000000000000      0xb48 /tmp/ccAULJ3h.ltrans0.ltrans.o
- .debug_frame   0x0000000000000b48      0xbb8 /tmp/ccAULJ3h.ltrans1.ltrans.o
- .debug_frame   0x0000000000001700      0xb6c /tmp/ccAULJ3h.ltrans2.ltrans.o
+ .debug_frame   0x0000000000000000      0xb48 /tmp/ccVqMBBy.ltrans0.ltrans.o
+ .debug_frame   0x0000000000000b48      0xbb8 /tmp/ccVqMBBy.ltrans1.ltrans.o
+ .debug_frame   0x0000000000001700      0xb6c /tmp/ccVqMBBy.ltrans2.ltrans.o
  .debug_frame   0x000000000000226c       0x28 out/obj/syscalls.o
  .debug_frame   0x0000000000002294       0x28 out/obj/sysmem.o
  .debug_frame   0x00000000000022bc       0x2c /mnt/c/Users/Stephen/Documents/Repositories/acconeer/compilers/gcc-arm-none-eabi-7-2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/libm.a(lib_a-ef_sqrt.o)
