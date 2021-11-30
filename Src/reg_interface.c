@@ -20,17 +20,25 @@ extern UART_HandleTypeDef huart1;
 //we probably need 2 or 3 ranges. I guess we will see.
 
 //registers as defined in xm132 module software
-//for custom registers
+//ADDITIONAL REGISTERS
+//0x0A :: sleepMCU
+//0x41 ::											:: envelope measurement repeats
+//-------------------------
 //0xD0 :: Velocity (mm/s)
 //0xD1 :: Distance (mm)
 //0xD2 :: Amplitude (arb)
 //0xD3 :: Mean Square Distance (arb)
-//0xD4 :: Mean Square Distance threshold (x1000)
+//0xD4 :: Mean Square Distance threshold (x1000) 	:: min peak seperation
 //0xD5 :: Gaussian Kernal StDev (x1000)
 //0xD6 :: Data Eval Mode
 //0xD7 :: Focus weight Radius
 //0xD8 :: Data zeroing threshold
 //0xD9 :: Bandstop velocity filter
+
+//ADDITIONAL COMMANDS
+//0x03 05 :: perform measurment
+//0x03 06 :: evaluate data
+//0xFA E9 :: dump 256 bytes of data from buffer with given offset
 uint32_t* RegInt_regmap(uint8_t reg){
 	REGADRERR = -1;
 	uint32_t* ptr = &REGADRERR;
@@ -77,10 +85,10 @@ int8_t RegInt_setregf(uint8_t reg, uint32_t val, uint8_t force){
 }
 
 int8_t RegInt_writeable(uint8_t reg){
-    //if service is activeated lock mode
+    //if service is created, lock mode
     if(reg == 0x02){
         if(RegInt_getreg(0x06) && 0x00000001){
-            return 1;
+            return 0;
         }
     }
     
@@ -113,7 +121,7 @@ void Reg_regor(uint8_t reg, uint32_t orbits){
 void RegInt_Init(void){
 	queue_cmd_end = 0;
 	for(uint8_t i = 0; i < 0xFF; i++){
-		if(i == 3){continue;}//writing to this reg controlls the RSS.//remove if works
+		// if(i == 3){continue;}//writing to this reg controlls the RSS.//remove if works
 		RegInt_setregf(i, 0, 1);
 	}
 	RegInt_setregf(0x07, 115200, 1);//set default baud rate
@@ -486,6 +494,9 @@ void updateSparseConfig(acc_service_configuration_t config, uint16_t sweep_start
 			
 }
 
+
+//custom register
+//0x41 :: Number of measurements (mm/s)
 void updateEnvelopeConfig(acc_service_configuration_t config){
     DBG_PRINTLN("updating config");
     acc_service_profile_set(config, RegInt_getreg(0x28));
@@ -671,7 +682,11 @@ int8_t activateService_handle(acc_service_handle_t handle){
 
 void stopService(void){
     DBG_PRINTLN("stopping service");
-    uint32_t service_type = RegInt_getreg(0x02);
+	//the first bit is set when a service is active
+	// DBG_PRINTINT(RegInt_getreg(0x06));
+    if(!(RegInt_getreg(0x06) && 0x00000001)){DBG_PRINTLN("no active service"); return;}
+	
+	uint32_t service_type = RegInt_getreg(0x02);
     
     acc_service_handle_t handle = NULL;
     if(service_type == 0x02){handle = envelope_handle;}
@@ -697,9 +712,11 @@ void stopService(void){
 	}
 	}
     
+	//clear least two bits
     uint32_t setbits = RegInt_getreg(0x06);
-    setbits &= 0xFFFFFFFE;
+    setbits &= 0xFFFFFFFC;
     RegInt_setregf(0x06, setbits, 1);
+	// DBG_PRINTINT(RegInt_getreg(0x06));
 	
 }
 
@@ -715,7 +732,7 @@ void sparseMeasure(void){
 	acc_service_sparse_get_next_by_reference(sparse_handle, &sparse_data, &sparse_result_info);
 	//filling the data buffer for near data
 	filldata_sparse(0);
-	INF_PRINTLN("Sparse measurement complete");
+	DBG_PRINTLN("Sparse measurement complete");
 		
 	if(far_active){
 		if(!acc_service_deactivate(sparse_handle)){
@@ -739,42 +756,52 @@ void sparseMeasure(void){
 			//handle error
 		}
 		
-		INF_PRINTLN("Sparse Far measurement end");
+		DBG_PRINTLN("Sparse Far measurement end");
 	}
 }
 
 void envelopeMeasure(void){
 	
 	INF_PRINTLN("Start Envelope measurement");
-    acc_service_envelope_get_next_by_reference(envelope_handle, &envelope_data, &envelope_result_info);
+	uint32_t repeats = RegInt_getreg(0x41);
+	DBG_PRINTINT(repeats);
+	for(uint32_t i=0; i < repeats; i++){
+		acc_service_envelope_get_next_by_reference(envelope_handle, &envelope_data, &envelope_result_info);
+	}
 	//filling the data buffer for near data
 	filldata_envelope();
-	INF_PRINTLN("Envelope measurement complete");
+	DBG_PRINTLN("Envelope measurement complete");
 	
 }
 
 void printf_sparse_metadata(acc_service_sparse_metadata_t metadata){
-    printf("Sparse* Serivce Metadata\n");
-	printf("Start: %ld mm\n", (int32_t)(metadata.start_m * 1000.0f));
+    INF_PRINTLN("Sparse* Serivce Metadata");
+	INF_PRINTLN("Start: %ld mm", (int32_t)(metadata.start_m * 1000.0f));
     if(! far_active){
-        printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
+        INF_PRINTLN("Length: %lu mm", (uint32_t)(metadata.length_m * 1000.0f));
     }else{
-       printf("Length (far): %lu mm\n", (uint32_t)((metadata.length_m+ sparse_metadata_far.length_m) * 1000.0f)); 
+       INF_PRINTLN("Length (far): %lu mm", (uint32_t)((metadata.length_m+ sparse_metadata_far.length_m) * 1000.0f)); 
     }
-    printf("Data length: %lu\n", (uint32_t)metadata.data_length);
-    printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.sweep_rate * 1000.0f));
-    printf("Step length: %lu um\n", (uint32_t)(metadata.step_length_m * 1.0e6f));
+    INF_PRINTLN("Data length: %lu", (uint32_t)metadata.data_length);
+    INF_PRINTLN("Sweep rate: %lu mHz", (uint32_t)(metadata.sweep_rate * 1000.0f));
+    INF_PRINTLN("Step length: %lu um", (uint32_t)(metadata.step_length_m * 1.0e6f));
 }
 
 void printf_envelope_metadata(acc_service_envelope_metadata_t metadata){
-    printf("Envelope Serivce Metadata\n");
-	printf("Start: %ld mm\n", (int32_t)(metadata.start_m * 1000.0f));
-    printf("Length: %lu mm\n", (uint32_t)(metadata.length_m * 1000.0f));
-    printf("Data length: %lu\n", (uint32_t)metadata.data_length);
-    printf("Sweep rate: %lu mHz\n", (uint32_t)(metadata.stitch_count));
-    printf("Step length: %lu um\n", (uint32_t)(metadata.step_length_m * 1.0e6f));
+    INF_PRINTLN("Envelope Serivce Metadata");
+	INF_PRINTLN("Start: %ld mm", (int32_t)(metadata.start_m * 1000.0f));
+    INF_PRINTLN("Length: %lu mm", (uint32_t)(metadata.length_m * 1000.0f));
+    INF_PRINTLN("Data length: %lu", (uint32_t)metadata.data_length);
+    INF_PRINTLN("Sweep rate: %lu mHz", (uint32_t)(metadata.stitch_count));
+    INF_PRINTLN("Step length: %lu um", (uint32_t)(metadata.step_length_m * 1.0e6f));
 }
 
+
+void evalData(void){
+	uint32_t service_type = RegInt_getreg(0x02);
+    if(service_type == 0x02){evalEnvelopeData();}
+    else if(service_type == 0x04){evalSparseData();}
+}
 
 //mode
 /*
@@ -786,7 +813,7 @@ Bit.
 5.	null below threshold
 6.	bandstop
 */
-void evalData(void){
+void evalSparseData(void){
     // #warning implentation removed for debuging
     // return;
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
@@ -857,10 +884,56 @@ void evalData(void){
 	}
 }
 
+
+//this should return the four tallest peaks and their amplitudes in D0 - D3
+//format 0xYYYYZZZZ, YYYY distance in mm, ZZZZ amplitude (little endian)
+void evalEnvelopeData(void){
+	const int n = 4;
+	uint16_t dist_res = (uint16_t)(envelope_metadata.step_length_m*1.0e6f);
+	uint16_t dist_start = (uint16_t)(envelope_metadata.start_m*1000.0f);
+	
+	uint16_t min_sep = RegInt_getreg(0xD4)
+	
+	uint16_t indexes[n];
+	uint16_t amplitudes[n];
+
+	
+	getpeaks(data, bins, indexes, amplitudes, min_sep);
+			
+	uint16_t distances[n];
+	for(uint8_t i = 0; i < n; i++){
+		distances[i] = (uint16_t)(((uint32_t)indexes[i]*(uint32_t)dist_res)/1e3) + dist_start;
+	}
+
+	uint32_t distamp_pack[n];
+	pack16to32array(distamp_pack, indexes, amplitudes);
+	
+	//store results
+	RegInt_setregf(0xD0,(uint32_t)distamp_pack[0], 1);
+	RegInt_setregf(0xD1,(uint32_t)distamp_pack[1], 1);
+	RegInt_setregf(0xD2,(uint32_t)distamp_pack[2], 1);
+	RegInt_setregf(0xD3,(uint32_t)distamp_pack[3], 1);
+	
+	INF_PRINTLN("RESULTS");
+	INF_PRINTLN("Peak 1: %d mm | %d arb.", distances[0], amplitudes[0]);
+	INF_PRINTLN("Peak 2: %d mm | %d arb.", distances[1], amplitudes[1]);
+	INF_PRINTLN("Peak 3: %d mm | %d arb.", distances[2], amplitudes[2]);
+	INF_PRINTLN("Peak 4: %d mm | %d arb.", distances[3], amplitudes[3]);
+	
+	print_envelope_results();
+	
+}
+
+
+
 void print_sparse_results(void){
 		INF_PRINTLN("RESULTS");
 		INF_PRINTLN("Velocity: %ld mm\\s", RegInt_getreg(0xD0));
 		INF_PRINTLN("Distance: %ld mm", RegInt_getreg(0xD1));
 		INF_PRINTLN("Amplitude: %ld arb", RegInt_getreg(0xD2));
 		INF_PRINTLN("Mean Square Distance: %ld arb", RegInt_getreg(0xD3));
+}
+
+
+void print_envelope_results(void){
 }

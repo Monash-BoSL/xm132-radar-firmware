@@ -115,7 +115,10 @@ void printf_sparse_metadata(acc_service_sparse_metadata_t);
 void printf_envelope_metadata(acc_service_envelope_metadata_t);
 
 void evalData(void);
+void evalSparseData(void);
+void evalEnvelopeData(void);
 void print_sparse_results(void);
+void print_envelope_results(void);
 
 
 #endif

@@ -296,3 +296,58 @@ floatv2_t center_of_mass(uint8v2_t max, uint8_t r){
 	}
 	return center;
 }
+
+
+//////////////envelope methods
+
+void getpeaks(uint16_t** data, uint16_t data_len, uint16_t* indexes, uint16_t* amplitudes, uint16_t min_sep){
+	const int n = 4;//number of peaks to find
+	uint16_t bins = data_len;
+	
+	for(uint8_t i = 0; i < n; i++){
+		indexes[i] = 0;
+		amplitudes[i] = 0;
+	}
+	
+	for(uint16_t i = 0; i < bins; i++){
+		uint8_t insert_indx = n;
+		uint16_t nxpeak = next_peak(data, bins, i, min_sep);
+		if (nxpeak == 0){
+			for(int8_t j = n-1; j >= 0; j--){
+				if(data[0][i] > amplitudes[j]){insert_indx = j;}
+				else{break;}
+			}
+			if(insert_indx < 4){
+				insert(indexes, n, i,insert_indx);
+				insert(amplitudes, n, data[0][i],insert_indx);
+				i += min_sep;
+			}
+		}else{
+			i = nxpeak;
+		}
+	}
+}
+
+uint16_t next_peak(uint16_t** data, uint16_t bins, uint16_t index, uint16_t min_sep){
+	uint16_t amp = data[0][index];
+	uint16_t indexend = MIN(bins,index + min_sep);
+	for(uint16_t i = index; i < indexend; i ++){
+		if(amp < data[0][i]){return i;}
+	}
+	return 0;
+}
+
+void insert(uint16_t* a, uint16_t a_len, uint16_t v, uint8_t indx){
+	const int n = a_len;//number of peaks to find
+	for(int8_t i = n-1; i > indx; i-- ){
+		a[i] = a[i-1];
+	}
+	a[indx] = v;
+}
+
+void pack16to32array(uint32_t* a, uint16_t* b, uint16_t* c){
+	const int n = 4;//number of peaks to find
+	for(uint8_t i = 0; i < n; i++ ){
+		a[i] = (((uint32_t)b[i])<<16) | c[i];
+	}
+}

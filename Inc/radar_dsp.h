@@ -44,7 +44,12 @@ float get_msd(uint16_t**, uint8v2_t, uint8v2_t, float);
 void null_data(uint16_t**, uint8v2_t, uint8v2_t, float);
 floatv2_t center_of_mass(uint8v2_t, uint8_t);
 
+////envelope ////
 
+void getpeaks(uint16_t**, uint16_t, uint16_t*, uint16_t*, uint16_t);
+uint16_t next_peak(uint16_t**, uint16_t, uint16_t, uint16_t);
+void insert(uint16_t*, uint16_t, uint16_t, uint8_t);
+void pack16to32array(uint32_t*, uint16_t*, uint16_t*);
 
 
 

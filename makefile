@@ -61,8 +61,13 @@ include $(sort $(wildcard rule/makefile_target_*.inc))
 include $(sort $(wildcard rule/makefile_define_*.inc))
 include $(sort $(wildcard rule/makefile_build_*.inc))
 
-CFLAGS-$(OUT_OBJ_DIR)/arduinoFFTfix.o = -O3
-CFLAGS-$(OUT_OBJ_DIR)/radar_dsp.o = -O3
+#extra aguments for source files
+CFLAGS-$(OUT_OBJ_DIR)/main.o = $(DEBUG_FLAGS)
+CFLAGS-$(OUT_OBJ_DIR)/reg_interface.o = -O2 $(DEBUG_FLAGS)
+CFLAGS-$(OUT_OBJ_DIR)/arduinoFFTfix.o = -O3 $(DEBUG_FLAGS)
+CFLAGS-$(OUT_OBJ_DIR)/util.o = -O3 $(DEBUG_FLAGS)
+CFLAGS-$(OUT_OBJ_DIR)/radar_dsp.o = -O3 $(DEBUG_FLAGS)
+#else
 CFLAGS-$(OUT_OBJ_DIR)/syscalls.o += -fno-lto
 CFLAGS-$(OUT_OBJ_DIR)/sysmem.o = -std=gnu11 -Wno-strict-prototypes -Wno-pedantic -Wno-missing-prototypes -fno-lto
 CFLAGS-$(OUT_OBJ_DIR)/printf.o = -DPRINTF_DISABLE_SUPPORT_FLOAT -DPRINTF_DISABLE_SUPPORT_EXPONENTIAL -fno-lto
@@ -102,11 +107,15 @@ $(foreach target, $(TARGETS), $(eval SOURCES := $(_SOURCES) $($(addsuffix $(call
 # Create jlink flash targets
 $(foreach target, $(TARGETS), $(eval $(call define_jlink_flash_target, $(target))))
 
+.PHONY: nolog
+nolog: binary
+
 .PHONY: all
+all: DEBUG_FLAGS = -DDBG_LOGGING
 all: binary
 
 .PHONY: debug
-debug: DEBUG_FLAGS = -ggdb -Og
+debug: DEBUG_FLAGS = -DDBG_LOGGING -ggdb -Og
 debug: binary
 
 .PHONY : clean
