@@ -28,6 +28,7 @@
 
 #include "acc_integration.h"
 
+#include "util.h"
 #include "reg_interface.h"
 
 
@@ -245,7 +246,6 @@ int main(void)
     {      
         //parse_command
         RegInt_parsecmd();
-        
         //sleep
         HAL_SuspendTick(); //1.23947
         HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFE);
