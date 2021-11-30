@@ -113,10 +113,6 @@ void Reg_regor(uint8_t reg, uint32_t orbits){
 	RegInt_setregf(reg, flags, 1);
 }
 
-
-
-
-
 //begin listning on UART
 void RegInt_Init(void){
 	queue_cmd_end = 0;
@@ -323,10 +319,6 @@ void sleepMCU(uint32_t mode){
     return;
 }
 
-
-
-
-
 void rss_control(uint32_t val){
 	if (val == 0x00){stopService();}
 	if (val == 0x01){createService();}
@@ -358,7 +350,6 @@ void initRSS(void){
  
 	if (sparse_config == NULL)
 	{
-		/* Handle error */
 		ERR_PRINTLN("sparse config creation fail");
 	}
 	
@@ -366,7 +357,6 @@ void initRSS(void){
  
 	if (sparse_config_far == NULL)
 	{
-		/* Handle error */
 		ERR_PRINTLN("far sparse config creation fail");
 	}
     
@@ -374,7 +364,6 @@ void initRSS(void){
  
 	if (envelope_config == NULL)
 	{
-		/* Handle error */
 		printf("envelope config creation fail");
 	}
 
@@ -892,12 +881,11 @@ void evalEnvelopeData(void){
 	uint16_t dist_res = (uint16_t)(envelope_metadata.step_length_m*1.0e6f);
 	uint16_t dist_start = (uint16_t)(envelope_metadata.start_m*1000.0f);
 	
-	uint16_t min_sep = RegInt_getreg(0xD4)
-	
+	uint16_t min_sep = (uint16_t)((1000*(uint32_t)RegInt_getreg(0xD4))/dist_res);
+	DBG_PRINTINT(min_sep);
 	uint16_t indexes[n];
 	uint16_t amplitudes[n];
 
-	
 	getpeaks(data, bins, indexes, amplitudes, min_sep);
 			
 	uint16_t distances[n];
@@ -906,7 +894,7 @@ void evalEnvelopeData(void){
 	}
 
 	uint32_t distamp_pack[n];
-	pack16to32array(distamp_pack, indexes, amplitudes);
+	pack16to32array(distamp_pack, distances, amplitudes);
 	
 	//store results
 	RegInt_setregf(0xD0,(uint32_t)distamp_pack[0], 1);
@@ -914,14 +902,7 @@ void evalEnvelopeData(void){
 	RegInt_setregf(0xD2,(uint32_t)distamp_pack[2], 1);
 	RegInt_setregf(0xD3,(uint32_t)distamp_pack[3], 1);
 	
-	INF_PRINTLN("RESULTS");
-	INF_PRINTLN("Peak 1: %d mm | %d arb.", distances[0], amplitudes[0]);
-	INF_PRINTLN("Peak 2: %d mm | %d arb.", distances[1], amplitudes[1]);
-	INF_PRINTLN("Peak 3: %d mm | %d arb.", distances[2], amplitudes[2]);
-	INF_PRINTLN("Peak 4: %d mm | %d arb.", distances[3], amplitudes[3]);
-	
 	print_envelope_results();
-	
 }
 
 
@@ -936,4 +917,10 @@ void print_sparse_results(void){
 
 
 void print_envelope_results(void){
+	INF_PRINTLN("RESULTS");
+	INF_PRINTLN("Peak 1: %d mm | %d arb.", get_short(RegInt_getreg(0xD0),2), get_short(RegInt_getreg(0xD0),0));
+	INF_PRINTLN("Peak 2: %d mm | %d arb.", get_short(RegInt_getreg(0xD1),2), get_short(RegInt_getreg(0xD1),0));
+	INF_PRINTLN("Peak 3: %d mm | %d arb.", get_short(RegInt_getreg(0xD2),2), get_short(RegInt_getreg(0xD2),0));
+	INF_PRINTLN("Peak 4: %d mm | %d arb.", get_short(RegInt_getreg(0xD3),2), get_short(RegInt_getreg(0xD3),0));
+
 }

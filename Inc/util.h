@@ -48,6 +48,7 @@
 
 
 uint8_t get_byte(uint32_t, uint8_t );
+uint16_t get_short(uint32_t, uint8_t);
 uint32_t roundUp(uint32_t, uint32_t );
 uint32_t roundDown(uint32_t, uint32_t );
 
