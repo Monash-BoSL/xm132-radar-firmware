@@ -1,4 +1,4 @@
-
+// #include "arm_math.h"
 
 #include "util.h"
 #include "arduinoFFTfix.h"
@@ -50,9 +50,9 @@ float dofft(uint16_t** data, uint8v2_t data_size){
 		
 		//Compute FFT
 		scales[i] = fftRangeScaling(real, sweeps);
-		fftWindowing(real, sweeps, FFT_FORWARD);
-		fftCompute(real, imag, sweeps, FFT_FORWARD);
-		fftComplexToMagnitude(real, imag, sweeps);
+		fftWindowing(real, sweeps, FFT_FORWARD); //0.311s
+		fftCompute(real, imag, sweeps, FFT_FORWARD);//0.758s
+		fftComplexToMagnitude(real, imag, sweeps);//0.135
 		
 		//load data back in to data array
 		//set real componet of FFT to data
