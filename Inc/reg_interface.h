@@ -34,6 +34,7 @@ uint8_t cmd_length;
 uint8_t queue_cmd_end;
 uint8_t far_active;
 uint16_t** data;
+float** accumulant;
 uint16_t sweeps;
 uint16_t bins;
 uint32_t bufflen;

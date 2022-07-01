@@ -792,6 +792,40 @@ void evalData(void){
     else if(service_type == 0x04){evalSparseData();}
 }
 
+
+void mac_accumulatant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		float d = data[j][i];
+		accumulant[j][i] += d*d;
+	}
+	}
+}
+
+void sqrt_accumulant(){
+	
+}
+
+void mac_accumulant(){
+	
+}
+
+void clear_accumulatant(float v){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		accumulant[j][i] = v;
+	}
+	}
+}
+
+void load_accumulatant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		data[j][i] = accumulant[j][i];
+	}
+	}
+}
+
 //mode
 /*
 Bit.
