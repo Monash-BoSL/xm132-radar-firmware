@@ -15,7 +15,7 @@ Version 1.4.0
 
 ///////////////////////////////*/
 
-#define FIRMWARE_REVISION 0xBF010400 //0x BF MM II PP -> BoSL Firmware MM.II.PP
+#define FIRMWARE_REVISION 0xBF010500 //0x BF MM II PP -> BoSL Firmware MM.II.PP
 #define HARDWARE_REVISION 0xBD010100 //0x BD MM II PP -> BoSL Device MM.II.PP
 
 #define UART_BUFF 64
@@ -35,6 +35,7 @@ uint8_t queue_cmd_end;
 uint8_t far_active;
 uint16_t** data;
 float** accumulant;
+float dsp_value_f;
 uint16_t sweeps;
 uint16_t bins;
 uint32_t bufflen;
@@ -91,6 +92,7 @@ void initRSS(void);
 
 int8_t envelope_data_malloc(void);
 int8_t sparse_data_malloc(void);
+int8_t accumulant_malloc(uint16_t sweeps, uint16_t bins);
 int8_t data_malloc(uint16_t, uint16_t);
 void data_free(void);
 void filldata_sparse(uint8_t);
@@ -118,6 +120,9 @@ void printf_envelope_metadata(acc_service_envelope_metadata_t);
 void evalData(void);
 void evalSparseData(void);
 void evalEnvelopeData(void);
+
+void dsp_burst(void);
+
 void print_sparse_results(void);
 void print_envelope_results(void);
 

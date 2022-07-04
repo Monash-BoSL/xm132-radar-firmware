@@ -27,6 +27,34 @@ void dcdatarm(uint16_t** data, uint8v2_t data_size){
 	}
 }
 
+void detrend(uint16_t** data, uint8v2_t data_size){
+	uint8_t sweeps = data_size.x1;
+	uint8_t bins = data_size.x2;
+	
+	for(uint16_t i = 0; i<bins; i++){
+		uint32_t ssxx = ((sweeps*sweeps - 1)*sweeps)/12;
+		uint32_t nxmean = (sweeps*(sweeps-1))/2;
+		uint32_t ssxy = 0;
+		uint32_t ymean = 0;
+
+		for(uint16_t j = 0; j<sweeps; j++){
+			ymean += data[j][i];
+			ssxy += data[j][i]*j;
+		}
+		ymean /= sweeps;
+		ssxy = ssxy - nxmean*ymean;
+
+		float m = ssxy/(float)ssxx;
+		float b = (float)ymean - (m*nxmean)/(float)sweeps;
+		
+		
+		for(uint16_t j = 0; j<sweeps; j++){
+			data[j][i] -= j*m + b;
+		}
+	}	
+}
+
+
 //do fft on each row of data
 float dofft(uint16_t** data, uint8v2_t data_size){
 	uint8_t sweeps = data_size.x1;
@@ -299,7 +327,6 @@ floatv2_t center_of_mass(uint8v2_t max, uint8_t r){
 
 
 //////////////envelope methods
-
 void getpeaks(uint16_t** data, uint16_t data_len, uint16_t* indexes, uint16_t* amplitudes, uint16_t min_sep){
 	const int n = 4;//number of peaks to find
 	uint16_t bins = data_len;
@@ -351,3 +378,77 @@ void pack16to32array(uint32_t* a, uint16_t* b, uint16_t* c){
 		a[i] = (((uint32_t)b[i])<<16) | c[i];
 	}
 }
+
+//accumulant functions
+extern uint16_t sweeps;
+extern uint16_t bins;
+extern float** accumulant;
+extern uint16_t** data;
+
+void set_accumulant(float v){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		accumulant[j][i] = v;
+	}
+	}
+}
+
+void load_accumulant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		data[j][i] = accumulant[j][i];
+	}
+	}
+}
+
+void add_accumulant(float v){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		accumulant[j][i] += v;
+	}
+	}
+}
+
+void mult_accumulant(float v){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		accumulant[j][i] *= v;
+	}
+	}
+}
+
+void acc_accumulant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		float d = data[j][i];
+		accumulant[j][i] += d;
+	}
+	}
+}
+
+void sq_acc_accumulant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		float d = data[j][i];
+		accumulant[j][i] += d*d;
+	}
+	}
+}
+
+void sqrt_accumulant(void){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		accumulant[j][i] = sqrt(accumulant[j][i]);
+	}
+	}
+}
+
+
+void add_data(int16_t v){
+	for(uint16_t i = 0; i<bins; i++){
+	for(uint16_t j = 0; j<sweeps/2; j++){
+		data[j][i] += v;
+	}
+	}
+}
+

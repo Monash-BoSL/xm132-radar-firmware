@@ -34,11 +34,14 @@ extern UART_HandleTypeDef huart1;
 //0xD7 :: Focus weight Radius
 //0xD8 :: Data zeroing threshold
 //0xD9 :: Bandstop velocity filter
+//0xDA :: DSP command buffer
+//0xDB :: DSP value
 
 //ADDITIONAL COMMANDS
-//0x03 05 :: perform measurment
-//0x03 06 :: evaluate data
-//0xFA E9 :: dump 256 bytes of data from buffer with given offset
+//0x03 05    :: perform measurment
+//0x03 06 	 :: evaluate data
+//0x03 07    :: accumulant dsp
+//0xFA E9    :: dump 256 bytes of data from buffer with given offset
 uint32_t* RegInt_regmap(uint8_t reg){
 	REGADRERR = -1;
 	uint32_t* ptr = &REGADRERR;
@@ -329,6 +332,7 @@ void rss_control(uint32_t val){
 	if (val == 0x04){Reg_regand(0x06,0x000000FF);}//clear error bits
 	if (val == 0x05){measure();}
 	if (val == 0x06){evalData();}
+	if (val == 0x07){dsp_burst();}
 }
 
 
@@ -382,9 +386,40 @@ int8_t sparse_data_malloc(void){
 	if(far_active){
 		bins += sparse_metadata_far.data_length/sweeps;
 	}
+	accumulant_malloc(sweeps/2,bins);
 	return data_malloc(sweeps,bins);
 }
 
+int8_t accumulant_malloc(uint16_t sweeps, uint16_t bins){
+	//this creates data array where data[i][j] is the i-th sweep and the j-th distance bin.
+	DBG_PRINTLN("accumulant malloc sweeps: %d", sweeps);
+	DBG_PRINTLN("accumulant malloc bins: %d", bins);
+	
+	uint32_t len = 0;
+	uint16_t r=sweeps, c=bins;//r: sweeps, c: bins
+    float *ptr;
+ 
+    len = sizeof(float *) * r + sizeof(float) * c * r;
+    accumulant = (float **)malloc(len);
+ 
+	if (accumulant == NULL){
+		ERR_PRINTLN("accumulant buffer allociation failed");
+		return -1;
+	}else{
+		DBG_PRINTLN("accumulant buffer allociation success");
+		DBG_PRINTLN("accumulant buffer len: %ld", len);
+	}
+ 
+    // ptr is now pointing to the first element in of 2D array
+    ptr = (float *)(accumulant + r);
+ 
+    // for loop to point rows pointer to appropriate location in 2D array
+    for(uint16_t i = 0; i < r; i++){
+        accumulant[i] = (ptr + c * i);
+	}
+	
+	return 0;
+}
 
 int8_t data_malloc(uint16_t sweeps, uint16_t bins){
 	//this creates data array where data[i][j] is the i-th sweep and the j-th distance bin.
@@ -418,6 +453,8 @@ int8_t data_malloc(uint16_t sweeps, uint16_t bins){
 }
 
 void data_free(void){
+	free(accumulant);
+	accumulant = NULL;
 	free(data);
 	data = NULL;
 	sweeps = 0;
@@ -792,40 +829,6 @@ void evalData(void){
     else if(service_type == 0x04){evalSparseData();}
 }
 
-
-void mac_accumulatant(void){
-	for(uint16_t i = 0; i<bins; i++){
-	for(uint16_t j = 0; j<sweeps/2; j++){
-		float d = data[j][i];
-		accumulant[j][i] += d*d;
-	}
-	}
-}
-
-void sqrt_accumulant(){
-	
-}
-
-void mac_accumulant(){
-	
-}
-
-void clear_accumulatant(float v){
-	for(uint16_t i = 0; i<bins; i++){
-	for(uint16_t j = 0; j<sweeps/2; j++){
-		accumulant[j][i] = v;
-	}
-	}
-}
-
-void load_accumulatant(void){
-	for(uint16_t i = 0; i<bins; i++){
-	for(uint16_t j = 0; j<sweeps/2; j++){
-		data[j][i] = accumulant[j][i];
-	}
-	}
-}
-
 //mode
 /*
 Bit.
@@ -835,6 +838,7 @@ Bit.
 4.	get velocity
 5.	null below threshold
 6.	bandstop
+7.  detrend
 */
 void evalSparseData(void){
     // #warning implentation removed for debuging
@@ -860,6 +864,7 @@ void evalSparseData(void){
 
 	//dc removal
 	if(mode & 0x00000001){dcdatarm(data, data_size);}
+	if(mode & 0x00000040){detrend(data, data_size);}
 	
 	//do fft on each row of data
 	if(mode & 0x00000002){min_scale = dofft(data, data_size);}
@@ -939,7 +944,48 @@ void evalEnvelopeData(void){
 	print_envelope_results();
 }
 
-
+void dsp_burst(void){
+	uint32_t dsp_cmds = RegInt_getreg(0xDA);
+	float	 dsp_val = RegInt_getreg(0xDB);
+	
+	//0x87 65 43 21 // cmd order
+	for(uint8_t i = 0; i < 8; i++){
+		uint8_t cmd = (dsp_cmds >> 4*i) & 0x0F;
+		
+		switch (cmd){
+		case 0x00:
+			break;
+		case 0x01:
+			set_accumulant(dsp_val);
+			break;
+		case 0x02:
+			load_accumulant();
+			break;
+		case 0x03:
+			add_accumulant(dsp_val);
+			break;
+		case 0x04:
+			mult_accumulant(dsp_val);
+			break;
+		case 0x05:
+			acc_accumulant();
+			break;
+		case 0x06:
+			sq_acc_accumulant();
+			break;
+		case 0x07:
+			sqrt_accumulant();
+			break;
+		case 0x08:
+			add_data(dsp_val);
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+}
 
 void print_sparse_results(void){
 		INF_PRINTLN("RESULTS");

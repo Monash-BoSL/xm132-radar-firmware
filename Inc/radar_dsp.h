@@ -27,6 +27,7 @@ uint8_t _sweeps;
 uint8_t _bins;
 
 void dcdatarm(uint16_t**, uint8v2_t);
+void detrend(uint16_t** data, uint8v2_t data_size);
 float dofft(uint16_t**, uint8v2_t);
 void dobandstop(uint16_t**, uint8v2_t, uint32_t);
 void doconv(uint16_t**, uint8v2_t, float);
@@ -51,6 +52,16 @@ uint16_t next_peak(uint16_t**, uint16_t, uint16_t, uint16_t);
 void insert(uint16_t*, uint16_t, uint16_t, uint8_t);
 void pack16to32array(uint32_t*, uint16_t*, uint16_t*);
 
+//// accumulant ////
+
+void set_accumulant(float v);
+void load_accumulant(void);
+void add_accumulant(float v);
+void mult_accumulant(float v);
+void acc_accumulant(void);
+void sq_acc_accumulant(void);
+void sqrt_accumulant(void);
+void add_data(int16_t v);
 
 
 
