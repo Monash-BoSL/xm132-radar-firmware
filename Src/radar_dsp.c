@@ -8,10 +8,10 @@
 
 #include "radar_dsp.h"
 
-void dcdatarm(uint16_t** data, uint8v2_t data_size){
+void dcdatarm(uint16_t** data, uint16v2_t data_size){
 	//remove dc component
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	for(uint16_t i = 0; i<bins; i++){
 		uint32_t accumulator = 0;
 		for(uint16_t j = 0; j<sweeps; j++){
@@ -27,9 +27,9 @@ void dcdatarm(uint16_t** data, uint8v2_t data_size){
 	}
 }
 
-void detrend(uint16_t** data, uint8v2_t data_size){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+void detrend(uint16_t** data, uint16v2_t data_size){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
 	for(uint16_t i = 0; i<bins; i++){
 		uint32_t ssxx = ((sweeps*sweeps - 1)*sweeps)/12;
@@ -56,9 +56,9 @@ void detrend(uint16_t** data, uint8v2_t data_size){
 
 
 //do fft on each row of data
-float dofft(uint16_t** data, uint8v2_t data_size){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+float dofft(uint16_t** data, uint16v2_t data_size){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
 	float scales[bins];
 	int16_t real[sweeps];
@@ -114,9 +114,9 @@ float dofft(uint16_t** data, uint8v2_t data_size){
 }
 
 //zeros out certain bins (distances) based on mask
-void dobandstop(uint16_t** data, uint8v2_t data_size, uint32_t mask){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+void dobandstop(uint16_t** data, uint16v2_t data_size, uint32_t mask){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
 	for(uint16_t j = 0; j<sweeps/2; j++){
 		if(mask & (1<<j)){
@@ -127,7 +127,7 @@ void dobandstop(uint16_t** data, uint8v2_t data_size, uint32_t mask){
 	}
 }
 
-void doconv(uint16_t** data, uint8v2_t data_size, float st_dev){
+void doconv(uint16_t** data, uint16v2_t data_size, float st_dev){
 	
 	_conv_data = data;
 	_sweeps = data_size.x1;
@@ -161,7 +161,7 @@ void makekernel(float st_dev){
 
 int8_t convolve1d(uint16_t indx, uint8_t dir){
 	stackSet();
-	uint8_t cent = (CONVKER-1)/2;
+	uint16_t cent = (CONVKER-1)/2;
 	if(dir == 0){	
 		// stackSet();
 		if(indx >= _bins){
@@ -235,13 +235,13 @@ float stackPush(float val){
 	return popped;
 }
 
-uint8v2_t max2d(uint16_t** data, uint8v2_t data_size){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+uint16v2_t max2d(uint16_t** data, uint16v2_t data_size){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
 	uint16_t apex = 0;
-	uint8_t mbin = 0;
-	uint8_t msweep = 0;
+	uint16_t mbin = 0;
+	uint16_t msweep = 0;
 	
 	for(uint16_t i = 0; i<bins; i++){
 		for(uint16_t j = 0; j<sweeps/2; j++){
@@ -252,16 +252,16 @@ uint8v2_t max2d(uint16_t** data, uint8v2_t data_size){
 				}
 		}
 		}
-	uint8v2_t max_index = {msweep,mbin};
+	uint16v2_t max_index = {msweep,mbin};
 	return max_index;
 }
 
-float get_msd(uint16_t** data, uint8v2_t data_size, uint8v2_t max, float threshold){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+float get_msd(uint16_t** data, uint16v2_t data_size, uint16v2_t max, float threshold){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
-	uint8_t msweep = max.x1;
-	uint8_t mbin = max.x2;
+	uint16_t msweep = max.x1;
+	uint16_t mbin = max.x2;
 	
 	float meansqdist = 0.0f;
 	float mass = 0.0f;
@@ -285,12 +285,12 @@ float get_msd(uint16_t** data, uint8v2_t data_size, uint8v2_t max, float thresho
 	return meansqdist;
 }
 
-void null_data(uint16_t** data, uint8v2_t data_size, uint8v2_t max, float threshold){
-	uint8_t sweeps = data_size.x1;
-	uint8_t bins = data_size.x2;
+void null_data(uint16_t** data, uint16v2_t data_size, uint16v2_t max, float threshold){
+	uint16_t sweeps = data_size.x1;
+	uint16_t bins = data_size.x2;
 	
-	uint8_t msweep = max.x1;
-	uint8_t mbin = max.x2;
+	uint16_t msweep = max.x1;
+	uint16_t mbin = max.x2;
 	
 	uint16_t apex = data[msweep][mbin];
 	uint16_t halfpex = apex*threshold;
@@ -304,9 +304,9 @@ void null_data(uint16_t** data, uint8v2_t data_size, uint8v2_t max, float thresh
 	}
 }
 
-floatv2_t center_of_mass(uint8v2_t max, uint8_t r){
-	uint8_t msweep = max.x1;
-	uint8_t mbin = max.x2;
+floatv2_t center_of_mass(uint16v2_t max, uint16_t r){
+	uint16_t msweep = max.x1;
+	uint16_t mbin = max.x2;
 	
 	float mass = 0.0f;	
 	floatv2_t center = {0.0f,0.0f};

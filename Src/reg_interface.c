@@ -846,13 +846,13 @@ void evalSparseData(void){
 	uint16_t dist_res = (uint16_t)(sparse_metadata.step_length_m*1000.0f);
 	uint16_t dist_start = (uint16_t)(sparse_metadata.start_m*1000.0f);
 	float sweep_rate = sparse_metadata.sweep_rate;
-	uint8v2_t data_size = {sweeps,bins};
+	uint16v2_t data_size = {sweeps,bins};
 	
 	float min_scale = 1.0f;
 	float thrstd = RegInt_getreg(0xD4)/1000.0f;
 	float thrnull = RegInt_getreg(0xD8)/1000.0f;
 	uint32_t mode = RegInt_getreg(0xD6);
-	uint8_t roi_radius = RegInt_getreg(0xD7);
+	uint16_t roi_radius = RegInt_getreg(0xD7);
 	uint32_t band_filt = RegInt_getreg(0xD9);
 	
 	float velocity;
@@ -880,7 +880,7 @@ void evalSparseData(void){
 	//calulate velocity parameters
 	if(mode & 0x00000008){
 			//get maximum index and maximum
-		uint8v2_t max_index = max2d(data, data_size);
+		uint16v2_t max_index = max2d(data, data_size);
 		uint16_t apex = data[max_index.x1][max_index.x2];
 		
 		DBG_PRINTINT(apex);
