@@ -269,7 +269,7 @@ void null_data(uint16_t** data, uint8v2_t data_size, uint8v2_t max, float thresh
 	
 	for(uint16_t i = 0; i<bins; i++){
 	for(uint16_t j = 0; j<sweeps/2; j++){
-		if(data[j][i] > halfpex){
+		if(data[j][i] < halfpex){
 			data[j][i] = 0;
 		}
 	}
