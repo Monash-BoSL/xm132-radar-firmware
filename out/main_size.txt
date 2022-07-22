@@ -1,3 +1,8 @@
    text	   data	    bss	    dec	    hex	filename
+<<<<<<< HEAD
  125960	    120	   7272	 133352	  208e8	out/main.elf
  125960	    120	   7272	 133352	  208e8	(TOTALS)
+=======
+ 124316	    120	   7264	 131700	  20274	out/main.elf
+ 124316	    120	   7264	 131700	  20274	(TOTALS)
+>>>>>>> main
